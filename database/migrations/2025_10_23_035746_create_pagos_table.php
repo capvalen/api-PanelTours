@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
              $table->foreignId('venta_id')->constrained('ventas')->onDelete('cascade');
             $table->dateTime('fecha');
+						$table->boolean('es_compromiso')->default(false)->comment('0=pago, 1=es compromiso');
+						$table->date('fecha_compromiso')->nullable()->comment('Fecha en que el cliente se compromete a pagar');
             $table->decimal('monto_abonado', 10, 2);
             $table->decimal('saldo_pendiente', 10, 2);
             $table->enum('metodo_pago', ['yape', 'tarjeta', 'depósito', 'efectivo'])->default('efectivo');
