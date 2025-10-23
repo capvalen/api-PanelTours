@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('alojamientos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('user')->unique();
-            $table->enum('perfil', ['administrador', 'agente', 'contador']);
-            $table->string('password');
-						$table->boolean('activo')->default(true)->comment('no/si');
+						$table->string('alojamiento');
+            $table->tinyInteger('activo')->default(1);
             $table->timestamps();
         });
-
     }
 
     /**
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('alojamientos');
     }
 };
