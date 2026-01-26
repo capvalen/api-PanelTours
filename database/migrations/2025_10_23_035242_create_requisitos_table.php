@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('cantidad_habitaciones')->nullable();
             $table->text('observacion_habitacion')->nullable();
             $table->boolean('silla_ruedas')->default(false);
+            $table->boolean('check_in')->default(false);
             
             // Campos para alquiler de vehículo
             $table->foreignId('vehiculo_id')->nullable()->constrained('vehiculos')->onDelete('set null');

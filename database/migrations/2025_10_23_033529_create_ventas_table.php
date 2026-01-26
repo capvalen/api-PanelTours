@@ -32,7 +32,6 @@ return new class extends Migration
             
             // Información del viaje
             $table->integer('pasajeros');
-            $table->boolean('check_in')->default(false);
             $table->enum('metodo_pago', ['yape', 'tarjeta', 'depósito', 'efectivo'])->nullable();
             
             // Necesidades especiales
