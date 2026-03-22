@@ -42,7 +42,6 @@ return new class extends Migration
             $table->index('restaurante_id');
             $table->index('fecha_hora_reserva');
             $table->index('estado');
-            $table->index('codigo_confirmacion');
             
             // Llaves foráneas
             $table->foreign('restaurante_id')->references('id')->on('restaurantes')->onDelete('cascade');

@@ -12,10 +12,10 @@ class UsuarioSeeder extends Seeder
     {
         DB::table('usuarios')->insert([
             [
-                'nombre' => 'Carlos Mendoza',
-                'user' => 'admin',
+                'nombre' => 'Carlos Pariona',
+                'user' => 'cpariona',
                 'perfil' => 'administrador',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('nus'),
                 'activo' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

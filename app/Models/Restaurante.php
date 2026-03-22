@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Proveedor extends Model
+class Restaurante extends Model
 {
     use HasFactory;
 
-    protected $table = 'proveedores';
+    protected $table = 'restaurantes';
 
     protected $fillable = [
-        'ruc',
-        'razon_social',
+        'nombre',
+        'departamento_id',
         'direccion',
         'contacto',
         'celular',
-        'cuenta_bancaria',
-        'numero_cuenta',
-        'categoria',
-        'archivos',
         'activo',
     ];
 
     protected $casts = [
-        'archivos' => 'array',
         'activo' => 'boolean',
     ];
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
+    }
 }
