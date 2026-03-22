@@ -1,0 +1,128 @@
+tablas independientes sin tablas foráneas:
+clientes
+departamentos <- nueva tabla, departamentos del perú
+guias <- nueva tabla
+vuelos <- se usará como catálogo simple, sin dependencias a nada
+proveedores
+aerolineas <- nueva tabla
+calendarios <- servirá de recordatorios
+
+
+Tablas con dependencia leve: todas dependen de proveedores
+hospedajes <- cambiar nombre, actualmente se llama alojamientos
+restaurantes <- nueva tabla
+vehiculos
+
+Tablas principales de transacción:
+ventas
+cajas <- apertura la sesion de caja
+
+Tablas de detalle, items y relaciones:
+venta_detalles <- me recomentaron renombrar venta_items?
+caja_detalles <- registro de entradas y salidas extras junto a ventas
+venta_vuelos
+venta_hospedajes
+venta_autos
+venta_restaurantes
+venta_turismo
+venta_guias
+
+Tablas de subDetalles y dependencias anidadas
+venta_vuelos_tramos
+venta_vuelos_pasajeros
+venta_autos_pasajeros
+
+Finanzas y cierre:
+pagos
+deudas
+
+Tablas a eliminar:
+tours <- eliminar, será extraído de una api externa
+requisitos <- Eliminar tabla
+
+
+
+** CORRECCIONES **
+- en la tabla clientes considerar
+    "vacunacion_fiebre_amarilla": {
+      "certificado": "XYZ789",
+      "fecha": "2025-01-15"
+    }, pasaporte_permanente VARCHAR(50),     -- Si el cliente tiene un pasaporte habitual
+    pais_residencia VARCHAR(100),
+- la tabla ventas solo debe tener los campos:
+  -> id, cliente_id, fecha, estado [cotizacion, confirmada, pagada, anulada]
+  -> ejm:
+    id: 1
+    cliente_id: 10
+    fecha: 2026-03-21
+    estado: cotizacion
+- la tabla venta_items:
+  -> id, venta_id, tipo (vuelo, hospedaje, auto, comida, turismo), precio, descripcion (texto resumen para comprobante)
+  -> ejm:
+    id: 100 | venta_id: 1 | tipo: vuelo    | descripcion: "Vuelo Lima - Cusco ida y vuelta"
+    id: 101 | venta_id: 1 | tipo: hospedaje| descripcion: "Hospedaje en Cusco"
+-la tabla venta_vuelos
+  -> id, venta_item_id, tipo_viaje
+  -> ejm:
+    id: 10, venta_item_id: 100, tipo_viaje: ida_vuelta
+-la tabla venta_vuelo_tramos
+  -> id, venta_vuelo_id, origen, destino, fecha, pasajeros, equipaje, precio_soles, precio_dolares, costo_soles, costo_dolares, etc, considerar lo siguiente:
+  -- Identificación del vuelo
+    codigo_vuelo VARCHAR(20),              -- Ej: LA2040, H8 321
+    aerolinea VARCHAR(100),                -- Ej: LATAM, Sky, JetSmart
+    numero_vuelo VARCHAR(10),              -- Solo el número: 2040
+    aeronave VARCHAR(50),                  -- Tipo de avión: Airbus A320, Boeing 737
+
+    -- Horarios (importante para tours)
+    fecha_salida TIMESTAMP,                -- Fecha y hora de salida
+    fecha_llegada TIMESTAMP,               -- Fecha y hora de llegada (opcional)
+    hora_salida TIME,                      -- Solo hora (por si prefieres separado)
+    horario_llegada TIME, --opcional
+    duracion_minutos INT,                  -- Duración del vuelo en minutos
+
+    -- Terminales y puertas
+    terminal_salida VARCHAR(10),           -- Terminal A, B, etc.
+    puerta_embarque VARCHAR(10),           -- Puerta 12, 15B, etc.
+    terminal_llegada VARCHAR(10),
+
+    -- Estados y gestión
+    estado_tramo ENUM('pendiente', 'confirmado', 'emitido', 'checkin_disponible', 'checkin_realizado', 'abordado', 'cancelado', 'completado') DEFAULT 'pendiente',
+    localizador VARCHAR(20),               -- Código de reserva de la aerolínea (PNR)
+    billete_electronico VARCHAR(50),       -- Número de e-ticket
+    asientos_asignados VARCHAR(200),       -- Ej: "12A,12B" o JSON con detalles
+
+    -- Información adicional
+    clase_vuelo ENUM('economica', 'economica_plus', 'ejecutiva', 'primera') DEFAULT 'economica',
+    escala BOOLEAN DEFAULT false,          -- Si es escala o vuelo directo
+    numero_escala INT DEFAULT 0,           -- Número de escala si aplica
+    observaciones TEXT,                    -- Observaciones generales del tramo
+- en la tabla venta_vuelos_pasajeros considerar:
+CREATE TABLE venta_vuelos_pasajeros (
+    id INT PRIMARY KEY,
+    venta_vuelo_tramo_id INT,        -- El tramo específico del vuelo
+
+    -- Datos del pasajero para este vuelo específico
+    numero_asiento VARCHAR(10),
+
+    -- Documentación
+    dni VARCHAR(50),
+    nombre VARCHAR(100), -- nombre del pasajero
+    fecha_nacimiento DATE, --puede ser null
+    numero_pasaporte VARCHAR(50),
+    fecha_vencimiento_pasaporte DATE,
+    pais_emision_pasaporte VARCHAR(100),
+
+    -- Vacunación fiebre amarilla
+    certificado_fiebre_amarilla VARCHAR(100),  -- Número de certificado
+    fecha_vacunacion_fiebre_amarilla DATE,
+    certificado_valido_hasta DATE,
+
+    -- Check in
+    check_in_realizado BOOLEAN DEFAULT false,
+    fecha_check_in TIMESTAMP,
+    usuario_check_in VARCHAR(100),     -- Quién realizó el check in
+    observaciones_check_in TEXT,
+);
+
+
+** CONSIDERACIONES **

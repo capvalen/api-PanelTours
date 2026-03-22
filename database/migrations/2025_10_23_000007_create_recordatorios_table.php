@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calendarios', function (Blueprint $table) {
+        Schema::create('recordatorios', function (Blueprint $table) {
             $table->id();
-						$table->enum('tipo_evento', ['pagos', 'boletos']);
+						$table->enum('tipo_evento', ['pagos', 'boletos', 'reunion', 'tarea', 'llamada', 'otro']);
             $table->dateTime('fecha_hora');
             $table->enum('estado', ['pendiente', 'activo', 'finalizado', 'anulado'])->default('pendiente');
             $table->string('titulo');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calendarios');
+        Schema::dropIfExists('recordatorios');
     }
 };

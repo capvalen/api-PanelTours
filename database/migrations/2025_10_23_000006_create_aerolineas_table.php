@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alojamientos', function (Blueprint $table) {
+        Schema::create('aerolineas', function (Blueprint $table) {
             $table->id();
-						$table->string('alojamiento');
-            $table->tinyInteger('activo')->default(1);
+            $table->string('nombre');
+            $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alojamientos');
+        Schema::dropIfExists('aerolineas');
     }
 };

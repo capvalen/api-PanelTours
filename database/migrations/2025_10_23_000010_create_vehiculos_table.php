@@ -19,6 +19,12 @@ return new class extends Migration
 				$table->string('nombre_conductor')->nullable();
 				$table->string('licencia_conductor', 20)->nullable();
 				$table->integer('edad_conductor')->default(0);
+				$table->enum('tipo_combustible', ['gasolina', 'diesel', 'electrico', 'hibrido'])->default('gasolina');
+				$table->boolean('incluye_seguro')->default(false);
+				$table->string('seguro')->nullable();
+				$table->boolean('incluye_gps')->default(false);
+				$table->boolean('incluye_silla_bebe')->default(false);
+            	$table->boolean('acepta_mascotas')->default(false);
 				$table->json('archivos')->nullable();
 				$table->boolean('activo')->default(true)->comment('no/si');
 				$table->timestamps();

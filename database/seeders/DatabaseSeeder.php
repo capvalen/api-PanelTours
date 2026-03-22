@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +14,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            // Grupo 1: Tablas independientes
+            UsuarioSeeder::class,
+            ClienteSeeder::class,
+            DepartamentoSeeder::class,
+            GuiaSeeder::class,
+            VueloSeeder::class,
+            ProveedorSeeder::class,
+            AerolineaSeeder::class,
+            RecordatorioSeeder::class,
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            // Grupo 2: Dependencia leve (proveedores)
+            HospedajeSeeder::class,
+            RestauranteSeeder::class,
+            VehiculoSeeder::class,
+
+            // Grupo 3: Tablas de transacción
+            VentaSeeder::class,
+            CajaSeeder::class,
+
+            // Grupo 4: Detalle e items
+            VentaItemSeeder::class,
+            CajaDetalleSeeder::class,
+            VentaVueloSeeder::class,
+            VentaHospedajeSeeder::class,
+            VentaAutoSeeder::class,
+            VentaRestauranteSeeder::class,
+            VentaTurismoSeeder::class,
+            VentaGuiaSeeder::class,
+
+            // Grupo 5: SubDetalles
+            VentaVueloTramoSeeder::class,
+            VentaVueloPasajeroSeeder::class,
+            VentaAutoPasajeroSeeder::class,
+
+            // Grupo 6: Finanzas
+            PagoSeeder::class,
+            DeudaSeeder::class,
         ]);
     }
 }
