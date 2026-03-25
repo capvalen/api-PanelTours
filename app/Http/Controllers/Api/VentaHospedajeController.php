@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VentaHospedaje;
 use Illuminate\Http\Request;
 
 class VentaHospedajeController extends Controller
@@ -12,7 +13,7 @@ class VentaHospedajeController extends Controller
      */
     public function index()
     {
-        //
+        return VentaHospedaje::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class VentaHospedajeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = VentaHospedaje::create($request->all());
+        return response()->json(["message" => "VentaHospedaje creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class VentaHospedajeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return VentaHospedaje::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class VentaHospedajeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = VentaHospedaje::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "VentaHospedaje actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class VentaHospedajeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = VentaHospedaje::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "VentaHospedaje eliminado"]);
     }
 }

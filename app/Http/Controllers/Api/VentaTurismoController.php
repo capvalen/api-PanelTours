@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VentaTurismo;
 use Illuminate\Http\Request;
 
 class VentaTurismoController extends Controller
@@ -12,7 +13,7 @@ class VentaTurismoController extends Controller
      */
     public function index()
     {
-        //
+        return VentaTurismo::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class VentaTurismoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = VentaTurismo::create($request->all());
+        return response()->json(["message" => "VentaTurismo creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class VentaTurismoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return VentaTurismo::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class VentaTurismoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = VentaTurismo::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "VentaTurismo actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class VentaTurismoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = VentaTurismo::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "VentaTurismo eliminado"]);
     }
 }

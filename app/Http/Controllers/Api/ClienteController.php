@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -12,7 +13,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        return Cliente::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Cliente::create($request->all());
+        return response()->json(["message" => "Cliente creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class ClienteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Cliente::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Cliente::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "Cliente actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Cliente::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "Cliente eliminado"]);
     }
 }

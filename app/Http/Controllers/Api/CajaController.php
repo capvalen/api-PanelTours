@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Caja;
 use Illuminate\Http\Request;
 
 class CajaController extends Controller
@@ -10,9 +11,19 @@ class CajaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Caja::orderBy('id', 'desc')->take(50);
+
+				if ($request->has('dia')) {
+					$query->whereDate('fecha_apertura', $request->dia);
+        }
+				//URL: http://127.0.0.1:8000/api/cajas?abierta=true
+				if ($request->has('abierta')) {
+					$query->where('estado', 'abierta');
+        }
+				$cajas = $query->get();
+				return $cajas; 
     }
 
     /**
@@ -20,7 +31,12 @@ class CajaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+			//return $request->all();
+			$otrasCajas = Caja::where('estado', 'abierta');
+			$otrasCajas->update(['estado' => 'cerrada']);
+
+			$item = Caja::create($request->all());
+			return response()->json(["message" => "Caja aperturada correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +44,7 @@ class CajaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Caja::find($id);
     }
 
     /**
@@ -36,7 +52,22 @@ class CajaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Caja::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "Caja actualizado correctamente", "data" => $item]);
+    }
+
+    public function cerrar(Request $request, string $id)
+    {
+			//url= http://127.0.0.1:8000/api/cajas/1/cerrar
+			$item = Caja::findOrFail($id);
+			$item->update([
+				'estado' => 'cerrada',
+				'fecha_cierre' => now(),
+				'monto_final' => $request->monto_final,
+				'observaciones' => $request->observaciones,
+			]);
+			return response()->json(["message" => "Caja cerrada correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +75,12 @@ class CajaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Caja::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "Caja eliminado"]);
     }
 }

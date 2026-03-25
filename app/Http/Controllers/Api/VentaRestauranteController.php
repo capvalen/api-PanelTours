@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VentaRestaurante;
 use Illuminate\Http\Request;
 
 class VentaRestauranteController extends Controller
@@ -12,7 +13,7 @@ class VentaRestauranteController extends Controller
      */
     public function index()
     {
-        //
+        return VentaRestaurante::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class VentaRestauranteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = VentaRestaurante::create($request->all());
+        return response()->json(["message" => "VentaRestaurante creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class VentaRestauranteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return VentaRestaurante::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class VentaRestauranteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = VentaRestaurante::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "VentaRestaurante actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class VentaRestauranteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = VentaRestaurante::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "VentaRestaurante eliminado"]);
     }
 }

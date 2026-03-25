@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
 class VehiculoController extends Controller
@@ -12,7 +13,7 @@ class VehiculoController extends Controller
      */
     public function index()
     {
-        //
+        return Vehiculo::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class VehiculoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Vehiculo::create($request->all());
+        return response()->json(["message" => "Vehiculo creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class VehiculoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Vehiculo::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Vehiculo::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "Vehiculo actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class VehiculoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Vehiculo::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "Vehiculo eliminado"]);
     }
 }

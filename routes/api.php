@@ -37,48 +37,53 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [UsuarioController::class, 'login']);
 
+Route::middleware('auth:sanctum')->group(function () {
+	Route::apiResource('usuarios', UsuarioController::class);
+	// 1. Tablas Independientes Base
+	Route::apiResource('clientes', ClienteController::class);
+	Route::apiResource('departamentos', DepartamentoController::class)->only(['index']); // Solo listar
+	Route::apiResource('guias', GuiaController::class);
+	Route::apiResource('vuelos', VueloController::class);
+	Route::apiResource('proveedores', ProveedorController::class);
+	Route::apiResource('aerolineas', AerolineaController::class);
+	Route::apiResource('recordatorios', RecordatorioController::class);
+	
+	// 2. Tablas de Dependencia Leve
+	Route::apiResource('hospedajes', HospedajeController::class);
+	Route::apiResource('restaurantes', RestauranteController::class);
+	Route::apiResource('vehiculos', VehiculoController::class);
+	
+	// 3. Tablas Transaccionales Core
+	Route::apiResource('ventas', VentaController::class);
+	Route::apiResource('cajas', CajaController::class);
+	
+	// 4. Tablas Detalle e Items
+	Route::apiResource('venta_items', VentaItemController::class);
+	Route::apiResource('caja_detalles', CajaDetalleController::class);
+	
+	// 5. Detalles Específicos de Items de Venta
+	Route::apiResource('venta_vuelos', VentaVueloController::class);
+	Route::apiResource('venta_hospedajes', VentaHospedajeController::class);
+	Route::apiResource('venta_autos', VentaAutoController::class);
+	Route::apiResource('venta_restaurantes', VentaRestauranteController::class);
+	Route::apiResource('venta_turismo', VentaTurismoController::class);
+	Route::apiResource('venta_guias', VentaGuiaController::class);
+	
+	// 6. Subdetalles y Pasajeros
+	Route::apiResource('venta_vuelos_tramos', VentaVueloTramoController::class);
+	Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
+	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
+	
+	// 7. Módulo Financiero
+	Route::apiResource('pagos', PagoController::class);
+	Route::apiResource('deudas', DeudaController::class);
+	
+	//prueba
+	Route::get('/prueba', function(){
+		return "hola mundo";
+	});
 
-Route::apiResource('usuarios', UsuarioController::class)->middleware('auth:sanctum');
-// 1. Tablas Independientes Base
-Route::apiResource('clientes', ClienteController::class);
-Route::apiResource('departamentos', DepartamentoController::class)->only(['index']); // Solo listar
-Route::apiResource('guias', GuiaController::class);
-Route::apiResource('vuelos', VueloController::class);
-Route::apiResource('proveedores', ProveedorController::class);
-Route::apiResource('aerolineas', AerolineaController::class);
-Route::apiResource('recordatorios', RecordatorioController::class);
-
-// 2. Tablas de Dependencia Leve
-Route::apiResource('hospedajes', HospedajeController::class);
-Route::apiResource('restaurantes', RestauranteController::class);
-Route::apiResource('vehiculos', VehiculoController::class);
-
-// 3. Tablas Transaccionales Core
-Route::apiResource('ventas', VentaController::class);
-Route::apiResource('cajas', CajaController::class);
-
-// 4. Tablas Detalle e Items
-Route::apiResource('venta_items', VentaItemController::class);
-Route::apiResource('caja_detalles', CajaDetalleController::class);
-
-// 5. Detalles Específicos de Items de Venta
-Route::apiResource('venta_vuelos', VentaVueloController::class);
-Route::apiResource('venta_hospedajes', VentaHospedajeController::class);
-Route::apiResource('venta_autos', VentaAutoController::class);
-Route::apiResource('venta_restaurantes', VentaRestauranteController::class);
-Route::apiResource('venta_turismo', VentaTurismoController::class);
-Route::apiResource('venta_guias', VentaGuiaController::class);
-
-// 6. Subdetalles y Pasajeros
-Route::apiResource('venta_vuelos_tramos', VentaVueloTramoController::class);
-Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
-Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
-
-// 7. Módulo Financiero
-Route::apiResource('pagos', PagoController::class);
-Route::apiResource('deudas', DeudaController::class);
-
-//prueba
-Route::get('/prueba', function(){
-	return "hola mundo";
+	//Personalizadas
+	Route::put('/cajas/aperturar', [CajaController::class, 'aperturar']);
+	Route::put('/cajas/{id}/cerrar', [CajaController::class, 'cerrar']);
 });

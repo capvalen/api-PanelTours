@@ -15,7 +15,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return 'listado de suaurios';
+        return Usuario::orderBy('id', 'desc')->get();
     }
 
     public function login(Request $request)
@@ -46,7 +46,8 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-    //
+        $item = Usuario::create($request->all());
+        return response()->json(["message" => "Usuario creado correctamente", "data" => $item]);
     }
 
     /**
@@ -54,7 +55,7 @@ class UsuarioController extends Controller
      */
     public function show(string $id)
     {
-    //
+        return Usuario::find($id);
     }
 
     /**
@@ -62,7 +63,9 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-    //
+        $item = Usuario::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "Usuario actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -70,6 +73,12 @@ class UsuarioController extends Controller
      */
     public function destroy(string $id)
     {
-    //
+        $item = Usuario::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "Usuario eliminado"]);
     }
 }

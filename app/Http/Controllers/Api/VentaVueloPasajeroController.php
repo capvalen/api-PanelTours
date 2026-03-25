@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\VentaVueloPasajero;
 use Illuminate\Http\Request;
 
 class VentaVueloPasajeroController extends Controller
@@ -12,7 +13,7 @@ class VentaVueloPasajeroController extends Controller
      */
     public function index()
     {
-        //
+        return VentaVueloPasajero::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class VentaVueloPasajeroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = VentaVueloPasajero::create($request->all());
+        return response()->json(["message" => "VentaVueloPasajero creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class VentaVueloPasajeroController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return VentaVueloPasajero::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class VentaVueloPasajeroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = VentaVueloPasajero::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "VentaVueloPasajero actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class VentaVueloPasajeroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = VentaVueloPasajero::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "VentaVueloPasajero eliminado"]);
     }
 }

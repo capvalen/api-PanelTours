@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -12,7 +13,7 @@ class VentaController extends Controller
      */
     public function index()
     {
-        //
+        return Venta::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Venta::create($request->all());
+        return response()->json(["message" => "Venta creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class VentaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Venta::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class VentaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Venta::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "Venta actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class VentaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Venta::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "Venta eliminado"]);
     }
 }

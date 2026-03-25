@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recordatorio;
 use Illuminate\Http\Request;
 
 class RecordatorioController extends Controller
@@ -12,7 +13,7 @@ class RecordatorioController extends Controller
      */
     public function index()
     {
-        //
+        return Recordatorio::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -20,7 +21,8 @@ class RecordatorioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = Recordatorio::create($request->all());
+        return response()->json(["message" => "Recordatorio creado correctamente", "data" => $item]);
     }
 
     /**
@@ -28,7 +30,7 @@ class RecordatorioController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Recordatorio::find($id);
     }
 
     /**
@@ -36,7 +38,9 @@ class RecordatorioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Recordatorio::findOrFail($id);
+        $item->update($request->all());
+        return response()->json(["message" => "Recordatorio actualizado correctamente", "data" => $item]);
     }
 
     /**
@@ -44,6 +48,12 @@ class RecordatorioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Recordatorio::findOrFail($id);
+        if (isset($item->activo)) {
+            $item->update(['activo' => 0]);
+        } else {
+            $item->delete();
+        }
+        return response()->json(["message" => "Recordatorio eliminado"]);
     }
 }
