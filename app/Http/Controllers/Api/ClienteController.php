@@ -22,7 +22,7 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $item = Cliente::create($request->all());
-        return response()->json(["message" => "Cliente creado correctamente", "data" => $item]);
+				return $item;
     }
 
     /**
@@ -40,7 +40,7 @@ class ClienteController extends Controller
     {
         $item = Cliente::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Cliente actualizado correctamente", "data" => $item]);
+				return $item;
     }
 
     /**

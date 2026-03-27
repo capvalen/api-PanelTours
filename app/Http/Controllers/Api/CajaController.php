@@ -15,14 +15,14 @@ class CajaController extends Controller
     {
         $query = Caja::orderBy('id', 'desc')->take(50);
 
-				if ($request->has('dia')) {
-					$query->whereDate('fecha_apertura', $request->dia);
+				if ($request->has('fecha')) {
+					$query->whereDate('fecha_apertura', $request->fecha);
         }
 				//URL: http://127.0.0.1:8000/api/cajas?abierta=true
 				if ($request->has('abierta')) {
 					$query->where('estado', 'abierta');
         }
-				$cajas = $query->get();
+				$cajas = $query->with('usuario')->get();
 				return $cajas; 
     }
 
@@ -36,7 +36,13 @@ class CajaController extends Controller
 			$otrasCajas->update(['estado' => 'cerrada']);
 
 			$item = Caja::create($request->all());
-			return response()->json(["message" => "Caja aperturada correctamente", "data" => $item]);
+			$item->load('usuario');
+			$item->load('detalle');
+
+			return response()->json([
+				"message" => "Caja aperturada correctamente",
+				"data" => $item
+			]);
     }
 
     /**
@@ -61,11 +67,10 @@ class CajaController extends Controller
     {
 			//url= http://127.0.0.1:8000/api/cajas/1/cerrar
 			$item = Caja::findOrFail($id);
+			$item->update($request->all());
 			$item->update([
 				'estado' => 'cerrada',
-				'fecha_cierre' => now(),
-				'monto_final' => $request->monto_final,
-				'observaciones' => $request->observaciones,
+				'fecha_cierre' => now()
 			]);
 			return response()->json(["message" => "Caja cerrada correctamente", "data" => $item]);
     }

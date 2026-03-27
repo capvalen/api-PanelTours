@@ -85,5 +85,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	//Personalizadas
 	Route::put('/cajas/aperturar', [CajaController::class, 'aperturar']);
-	Route::put('/cajas/{id}/cerrar', [CajaController::class, 'cerrar']);
+	Route::put('/cajas/cerrar/{id}', [CajaController::class, 'cerrar']);
 });

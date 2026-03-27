@@ -11,6 +11,20 @@ class ProveedorSeeder extends Seeder
     {
         DB::table('proveedores')->insert([
             [
+                'ruc' => '00000000',
+                'razon_social' => 'Ninguno',
+                'direccion' => '',
+                'contacto' => '',
+                'celular' => '',
+                'cuenta_bancaria' => '',
+                'numero_cuenta' => '',
+                'categoria' => 'local',
+                'archivos' => null,
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'ruc' => '20601234567',
                 'razon_social' => 'Hotel Libertador Cusco',
                 'direccion' => 'Plazoleta Santo Domingo 259, Cusco',

@@ -11,9 +11,13 @@ class CajaDetalleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CajaDetalle::orderBy('id', 'desc')->get();
+      $query = CajaDetalle::orderBy('id', 'desc');
+			if ($request->has('caja_id')) {
+				$query->where('caja_id', $request->caja_id);
+			}
+			return $query->get();
     }
 
     /**

@@ -22,6 +22,8 @@ class CajaDetalle extends Model
         'serie',
         'venta_id',
         'observaciones',
+				'metodo_pago',
+        'proveedor_id',
         'activo',
     ];
 

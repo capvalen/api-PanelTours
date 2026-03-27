@@ -20,8 +20,7 @@ return new class extends Migration
 						// Datos personales
 						$table->string('nombres')->nullable();
 						$table->string('apellidos')->nullable();
-						$table->string('dni', 8)->nullable()->unique();
-						$table->string('carnet_extranjeria', 20)->nullable()->unique();
+						$table->string('dni', 8)->nullable()->unique();						
 						$table->date('fecha_nacimiento')->nullable();
 						
 						// Contacto
@@ -31,25 +30,20 @@ return new class extends Migration
 						$table->text('direccion')->nullable();
 						
 						// Ubicación
-						$table->string('nacionalidad')->nullable();
-						$table->string('pais_origen')->nullable();
+						$table->enum('nacionalidad', ['peruano', 'extranjero'])->default('peruano');
+						$table->string('pais_origen')->nullable()->comment('ciudad o país de origen');
 						
 						// Documentos de viaje
-						$table->boolean('pasaporte')->default(false)->comment('no/si');
+						$table->string('pasaporte')->nullable();
 						$table->date('vigencia_pasaporte')->nullable()->comment('Vigencia de 6 meses');;
-						$table->boolean('visado')->default(false)->comment('no/si');
+						$table->enum('tipo_visado', ['turista', 'trabajo', 'visitante', 'freelance', 'estudiante', 'adopción', 'familiar', 'humanitario', 'oficial', 'militar', 'diplomático']);
 						$table->date('valido_visa')->nullable();
 						
 						// Información adicional
-						$table->boolean('vacunacion')->default(false)->comment('no/si');
-						$table->json('vacunacion_fiebre_amarilla')->nullable()->comment('certificado, fecha');
-						$table->boolean('tiene_seguro')->default(false)->comment('no/si');
-						$table->text('seguro')->nullable();
+						$table->json('vacunas')->nullable()->comment('certificado, fecha');
+						$table->json('seguros')->nullable()->comment('seguro, fecha');
 						$table->enum('autorizacion_viaje', ['si', 'no', 'no aplica'])->nullable(); // para menores de edad
 
-						// Documentos adicionales
-						$table->string('pasaporte_permanente', 50)->nullable()->comment('Pasaporte habitual del cliente');
-						$table->string('pais_residencia', 100)->nullable();
 
 						// Archivos adjuntos
 						$table->json('archivos')->nullable();

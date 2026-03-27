@@ -15,14 +15,18 @@ return new class extends Migration
             $table->id();
 						$table->foreignId('caja_id')->constrained('cajas')->onDelete('cascade');
             $table->enum('tipo', ['ingreso', 'egreso']);
-            $table->enum('categoria', ['venta turismo', 'gasto operativo', 'servicios básicos', 'pago personal', 'otros']);
+            $table->enum('categoria', ['ingreso','salida','venta turismo', 'gasto operativo', 'servicios básicos', 'pago de personal', 'pago de proveedores', 'otros']);
             $table->decimal('monto', 10, 2);
             $table->string('concepto');
             $table->dateTime('fecha');
-            $table->enum('comprobante_pago', ['ticket', 'boleta', 'factura', 'proforma']);
+            $table->enum('comprobante_pago', ['interno','ticket', 'boleta', 'factura', 'proforma']);
             $table->string('serie', 50)->nullable();
             $table->foreignId('venta_id')->nullable()->constrained('ventas')->onDelete('set null');
             $table->text('observaciones')->nullable();
+						$table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
+            $table->enum('metodo_pago', ['efectivo', 'tarjeta', 'yape', 'plin', 'cuenta bancaria'])->nullable();
+
+
 						$table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
