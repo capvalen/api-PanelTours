@@ -30,6 +30,7 @@ use App\Http\Controllers\Api\VentaVueloPasajeroController;
 use App\Http\Controllers\Api\VentaAutoPasajeroController;
 use App\Http\Controllers\Api\PagoController;
 use App\Http\Controllers\Api\DeudaController;
+use App\Http\Controllers\Api\ArchivoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -86,4 +87,6 @@ Route::middleware('auth:sanctum')->group(function () {
 	//Personalizadas
 	Route::put('/cajas/aperturar', [CajaController::class, 'aperturar']);
 	Route::put('/cajas/cerrar/{id}', [CajaController::class, 'cerrar']);
+	Route::post('/archivos', [ArchivoController::class, 'store']);
+	Route::post('/clientes/{id}/adjuntar_archivo', [ClienteController::class, 'adjuntarArchivo']);
 });

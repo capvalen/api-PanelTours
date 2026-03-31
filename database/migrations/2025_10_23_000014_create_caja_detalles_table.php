@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('tipo', ['ingreso', 'egreso']);
             $table->enum('categoria', ['ingreso','salida','venta turismo', 'gasto operativo', 'servicios básicos', 'pago de personal', 'pago de proveedores', 'otros']);
             $table->decimal('monto', 10, 2);
-            $table->string('concepto');
+            $table->string('concepto')->nullable();
             $table->dateTime('fecha');
             $table->enum('comprobante_pago', ['interno','ticket', 'boleta', 'factura', 'proforma']);
             $table->string('serie', 50)->nullable();

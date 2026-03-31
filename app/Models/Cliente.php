@@ -49,4 +49,9 @@ class Cliente extends Model
     {
         return $this->hasMany(Venta::class);
     }
+
+		public function getArchivosAttribute($value)
+		{
+			return $value ? json_decode($value, true) : [];
+		}
 }

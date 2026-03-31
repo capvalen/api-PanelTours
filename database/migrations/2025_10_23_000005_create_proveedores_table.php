@@ -16,13 +16,15 @@ return new class extends Migration
 						$table->string('ruc', 11)->unique();
             $table->string('razon_social');
             $table->text('direccion')->nullable();
+            $table->string('ciudad')->nullable();
             $table->string('contacto')->nullable();
             $table->string('celular', 20)->nullable();
-            $table->string('cuenta_bancaria')->nullable();
+            $table->string('banco')->nullable();
             $table->string('numero_cuenta', 30)->nullable();
             $table->enum('categoria', ['alojamiento', 'transporte', 'restaurant', 'local', 'agencia'])->nullable();
             $table->json('archivos')->nullable();
 						$table->boolean('activo')->default(true)->comment('no/si');
+            $table->text('observaciones')->nullable();
             $table->timestamps();
 
 						$table->index('ruc');

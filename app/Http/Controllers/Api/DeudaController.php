@@ -22,7 +22,7 @@ class DeudaController extends Controller
     public function store(Request $request)
     {
         $item = Deuda::create($request->all());
-        return response()->json(["message" => "Deuda creado correctamente", "data" => $item]);
+				return $item;
     }
 
     /**

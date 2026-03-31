@@ -11,12 +11,13 @@ class DeudaSeeder extends Seeder
     {
         DB::table('deudas')->insert([
             [
+							'proveedor_id'=>1,
                 'fecha_pago' => '2026-03-25',
                 'monto' => 1200.00,
                 'informacion' => 'Pago a Hotel Libertador por reserva grupo Flores - 4 noches habitación doble',
                 'contacto_pagar' => 'Hotel Libertador - Reservas',
                 'comprobante' => null,
-                'medio_pago' => 'banco',
+                'medio_pago' => 'efectivo',
                 'estado_pago' => 'pendiente',
                 'codigo_referencia' => null,
                 'activo' => 1,
@@ -24,6 +25,7 @@ class DeudaSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+							'proveedor_id'=>2,
                 'fecha_pago' => '2026-03-22',
                 'monto' => 320.00,
                 'informacion' => 'Comisión guía turístico Machu Picchu - Tour Johnson',
@@ -37,6 +39,7 @@ class DeudaSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+							'proveedor_id'=>1,
                 'fecha_pago' => '2026-03-30',
                 'monto' => 850.00,
                 'informacion' => 'Pago LATAM boletos grupo Flores - vuelo LA2040/LA2041',

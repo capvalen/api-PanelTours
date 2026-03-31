@@ -10,9 +10,8 @@ class VueloSeeder extends Seeder
     public function run(): void
     {
         DB::table('vuelos')->insert([
-            ['activo' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['activo' => true, 'created_at' => now(), 'updated_at' => now()],
-            ['activo' => true, 'created_at' => now(), 'updated_at' => now()],
+            ['vuelo' => 'Jauja - lima. 25/06/2026 3 am','activo' => true, 'created_at' => now(), 'updated_at' => now()],
+            ['vuelo' => 'CUZ - IQU. 14:00 a 25 soles c/u', 'activo' => true, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

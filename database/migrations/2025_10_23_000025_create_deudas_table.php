@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('deudas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_pago');
+						$table->foreignId('proveedor_id')->default(1)->constrained('proveedores');
+            $table->date('fecha_pago')->nullable();
             $table->decimal('monto', 10, 2);
             $table->text('informacion')->nullable();
-            $table->string('contacto_pagar');
+            $table->string('contacto_pagar')->nullable();
             $table->string('comprobante')->nullable();
-            $table->enum('medio_pago', ['yape', 'tarjeta', 'depósito', 'efectivo', 'banco']);
+            $table->enum('medio_pago', ['yape', 'plin','tarjeta','depósito bancario','efectivo','POS'])->default('efectivo')->nullable();
             $table->enum('estado_pago', ['pendiente', 'completado', 'fallido', 'condonado'])->default('pendiente');
             $table->string('codigo_referencia')->nullable()->comment('Para transferencias o depósitos');
             $table->tinyInteger('activo')->default(1);

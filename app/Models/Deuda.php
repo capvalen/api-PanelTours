@@ -12,6 +12,7 @@ class Deuda extends Model
     protected $table = 'deudas';
 
     protected $fillable = [
+			'proveedor_id',
         'fecha_pago',
         'monto',
         'informacion',

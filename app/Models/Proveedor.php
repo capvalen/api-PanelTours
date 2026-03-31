@@ -15,9 +15,10 @@ class Proveedor extends Model
         'ruc',
         'razon_social',
         'direccion',
+        'ciudad',
         'contacto',
         'celular',
-        'cuenta_bancaria',
+        'banco',
         'numero_cuenta',
         'categoria',
         'archivos',
@@ -28,4 +29,13 @@ class Proveedor extends Model
         'archivos' => 'array',
         'activo' => 'boolean',
     ];
+
+		public function deudas(){
+			return $this->hasMany(Deuda::class, 'proveedor_id')->where('activo', 1);;
+		}
+
+		public function getArchivosAttribute($value)
+		{
+			return $value ? json_decode($value, true) : [];
+		}
 }

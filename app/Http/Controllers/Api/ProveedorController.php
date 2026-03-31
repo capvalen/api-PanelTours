@@ -11,9 +11,21 @@ class ProveedorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Proveedor::orderBy('id', 'desc')->get();
+			$buscar = $request->buscar;
+			$query = Proveedor::where('activo', 1);
+			
+
+			if ($request->has('buscar')) {
+				$query->where(function ($q) use ($buscar) {
+					//se crea una sub query
+					$q->where('ruc', $buscar)
+						->orWhere('razon_social', 'like', $buscar . '%');
+        });
+			}
+
+			return $query->orderBy('id', 'desc')->get();
     }
 
     /**
@@ -22,7 +34,7 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         $item = Proveedor::create($request->all());
-        return response()->json(["message" => "Proveedor creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -30,7 +42,7 @@ class ProveedorController extends Controller
      */
     public function show(string $id)
     {
-        return Proveedor::find($id);
+        return Proveedor::with('deudas')->find($id);
     }
 
     /**
@@ -38,9 +50,9 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $item = Proveedor::findOrFail($id);
+        $item = Proveedor::with('deudas')->findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Proveedor actualizado correctamente", "data" => $item]);
+				return $item;
     }
 
     /**

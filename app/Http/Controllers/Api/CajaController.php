@@ -22,7 +22,9 @@ class CajaController extends Controller
 				if ($request->has('abierta')) {
 					$query->where('estado', 'abierta');
         }
-				$cajas = $query->with('usuario')->get();
+				$cajas = $query->with('usuario')
+				->orderBy('fecha_apertura', 'desc')
+				->get();
 				return $cajas; 
     }
 
@@ -37,7 +39,7 @@ class CajaController extends Controller
 
 			$item = Caja::create($request->all());
 			$item->load('usuario');
-			$item->load('detalle');
+			//$item->load('detalle');
 
 			return response()->json([
 				"message" => "Caja aperturada correctamente",

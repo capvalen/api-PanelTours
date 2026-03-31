@@ -20,7 +20,7 @@ return new class extends Migration
 						// Datos personales
 						$table->string('nombres')->nullable();
 						$table->string('apellidos')->nullable();
-						$table->string('dni', 8)->nullable()->unique();						
+						$table->string('dni', 11)->nullable()->unique();						
 						$table->date('fecha_nacimiento')->nullable();
 						
 						// Contacto
@@ -36,13 +36,13 @@ return new class extends Migration
 						// Documentos de viaje
 						$table->string('pasaporte')->nullable();
 						$table->date('vigencia_pasaporte')->nullable()->comment('Vigencia de 6 meses');;
-						$table->enum('tipo_visado', ['turista', 'trabajo', 'visitante', 'freelance', 'estudiante', 'adopción', 'familiar', 'humanitario', 'oficial', 'militar', 'diplomático']);
+						$table->enum('tipo_visado', ['ninguno','turista', 'trabajo', 'visitante', 'freelance', 'estudiante', 'adopción', 'familiar', 'humanitario', 'oficial', 'militar', 'diplomático'])->default('ninguno');
 						$table->date('valido_visa')->nullable();
 						
 						// Información adicional
 						$table->json('vacunas')->nullable()->comment('certificado, fecha');
 						$table->json('seguros')->nullable()->comment('seguro, fecha');
-						$table->enum('autorizacion_viaje', ['si', 'no', 'no aplica'])->nullable(); // para menores de edad
+						$table->enum('autorizacion_viaje', ['si', 'no', 'no aplica', 'no presentó'])->nullable(); // para menores de edad
 
 
 						// Archivos adjuntos
