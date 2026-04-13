@@ -12,10 +12,20 @@ class Vuelo extends Model
     protected $table = 'vuelos';
 
     protected $fillable = [
-        'activo',
+        'vuelo', 'observaciones', 'activo',
     ];
 
     protected $casts = [
         'activo' => 'boolean',
     ];
+        // Sobrescribe la consulta base
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope('activo', function ($query) {
+            $query->where('activo', 1);
+        });
+    }
+    
 }

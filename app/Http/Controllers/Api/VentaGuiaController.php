@@ -22,7 +22,7 @@ class VentaGuiaController extends Controller
     public function store(Request $request)
     {
         $item = VentaGuia::create($request->all());
-        return response()->json(["message" => "VentaGuia creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VentaGuiaController extends Controller
     {
         $item = VentaGuia::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "VentaGuia actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

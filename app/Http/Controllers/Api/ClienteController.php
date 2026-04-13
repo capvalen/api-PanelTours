@@ -36,7 +36,7 @@ class ClienteController extends Controller
 		public function store(Request $request)
 		{
 				$item = Cliente::create($request->all());
-				return $item;
+				return response()->json($item);
 		}
 
 		/**

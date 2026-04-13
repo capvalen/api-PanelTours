@@ -22,7 +22,7 @@ class HospedajeController extends Controller
     public function store(Request $request)
     {
         $item = Hospedaje::create($request->all());
-        return response()->json(["message" => "Hospedaje creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class HospedajeController extends Controller
     {
         $item = Hospedaje::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Hospedaje actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

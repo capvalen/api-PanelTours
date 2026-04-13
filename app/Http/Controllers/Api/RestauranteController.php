@@ -8,52 +8,64 @@ use Illuminate\Http\Request;
 
 class RestauranteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return Restaurante::orderBy('id', 'desc')->get();
-    }
+	/**
+	 * Display a listing of the resource.
+	 */
+	public function index(Request $request)
+	{
+		$buscar = $request->buscar;
+		$query = Restaurante::orderBy('id', 'desc');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $item = Restaurante::create($request->all());
-        return response()->json(["message" => "Restaurante creado correctamente", "data" => $item]);
-    }
+		if ($request->has('buscar')) {
+			$query->where(function ($q) use ($buscar) {
+			//se crea una sub query
+			$q->where('nombre', 'like', '%'.$buscar . '%')
+				->orWhere('ruc', 'like', '%'.$buscar . '%');
+			});
+		}
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return Restaurante::find($id);
-    }
+		$restaurantes = $query->where('activo', 1)->get();
+		return response()->json($restaurantes);
+	}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $item = Restaurante::findOrFail($id);
-        $item->update($request->all());
-        return response()->json(["message" => "Restaurante actualizado correctamente", "data" => $item]);
-    }
+	/**
+	 * Store a newly created resource in storage.
+	 */
+	public function store(Request $request)
+	{
+		$item = Restaurante::create($request->all());
+		return response()->json($item);
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $item = Restaurante::findOrFail($id);
-        if (isset($item->activo)) {
-            $item->update(['activo' => 0]);
-        } else {
-            $item->delete();
-        }
-        return response()->json(["message" => "Restaurante eliminado"]);
-    }
+	/**
+	 * Display the specified resource.
+	 */
+	public function show(string $id)
+	{
+		return Restaurante::find($id);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 */
+	public function update(Request $request, string $id)
+	{
+		$item = Restaurante::findOrFail($id);
+		$item->update($request->all());
+		return $item;
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 */
+	public function destroy(string $id)
+	{
+		$item = Restaurante::findOrFail($id);
+		if (isset($item->activo)) {
+			$item->update(['activo' => 0]);
+		} else {
+			$item->delete();
+		}
+		return response()->json(["message" => "Restaurante eliminado"]);
+	}
 }

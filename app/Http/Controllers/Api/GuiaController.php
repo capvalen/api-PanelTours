@@ -11,9 +11,21 @@ class GuiaController extends Controller
 		/**
 		 * Display a listing of the resource.
 		 */
-		public function index()
+		public function index(Request	$request)
 		{
-				return Guia::orderBy('id', 'desc')->get();
+			$buscar = $request->buscar;
+			$query = Guia::where('activo', 1);
+			
+
+			if ($request->has('buscar')) {
+				$query->where(function ($q) use ($buscar) {
+					//se crea una sub query
+					$q->where('nombre', 'like', '%'.$buscar . '%')
+						->orWhere('dni', 'like', '%'.$buscar . '%');
+        });
+			}
+
+			return $query->orderBy('id', 'desc')->get();
 		}
 
 		/**
@@ -21,11 +33,8 @@ class GuiaController extends Controller
 		 */
 		public function store(Request $request)
 		{
-				$guia = Guia::create($request->all());
-				return response()->json([
-						'message' => 'Guía creado correctamente',
-						'data' => $guia
-				]);
+				$item = Guia::create($request->all());
+				return response()->json($item);
 		}
 
 		/**
@@ -41,12 +50,9 @@ class GuiaController extends Controller
 		 */
 		public function update(Request $request, string $id)
 		{
-			$guia = Guia::findOrFail($id);
-			$guia->update($request->all());
-			return response()->json([
-				'message' => 'Guía actualizada correctamente',
-				'data' => $guia
-			]);
+			$item = Guia::findOrFail($id);
+			$item->update($request->all());
+			return $item;
 		}
 
 		/**

@@ -41,4 +41,8 @@ class Vehiculo extends Model
     {
         return $this->hasMany(VentaAuto::class);
     }
+    public function getArchivosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
+    }
 }

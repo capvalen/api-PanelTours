@@ -12,6 +12,7 @@ class HospedajeSeeder extends Seeder
         DB::table('hospedajes')->insert([
             [
                 'hospedaje' => 'Hotel Libertador Cusco',
+                'ruc' => '20100123456',
                 'direccion' => 'Plazoleta Santo Domingo 259, Cusco',
                 'contacto' => 'Reservas Hotel',
                 'celular' => '984123456',
@@ -27,6 +28,7 @@ class HospedajeSeeder extends Seeder
             ],
             [
                 'hospedaje' => 'Casa Andina Premium Valle Sagrado',
+                'ruc' => '20200234567',
                 'direccion' => 'Quinta Vivero s/n, Valle Sagrado, Urubamba',
                 'contacto' => 'Front Desk',
                 'celular' => '974234567',
@@ -42,6 +44,7 @@ class HospedajeSeeder extends Seeder
             ],
             [
                 'hospedaje' => 'Sonesta Hotel Arequipa',
+                'ruc' => '20300345678',
                 'direccion' => 'Portal de Flores 116, Plaza de Armas, Arequipa',
                 'contacto' => 'Atención al huésped',
                 'celular' => '954345678',
@@ -57,6 +60,7 @@ class HospedajeSeeder extends Seeder
             ],
             [
                 'hospedaje' => 'Hotel Paracas',
+                'ruc' => '20400456789',
                 'direccion' => 'Av. Paracas s/n, Paracas, Ica',
                 'contacto' => 'Reservaciones',
                 'celular' => '964456789',
@@ -72,6 +76,7 @@ class HospedajeSeeder extends Seeder
             ],
             [
                 'hospedaje' => 'Aranwa Sacred Valley',
+                'ruc' => '20500567890',
                 'direccion' => 'Antigua Hacienda Yaravilca, Huayllabamba, Urubamba',
                 'contacto' => 'Guest Relations',
                 'celular' => '984567890',

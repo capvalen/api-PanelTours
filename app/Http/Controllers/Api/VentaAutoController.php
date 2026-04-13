@@ -22,7 +22,7 @@ class VentaAutoController extends Controller
     public function store(Request $request)
     {
         $item = VentaAuto::create($request->all());
-        return response()->json(["message" => "VentaAuto creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VentaAutoController extends Controller
     {
         $item = VentaAuto::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "VentaAuto actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

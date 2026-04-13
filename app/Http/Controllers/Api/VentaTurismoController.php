@@ -22,7 +22,7 @@ class VentaTurismoController extends Controller
     public function store(Request $request)
     {
         $item = VentaTurismo::create($request->all());
-        return response()->json(["message" => "VentaTurismo creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VentaTurismoController extends Controller
     {
         $item = VentaTurismo::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "VentaTurismo actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

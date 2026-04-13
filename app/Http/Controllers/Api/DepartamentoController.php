@@ -13,7 +13,7 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        return Departamento::orderBy('id', 'desc')->get();
+        return Departamento::orderBy('departamento', 'asc')->get();
     }
 
     /**
@@ -22,7 +22,7 @@ class DepartamentoController extends Controller
     public function store(Request $request)
     {
         $item = Departamento::create($request->all());
-        return response()->json(["message" => "Departamento creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class DepartamentoController extends Controller
     {
         $item = Departamento::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Departamento actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

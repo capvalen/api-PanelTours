@@ -22,7 +22,7 @@ class VentaRestauranteController extends Controller
     public function store(Request $request)
     {
         $item = VentaRestaurante::create($request->all());
-        return response()->json(["message" => "VentaRestaurante creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VentaRestauranteController extends Controller
     {
         $item = VentaRestaurante::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "VentaRestaurante actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

@@ -11,9 +11,23 @@ class VehiculoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Vehiculo::orderBy('id', 'desc')->get();
+      $buscar = $request->buscar;
+			$query = Vehiculo::where('activo', 1);
+			
+
+			if ($request->has('buscar')) {
+				$query->where(function ($q) use ($buscar) {
+					//se crea una sub query
+					$q->where('nombre_conductor', 'like', '%'.$buscar . '%')
+						->orWhere('dni_conductor', 'like', '%'.$buscar . '%')
+						->orWhere('licencia_conductor', 'like', '%'.$buscar . '%')
+						->orWhere('placa', 'like', '%'.$buscar . '%');
+        });
+			}
+
+			return $query->orderBy('id', 'desc')->get();
     }
 
     /**
@@ -22,7 +36,7 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $item = Vehiculo::create($request->all());
-        return response()->json(["message" => "Vehiculo creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +54,7 @@ class VehiculoController extends Controller
     {
         $item = Vehiculo::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Vehiculo actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

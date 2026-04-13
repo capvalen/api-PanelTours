@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('hospedajes', function (Blueprint $table) {
             $table->id();
             $table->string('hospedaje');
+            $table->string('ruc')->nullable();
             $table->string('direccion')->nullable();            $table->string('contacto')->nullable();
             $table->string('celular')->nullable();
             $table->string('correo')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->boolean('incluye_estacionamiento')->default(false);
             $table->boolean('incluye_wifi')->default(true);
             $table->text('servicios_extra')->nullable()->comment('Spa, lavandería, etc.');
+			$table->json('archivos')->nullable();
 
             $table->tinyInteger('activo')->default(1);
             $table->timestamps();

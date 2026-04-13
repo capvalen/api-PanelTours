@@ -22,7 +22,7 @@ class VentaItemController extends Controller
     public function store(Request $request)
     {
         $item = VentaItem::create($request->all());
-        return response()->json(["message" => "VentaItem creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VentaItemController extends Controller
     {
         $item = VentaItem::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "VentaItem actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

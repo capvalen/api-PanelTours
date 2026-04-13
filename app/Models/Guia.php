@@ -22,6 +22,8 @@ class Guia extends Model
         'activo',
     ];
 
+    protected $with = ['departamento'];
+
     protected $casts = [
         'activo' => 'boolean',
     ];

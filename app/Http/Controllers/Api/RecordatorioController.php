@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class RecordatorioController extends Controller
 {
-    /**
+    /**resu
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Recordatorio::orderBy('id', 'desc')->get();
+        return Recordatorio::
+				where('activo',1)
+				->orderBy('id', 'desc')->get();
     }
 
     /**
@@ -22,7 +24,7 @@ class RecordatorioController extends Controller
     public function store(Request $request)
     {
         $item = Recordatorio::create($request->all());
-        return response()->json(["message" => "Recordatorio creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +42,7 @@ class RecordatorioController extends Controller
     {
         $item = Recordatorio::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Recordatorio actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

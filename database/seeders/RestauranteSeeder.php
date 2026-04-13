@@ -11,6 +11,7 @@ class RestauranteSeeder extends Seeder
     {
         $restaurantes = [
          [
+            'ruc' => '12345678901',
             'nombre' => 'La Huerta Feliz',
             'direccion' => 'Av. Principal 123, Miraflores',
             'contacto' => 'Juan Pérez',
@@ -18,6 +19,7 @@ class RestauranteSeeder extends Seeder
             'departameto_id' => 8
         ],
         [
+            'ruc' => '12345678902',
             'nombre' => 'Sabor Peruano',
             'direccion' => 'Calle Los Olivos 456, San Isidro',
             'contacto' => 'María García',
@@ -25,6 +27,7 @@ class RestauranteSeeder extends Seeder
             'departameto_id' => 10
         ],
         [
+            'ruc' => '12345678903',
             'nombre' => 'El Rincón Criollo',
             'direccion' => 'Jr. Amazonas 789, Cercado',
             'contacto' => 'Carlos Mendoza',
@@ -35,6 +38,8 @@ class RestauranteSeeder extends Seeder
         $registros = [];
         foreach ($restaurantes as $restaurante) {
             $registros[] = [
+                'ruc' => $restaurante['ruc'],
+                'nombre' => $restaurante['nombre'],
                 'departamento_id' => $restaurante ['departameto_id'],
                 'direccion' => $restaurante['direccion'],
                 'contacto' => $restaurante['contacto'],

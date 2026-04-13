@@ -12,20 +12,27 @@ class Restaurante extends Model
     protected $table = 'restaurantes';
 
     protected $fillable = [
+        'ruc',
         'nombre',
         'departamento_id',
         'direccion',
         'contacto',
         'celular',
+        'archivos',
         'activo',
     ];
 
     protected $casts = [
+        'archivos' => 'array',
         'activo' => 'boolean',
     ];
 
     public function departamento()
     {
         return $this->belongsTo(Departamento::class);
+    }
+    public function getArchivosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
     }
 }

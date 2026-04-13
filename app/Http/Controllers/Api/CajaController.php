@@ -41,10 +41,7 @@ class CajaController extends Controller
 			$item->load('usuario');
 			//$item->load('detalle');
 
-			return response()->json([
-				"message" => "Caja aperturada correctamente",
-				"data" => $item
-			]);
+			return response()->json($item);
     }
 
     /**
@@ -62,7 +59,7 @@ class CajaController extends Controller
     {
         $item = Caja::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Caja actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     public function cerrar(Request $request, string $id)

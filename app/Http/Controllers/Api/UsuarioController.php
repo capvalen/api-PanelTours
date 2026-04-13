@@ -47,7 +47,7 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $item = Usuario::create($request->all());
-        return response()->json(["message" => "Usuario creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -65,7 +65,7 @@ class UsuarioController extends Controller
     {
         $item = Usuario::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Usuario actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

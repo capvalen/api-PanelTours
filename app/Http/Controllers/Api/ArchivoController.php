@@ -18,9 +18,10 @@ class ArchivoController extends Controller
 		//$ruta = $request->file('archivo')->storeAs('adjuntos', $nombre, 'public');
 		$ruta = $request->file('archivo')->move(public_path('adjuntos'), $nombre);
 
-		return response()->json([
+		$item = [
 				'mensaje' => 'Archivo subido',
 				'link' => $nombre,
-		]);
+		];
+		return response()->json($item);
 	}
 }

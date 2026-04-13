@@ -26,7 +26,7 @@ class CajaDetalleController extends Controller
     public function store(Request $request)
     {
         $item = CajaDetalle::create($request->all());
-        return response()->json(["message" => "CajaDetalle creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -44,7 +44,7 @@ class CajaDetalleController extends Controller
     {
         $item = CajaDetalle::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "CajaDetalle actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

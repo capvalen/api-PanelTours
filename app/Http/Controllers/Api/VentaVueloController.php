@@ -22,7 +22,7 @@ class VentaVueloController extends Controller
     public function store(Request $request)
     {
         $item = VentaVuelo::create($request->all());
-        return response()->json(["message" => "VentaVuelo creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VentaVueloController extends Controller
     {
         $item = VentaVuelo::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "VentaVuelo actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

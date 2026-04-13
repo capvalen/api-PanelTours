@@ -22,7 +22,7 @@ class PagoController extends Controller
     public function store(Request $request)
     {
         $item = Pago::create($request->all());
-        return response()->json(["message" => "Pago creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class PagoController extends Controller
     {
         $item = Pago::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Pago actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

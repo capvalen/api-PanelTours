@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('vuelos', function (Blueprint $table) {
             $table->id();
             $table->string('vuelo');
+            $table->text('observaciones')->nullable();
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
         });

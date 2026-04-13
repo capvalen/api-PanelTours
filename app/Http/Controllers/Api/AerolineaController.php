@@ -22,7 +22,7 @@ class AerolineaController extends Controller
     public function store(Request $request)
     {
         $item = Aerolinea::create($request->all());
-        return response()->json(["message" => "Aerolinea creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class AerolineaController extends Controller
     {
         $item = Aerolinea::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Aerolinea actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

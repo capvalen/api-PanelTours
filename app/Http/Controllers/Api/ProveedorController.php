@@ -52,7 +52,7 @@ class ProveedorController extends Controller
     {
         $item = Proveedor::with('deudas')->findOrFail($id);
         $item->update($request->all());
-				return $item;
+        return $item;
     }
 
     /**

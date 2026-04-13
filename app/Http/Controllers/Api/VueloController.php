@@ -22,7 +22,7 @@ class VueloController extends Controller
     public function store(Request $request)
     {
         $item = Vuelo::create($request->all());
-        return response()->json(["message" => "Vuelo creado correctamente", "data" => $item]);
+        return response()->json($item);
     }
 
     /**
@@ -40,7 +40,7 @@ class VueloController extends Controller
     {
         $item = Vuelo::findOrFail($id);
         $item->update($request->all());
-        return response()->json(["message" => "Vuelo actualizado correctamente", "data" => $item]);
+        return $item;
     }
 
     /**

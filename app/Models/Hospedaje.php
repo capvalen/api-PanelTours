@@ -13,6 +13,7 @@ class Hospedaje extends Model
 
     protected $fillable = [
         'hospedaje',
+        'ruc',
         'direccion',
         'contacto',
         'celular',
@@ -22,13 +23,17 @@ class Hospedaje extends Model
         'incluye_estacionamiento',
         'incluye_wifi',
         'servicios_extra',
+        'archivos',
         'activo',
     ];
+
+    protected $with = ['departamento'];
 
     protected $casts = [
         'incluye_desayuno' => 'boolean',
         'incluye_estacionamiento' => 'boolean',
         'incluye_wifi' => 'boolean',
+        'archivos' => 'array',
         'activo' => 'boolean',
     ];
 
@@ -40,5 +45,9 @@ class Hospedaje extends Model
     public function ventaHospedajes()
     {
         return $this->hasMany(VentaHospedaje::class);
+    }
+    public function getArchivosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
     }
 }
