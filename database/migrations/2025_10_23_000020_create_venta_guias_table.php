@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('duracion_horas')->nullable(); // Duración del tour en horas
             $table->enum('tipo_servicio', ['privado', 'grupal', 'empresarial'])->default('privado');
             $table->integer('cantidad_personas')->default(1); // Número de personas
+            $table->text('pedido_especial')->nullable();
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
         });

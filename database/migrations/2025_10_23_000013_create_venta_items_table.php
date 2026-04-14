@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('venta_id')->constrained('ventas')->onDelete('cascade');
             $table->enum('tipo', ['vuelo', 'hospedaje', 'auto', 'comida', 'turismo']);
+            $table->integer('nro_clientes')->default(0)->nullable();
             $table->decimal('precio', 10, 2);
             $table->string('descripcion');
 						$table->boolean('activo')->default(true)->comment('no/si');

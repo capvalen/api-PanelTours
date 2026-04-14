@@ -58,4 +58,14 @@ class VentaItem extends Model
     {
         return $this->hasOne(VentaGuia::class);
     }
+
+    // Sobrescribe la consulta base
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope('activo', function ($query) {
+            $query->where('activo', 1);
+        });
+    }
 }

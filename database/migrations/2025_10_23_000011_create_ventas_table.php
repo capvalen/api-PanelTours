@@ -14,15 +14,17 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->enum('tipo', ['cotización', 'venta'])->default('cotización');
+            $table->enum('estado_pago', ['pendiente', 'adelantado', 'completo', 'anulado'])->default('pendiente');
             $table->date('fecha');
-            $table->enum('estado', ['cotizacion', 'confirmada', 'pagada', 'anulada'])->default('cotizacion');
-						$table->boolean('activo')->default(true)->comment('no/si');
+            $table->decimal('precio', 10, 2)->default(0)->nullable();
+			$table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
             // Índices
             $table->index('cliente_id');
             $table->index('fecha');
-            $table->index('estado');
+            $table->index('tipo');
         });
     }
 

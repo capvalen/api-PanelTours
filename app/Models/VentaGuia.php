@@ -22,6 +22,7 @@ class VentaGuia extends Model
         'duracion_horas',
         'tipo_servicio',
         'cantidad_personas',
+        'pedido_especial',
         'activo',
     ];
 

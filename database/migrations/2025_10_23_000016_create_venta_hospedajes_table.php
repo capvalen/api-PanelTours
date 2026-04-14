@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
             $table->foreignId('hospedaje_id')->constrained('hospedajes')->onDelete('cascade');
 
-            $table->string('tipo_habitacion', 100)->nullable()->comment(' "Suite", "Doble", "Individual"');
+            $table->enum('tipo_habitacion', ['Suite', 'Doble', 'Individual', 'King', 'Queen', 'Familiar', 'Económica', 'Compartida', 'Triple', 'Cuádruple'])->nullable()->comment('Tipos de habitación disponibles');
             $table->string('numero_habitacion', 20)->nullable()->comment('Ej: "101", "204", "Bungalow 3"');
             
             // Datos de la reserva
@@ -33,23 +33,16 @@ return new class extends Migration
             
             // Precios
             $table->decimal('precio_por_noche', 10, 2);
-            $table->decimal('subtotal', 10, 2);
-            $table->decimal('impuestos', 10, 2)->default(0);
-            $table->decimal('cargo_servicio', 10, 2)->default(0);
             $table->decimal('total', 10, 2);
-            $table->decimal('anticipo', 10, 2)->default(0);
-            $table->decimal('saldo_pendiente', 10, 2)->nullable();
             
             // Estado de pago
             $table->enum('estado_pago', ['pendiente', 'parcial', 'pagado'])->default('pendiente');
-            $table->string('metodo_pago', 50)->nullable();
             
             // Estado de la reserva
-            $table->enum('estado', ['reservado', 'confirmado', 'checkin', 'checkout', 'cancelado'])->default('reservado');
+            $table->enum('estado', ['pendiente','reservado', 'confirmado', 'checkin', 'checkout', 'cancelado'])->default('pendiente');
             $table->text('motivo_cancelacion')->nullable();
                         
             // Preferencias
-            $table->enum('tipo_cama', ['individual', 'doble', 'king', 'queen', 'matrimonial'])->nullable();
             $table->boolean('requiere_cuna')->default(false);
             $table->boolean('habitacion_fumador')->default(false);
             $table->text('preferencias_especiales')->nullable();

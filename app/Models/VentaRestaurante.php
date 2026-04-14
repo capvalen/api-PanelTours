@@ -23,6 +23,7 @@ class VentaRestaurante extends Model
         'tipo_servicio',
         'espacio',
         'numero_personas',
+        'precio',
         'fecha_hora_reserva',
         'pedido_especial',
         'restaurante_id',
@@ -31,6 +32,7 @@ class VentaRestaurante extends Model
     protected $casts = [
         'fecha_confirmacion' => 'datetime',
         'fecha_hora_reserva' => 'datetime',
+        'precio' => 'decimal:2',
     ];
 
     public function ventaItem()

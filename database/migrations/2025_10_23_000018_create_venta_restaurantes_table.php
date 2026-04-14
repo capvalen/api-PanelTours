@@ -25,11 +25,12 @@ return new class extends Migration
             
             // Logística del restaurante (sin mesa, duración ni zona)
             $table->enum('turno', ['comida', 'cena', 'brunch', 'desayuno', 'madrugada'])->nullable();
-            $table->enum('tipo_servicio', ['buffet', 'carta', 'degustacion', 'evento'])->default('carta');
-            $table->enum('espacio', ['interior','salon_principal', 'salon_privado', 'terraza', 'jardin', 'barra'])->default('interior')->nullable();
+            $table->enum('tipo_servicio', ['buffet', 'carta', 'degustación', 'evento'])->default('carta');
+            $table->enum('espacio', ['interior','salón principal', 'salón privado', 'terraza', 'jardín', 'barra'])->default('interior')->nullable();
             
             // Datos de la reserva
             $table->integer('numero_personas');
+            $table->decimal('precio', 10, 2)->default(0);
             $table->timestamp('fecha_hora_reserva');
             $table->text('pedido_especial')->nullable();
             $table->unsignedBigInteger('restaurante_id');

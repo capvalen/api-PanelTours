@@ -14,18 +14,23 @@ class Venta extends Model
     protected $fillable = [
         'cliente_id',
         'fecha',
-        'estado',
+        'tipo',
+        'estado_pago',
+        'precio',
         'activo',
     ];
 
     protected $casts = [
+        'precio' => 'decimal:2',
         'fecha' => 'datetime',
         'activo' => 'boolean',
     ];
 
+    protected $with = ['cliente'];
+
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Cliente::class)->select(['id', 'ruc', 'razon_social', 'dni', 'nombres', 'apellidos']);
     }
 
     public function items()

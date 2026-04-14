@@ -13,7 +13,9 @@ class VentaController extends Controller
      */
     public function index()
     {
-        return Venta::orderBy('id', 'desc')->get();
+        return Venta::orderBy('id', 'desc')
+        ->with('items')
+        ->get();
     }
 
     /**
