@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
             // Grupo 4: Detalle e items
             VentaItemSeeder::class,
             CajaDetalleSeeder::class,
-            VentaVueloSeeder::class,
             VentaHospedajeSeeder::class,
             VentaAutoSeeder::class,
             VentaRestauranteSeeder::class,
@@ -45,7 +44,7 @@ class DatabaseSeeder extends Seeder
             VentaGuiaSeeder::class,
 
             // Grupo 5: SubDetalles
-            VentaVueloTramoSeeder::class,
+            VentaVueloSeeder::class,
             VentaVueloPasajeroSeeder::class,
             VentaAutoPasajeroSeeder::class,
 

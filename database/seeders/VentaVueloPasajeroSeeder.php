@@ -12,7 +12,7 @@ class VentaVueloPasajeroSeeder extends Seeder
         DB::table('venta_vuelos_pasajeros')->insert([
             // Pasajero 1 - Tramo 1 (Lima→Cusco)
             [
-                'venta_vuelo_tramo_id' => 1,
+                'venta_vuelo_id' => 1,
                 'numero_asiento' => '12A',
                 'dni' => '45678912',
                 'nombre' => 'Roberto Flores Quispe',
@@ -33,7 +33,7 @@ class VentaVueloPasajeroSeeder extends Seeder
             ],
             // Pasajero 2 - Tramo 1 (Lima→Cusco)
             [
-                'venta_vuelo_tramo_id' => 1,
+                'venta_vuelo_id' => 1,
                 'numero_asiento' => '12B',
                 'dni' => '46789012',
                 'nombre' => 'Ana María Flores Ramos',
@@ -54,7 +54,7 @@ class VentaVueloPasajeroSeeder extends Seeder
             ],
             // Pasajero 1 en tramo 3 (Lima→Cusco Sky)
             [
-                'venta_vuelo_tramo_id' => 3,
+                'venta_vuelo_id' => 3,
                 'numero_asiento' => '5F',
                 'dni' => null,
                 'nombre' => 'Sarah Johnson',

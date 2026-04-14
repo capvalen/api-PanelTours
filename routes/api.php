@@ -25,7 +25,6 @@ use App\Http\Controllers\Api\VentaAutoController;
 use App\Http\Controllers\Api\VentaRestauranteController;
 use App\Http\Controllers\Api\VentaTurismoController;
 use App\Http\Controllers\Api\VentaGuiaController;
-use App\Http\Controllers\Api\VentaVueloTramoController;
 use App\Http\Controllers\Api\VentaVueloPasajeroController;
 use App\Http\Controllers\Api\VentaAutoPasajeroController;
 use App\Http\Controllers\Api\PagoController;
@@ -63,7 +62,6 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('caja_detalles', CajaDetalleController::class);
 	
 	// 5. Detalles Específicos de Items de Venta
-	Route::apiResource('venta_vuelos', VentaVueloController::class);
 	Route::apiResource('venta_hospedajes', VentaHospedajeController::class);
 	Route::apiResource('venta_autos', VentaAutoController::class);
 	Route::apiResource('venta_restaurantes', VentaRestauranteController::class);
@@ -71,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('venta_guias', VentaGuiaController::class);
 	
 	// 6. Subdetalles y Pasajeros
-	Route::apiResource('venta_vuelos_tramos', VentaVueloTramoController::class);
+	Route::apiResource('venta_vuelos', VentaVueloController::class);
 	Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
 	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
 	

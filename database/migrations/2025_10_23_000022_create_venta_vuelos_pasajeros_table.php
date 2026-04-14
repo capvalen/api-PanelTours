@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('venta_vuelos_pasajeros', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('venta_vuelo_tramo_id')->constrained('venta_vuelos_tramos')->onDelete('cascade');
+            $table->foreignId('venta_vuelo_id')->constrained('venta_vuelos')->onDelete('cascade');
 
             // Datos del pasajero
             $table->string('numero_asiento', 10)->nullable();
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
-            $table->index('venta_vuelo_tramo_id');
+            $table->index('venta_vuelo_id');
         });
     }
 

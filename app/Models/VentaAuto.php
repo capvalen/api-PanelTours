@@ -14,13 +14,15 @@ class VentaAuto extends Model
     protected $fillable = [
         'venta_item_id',
         'vehiculo_id',
+        'origen',
+        'destino',
         'fecha_inicio',
         'fecha_fin',
         'hora_recogida',
         'hora_devolucion',
         'estado_alquiler',
-        'monto',
         'costo',
+        'precio',
         'observaciones',
         'activo',
     ];
@@ -28,8 +30,8 @@ class VentaAuto extends Model
     protected $casts = [
         'fecha_inicio' => 'date',
         'fecha_fin' => 'date',
-        'monto' => 'decimal:2',
         'costo' => 'decimal:2',
+        'precio' => 'decimal:2',
         'activo' => 'boolean',
     ];
 

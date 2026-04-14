@@ -18,7 +18,7 @@ class VentaGuia extends Model
         'fecha',
         'hora',
         'lugar_encuentro',
-        'costo',
+        'precio',
         'duracion_horas',
         'tipo_servicio',
         'cantidad_personas',
@@ -28,7 +28,7 @@ class VentaGuia extends Model
 
     protected $casts = [
         'fecha' => 'date',
-        'costo' => 'decimal:2',
+        'precio' => 'decimal:2',
         'activo' => 'boolean',
     ];
 

@@ -24,14 +24,15 @@ class VentaRestaurante extends Model
         'espacio',
         'numero_personas',
         'precio',
-        'fecha_hora_reserva',
+        'fecha_reserva',
+        'hora_reserva',
         'pedido_especial',
         'restaurante_id',
     ];
 
     protected $casts = [
         'fecha_confirmacion' => 'datetime',
-        'fecha_hora_reserva' => 'datetime',
+        'fecha_reserva' => 'date',
         'precio' => 'decimal:2',
     ];
 

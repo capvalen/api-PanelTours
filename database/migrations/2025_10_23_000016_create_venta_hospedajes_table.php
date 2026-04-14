@@ -33,7 +33,7 @@ return new class extends Migration
             
             // Precios
             $table->decimal('precio_por_noche', 10, 2);
-            $table->decimal('total', 10, 2);
+            $table->decimal('precio', 10, 2);
             
             // Estado de pago
             $table->enum('estado_pago', ['pendiente', 'parcial', 'pagado'])->default('pendiente');

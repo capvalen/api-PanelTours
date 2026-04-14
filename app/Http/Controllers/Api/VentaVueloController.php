@@ -54,6 +54,6 @@ class VentaVueloController extends Controller
         } else {
             $item->delete();
         }
-        return response()->json(["message" => "VentaVuelo eliminado"]);
+        return response()->json(["message" => "VentaVueloTramo eliminado"]);
     }
 }

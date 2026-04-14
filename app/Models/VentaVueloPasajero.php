@@ -12,7 +12,7 @@ class VentaVueloPasajero extends Model
     protected $table = 'venta_vuelos_pasajeros';
 
     protected $fillable = [
-        'venta_vuelo_tramo_id',
+        'venta_vuelo_id',
         'numero_asiento',
         'dni',
         'nombre',
@@ -40,8 +40,8 @@ class VentaVueloPasajero extends Model
         'activo' => 'boolean',
     ];
 
-    public function tramo()
+    public function ventaVuelo()
     {
-        return $this->belongsTo(VentaVueloTramo::class, 'venta_vuelo_tramo_id');
+        return $this->belongsTo(VentaVuelo::class);
     }
 }

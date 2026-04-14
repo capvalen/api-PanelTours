@@ -31,7 +31,8 @@ return new class extends Migration
             // Datos de la reserva
             $table->integer('numero_personas');
             $table->decimal('precio', 10, 2)->default(0);
-            $table->timestamp('fecha_hora_reserva');
+            $table->date('fecha_reserva')->nullable();
+            $table->time('hora_reserva')->nullable();
             $table->text('pedido_especial')->nullable();
             $table->unsignedBigInteger('restaurante_id');
             
@@ -41,7 +42,7 @@ return new class extends Migration
             
             // Índices
             $table->index('restaurante_id');
-            $table->index('fecha_hora_reserva');
+            $table->index('fecha_reserva');
             $table->index('estado');
             
             // Llaves foráneas

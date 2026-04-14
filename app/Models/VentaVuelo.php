@@ -12,22 +12,55 @@ class VentaVuelo extends Model
     protected $table = 'venta_vuelos';
 
     protected $fillable = [
-        'venta_item_id',
-        'tipo_viaje',
+        'venta_id',
+        'origen',
+        'destino',
+        'pasajeros',
+        'que_equipaje',
+        'lleva_equipaje',
+        'kilos',
+        'precio_soles',
+        'precio_dolares',
+        'costo_soles',
+        'costo_dolares',
+        'codigo_vuelo',
+        'aerolinea',
+        'numero_vuelo',
+        'aeronave',
+        'fecha_salida',
+        'fecha_llegada',
+        'hora_salida',
+        'horario_llegada',
+        'duracion_minutos',
+        'terminal_salida',
+        'puerta_embarque',
+        'terminal_llegada',
+        'estado_tramo',
+        'asientos_asignados',
+        'clase_vuelo',
+        'escala',
+        'observaciones',
         'activo',
     ];
 
     protected $casts = [
+        'precio_soles' => 'decimal:2',
+        'precio_dolares' => 'decimal:2',
+        'costo_soles' => 'decimal:2',
+        'costo_dolares' => 'decimal:2',
+        'fecha_salida' => 'datetime',
+        'fecha_llegada' => 'datetime',
+        'escala' => 'boolean',
         'activo' => 'boolean',
     ];
 
-    public function ventaItem()
+    public function venta()
     {
-        return $this->belongsTo(VentaItem::class);
+        return $this->belongsTo(Venta::class);
     }
 
-    public function tramos()
+    public function pasajerosObj()
     {
-        return $this->hasMany(VentaVueloTramo::class);
+        return $this->hasMany(VentaVueloPasajero::class, 'venta_vuelo_id');
     }
 }

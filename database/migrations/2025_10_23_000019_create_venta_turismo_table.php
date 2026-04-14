@@ -17,21 +17,26 @@ return new class extends Migration
             
             // Datos del tour
             $table->string('nombre_tour', 255);
-            $table->enum('tipo', ['paquete', 'tour'])->default('tour');
+            $table->enum('tipo_tour', ['paquete', 'tour'])->default('tour');
+            $table->unsignedBigInteger('tour_id')->nullable();
             $table->text('descripcion')->nullable();
             
             // Fechas y duración
             $table->date('fecha_salida');
             $table->date('fecha_retorno')->nullable();
-            $table->integer('duracion_dias')->nullable();
-            $table->integer('duracion_noches')->nullable();
             
             // Capacidad
             $table->integer('cantidad_personas');
+            $table->integer('cantidad_adultos')->default(0);
+            $table->integer('cantidad_ninos')->default(0);
+            $table->integer('peruanos_adultos')->default(0);
+            $table->integer('peruanos_kids')->default(0);
+            $table->integer('extranjeros_adultos')->default(0);
+            $table->integer('extranjeros_kids')->default(0);
             
             // Precios
-            $table->decimal('precio', 10, 2); // Precio de venta al cliente
-            $table->decimal('costo', 10, 2); // Costo para la empresa
+            $table->decimal('precio', 10, 2)->default(0)->nullable(); // Precio de venta al cliente
+            $table->decimal('costo', 10, 2)->default(0)->nullable(); // Costo para la empresa
             
             // Incluye / No incluye
             $table->text('incluye')->nullable();
@@ -44,10 +49,7 @@ return new class extends Migration
             $table->time('hora_retorno')->nullable();
             
             // Estado y control
-            $table->enum('estado', ['disponible', 'confirmado', 'en_curso', 'finalizado', 'cancelado'])->default('disponible');
-            $table->enum('estado_pago', ['pendiente', 'parcial', 'pagado'])->default('pendiente');
-            $table->decimal('anticipo', 10, 2)->default(0);
-            $table->decimal('debe', 10, 2)->nullable();
+            $table->enum('estado', ['pendiente', 'confirmado', 'en_curso', 'finalizado', 'cancelado'])->default('pendiente');
             
             // Requisitos
             $table->text('requisitos')->nullable(); // Vacunas, documentos, etc.
@@ -62,7 +64,7 @@ return new class extends Migration
             // Índices
             $table->index('venta_item_id');
             $table->index('fecha_salida');
-            $table->index('tipo');
+            $table->index('tipo_tour');
             $table->index('estado');
         });
     }

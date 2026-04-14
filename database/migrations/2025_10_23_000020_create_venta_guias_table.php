@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('fecha');
             $table->time('hora');
             $table->text('lugar_encuentro');
+            $table->decimal('precio', 10, 2);
             $table->decimal('costo', 10, 2);
             $table->integer('duracion_horas')->nullable(); // Duración del tour en horas
             $table->enum('tipo_servicio', ['privado', 'grupal', 'empresarial'])->default('privado');
