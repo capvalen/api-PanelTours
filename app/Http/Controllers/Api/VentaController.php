@@ -14,7 +14,7 @@ class VentaController extends Controller
     public function index()
     {
         return Venta::orderBy('id', 'desc')
-        ->with('items')
+        ->with('items', 'departamento')
         ->get();
     }
 
@@ -48,14 +48,20 @@ class VentaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
         $item = Venta::findOrFail($id);
-        if (isset($item->activo)) {
-            $item->update(['activo' => 0]);
-        } else {
-            $item->delete();
-        }
+				
+				if ($request->has('anular')){
+					$item->update(['estado' => 'anulado']);
+				}else{
+					if (isset($item->activo)) {
+							$item->update(['activo' => 0]);
+					} else {
+							$item->delete();
+					}
+				}
+
         return response()->json(["message" => "Venta eliminado"]);
     }
 }

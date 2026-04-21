@@ -17,8 +17,13 @@ return new class extends Migration
             $table->enum('tipo', ['cotización', 'venta'])->default('cotización');
             $table->enum('estado_pago', ['pendiente', 'adelantado', 'completo', 'anulado'])->default('pendiente');
             $table->date('fecha');
+            $table->integer('personas')->default(0);
+            $table->foreignId('departamento_id')->constrained('departamentos')->onDelete('cascade');
+						$table->string('ciudad')->nullable();
             $table->decimal('precio', 10, 2)->default(0)->nullable();
-			$table->boolean('activo')->default(true)->comment('no/si');
+						$table->integer('nivel')->default(1)->comment('1=venta/reserva, 2=confirmación, 3=operatividad');
+						$table->enum('estado', ['activo', 'anulado', 'confirmado', 'operativo', 'en curso', 'finalizado' ])->default('activo')->comment('no/si');
+						$table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
             // Índices
