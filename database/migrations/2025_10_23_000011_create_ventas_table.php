@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->date('fecha');
             $table->enum('tipo', ['cotización', 'venta'])->default('cotización');
             $table->enum('estado_pago', ['pendiente', 'adelantado', 'completo', 'anulado'])->default('pendiente');
-            $table->date('fecha');
             $table->integer('personas')->default(0);
             $table->foreignId('departamento_id')->constrained('departamentos')->onDelete('cascade');
 						$table->string('ciudad')->nullable();
@@ -28,8 +29,12 @@ return new class extends Migration
 
             // Índices
             $table->index('cliente_id');
+            $table->index('usuario_id');
             $table->index('fecha');
             $table->index('tipo');
+            $table->index('estado_pago');
+            $table->index('departamento_id');
+            $table->index('estado');
         });
     }
 

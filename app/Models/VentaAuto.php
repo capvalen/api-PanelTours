@@ -21,6 +21,7 @@ class VentaAuto extends Model
         'hora_recogida',
         'hora_devolucion',
         'estado_alquiler',
+        'pasajeros',
         'costo',
         'precio',
         'observaciones',

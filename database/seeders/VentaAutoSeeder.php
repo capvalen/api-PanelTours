@@ -22,6 +22,7 @@ class VentaAutoSeeder extends Seeder
                 'estado_alquiler' => 'reservado',
                 'costo' => 400.00,
                 'precio' => 280.00,
+                'pasajeros' => 3,
                 'observaciones' => 'Recoger en aeropuerto de Arequipa, devolver en oficina centro',
                 'activo' => true,
                 'created_at' => now(),

@@ -11,6 +11,31 @@ class ClienteSeeder extends Seeder
     {
         DB::table('clientes')->insert([
             [
+                'ruc' => '00000000000',
+                'razon_social' => 'Cliente simple',
+                'nombres' => '',
+                'apellidos' => 'Cliente simple',
+                'dni' => '00000000',
+                'fecha_nacimiento' => null,
+                'correo' => '',
+                'celular' => '',
+                'telefono' => '',
+                'direccion' => '-',
+                'nacionalidad' => 'peruano',
+                'pais_origen' => 'Perú',
+                'pasaporte' => '',
+                'vigencia_pasaporte' => null,
+                'tipo_visado' => 'ninguno',
+                'valido_visa' => null,
+                'vacunas' => null,
+                'seguros' => null,
+                'autorizacion_viaje' => 'no aplica',
+                'archivos' => null,
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'ruc' => '20512345678',
                 'razon_social' => 'Turismo Andino S.A.C.',
                 'nombres' => 'Roberto',
@@ -28,12 +53,12 @@ class ClienteSeeder extends Seeder
                 'tipo_visado' => 'turista',
                 'valido_visa' => null,
                 'vacunas' => json_encode([
-										['certificado' => 'FA2024-001', 'fecha' => '2024-08-10'],
-										['certificado' => 'FA2023-445', 'fecha' => '2023-12-01'],
-								]),
+                    ['certificado' => 'FA2024-001', 'fecha' => '2024-08-10'],
+                    ['certificado' => 'FA2023-445', 'fecha' => '2023-12-01'],
+                ]),
                 'seguros' => json_encode([['seguro' => 'Rímac seguros - Plan Viajero Premium', 'fecha' => '2024-07-01']]),
                 'autorizacion_viaje' => 'no aplica',
-                
+
                 'archivos' => null,
                 'activo' => true,
                 'created_at' => now(),
@@ -59,7 +84,7 @@ class ClienteSeeder extends Seeder
                 'vacunas' => json_encode([['certificado' => 'US-YF-2025', 'fecha' => '2025-01-15']]),
                 'seguros' => json_encode([['seguro' => 'World Nomads - Standard Plan', 'fecha' => '2025-02-01']]),
                 'autorizacion_viaje' => 'no aplica',
-                
+
                 'archivos' => null,
                 'activo' => true,
                 'created_at' => now(),
@@ -85,7 +110,7 @@ class ClienteSeeder extends Seeder
                 'vacunas' => null,
                 'seguros' => null,
                 'autorizacion_viaje' => 'no aplica',
-                
+
                 'archivos' => null,
                 'activo' => true,
                 'created_at' => now(),
@@ -111,7 +136,7 @@ class ClienteSeeder extends Seeder
                 'vacunas' => json_encode([['certificado' => 'FA2023-445', 'fecha' => '2023-12-01']]),
                 'seguros' => json_encode([['seguro' => 'Pacífico seguros - Viajero Plus', 'fecha' => '2023-11-15']]),
                 'autorizacion_viaje' => 'no aplica',
-                
+
                 'archivos' => null,
                 'activo' => true,
                 'created_at' => now(),

@@ -13,6 +13,7 @@ class Venta extends Model
     protected $table = 'ventas';
 
     protected $fillable = [
+        'usuario_id',
         'cliente_id',
         'fecha',
         'tipo',
@@ -32,7 +33,7 @@ class Venta extends Model
         'activo' => 'boolean',
     ];
 
-    protected $with = ['cliente'];
+    protected $with = ['cliente', 'usuario'];
 
 		// Global Scope para filtrar solo activos
 		protected static function booted()
@@ -41,6 +42,11 @@ class Venta extends Model
 				$builder->where('activo', 1);
 			});
 		}
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class);
+    }
 
     public function cliente()
     {

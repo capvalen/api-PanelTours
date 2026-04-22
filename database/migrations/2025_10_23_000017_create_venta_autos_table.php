@@ -28,6 +28,7 @@ return new class extends Migration
             $table->enum('estado_alquiler', ['pendiente','reservado', 'activo', 'finalizado', 'cancelado'])->default('pendiente');
             $table->decimal('costo', 10, 2);
             $table->decimal('precio', 10, 2);
+            $table->integer('pasajeros')->default(1);
             // Entregas
             $table->text('observaciones')->nullable();
           

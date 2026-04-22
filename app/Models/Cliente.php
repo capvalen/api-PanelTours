@@ -50,8 +50,17 @@ class Cliente extends Model
         return $this->hasMany(Venta::class);
     }
 
-		public function getArchivosAttribute($value)
-		{
-			return $value ? json_decode($value, true) : [];
-		}
+    public function getArchivosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
+    }
+    public function getVacunasAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
+    }
+    public function getSegurosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
+    }
+   
 }

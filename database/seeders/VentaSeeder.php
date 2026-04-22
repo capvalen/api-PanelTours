@@ -11,6 +11,7 @@ class VentaSeeder extends Seeder
 	{
 		DB::table('ventas')->insert([
 			[
+				'usuario_id' => 1,
 				'cliente_id' => 1,
 				'fecha' => '2026-03-21',
 				'tipo' => 'venta',
@@ -19,11 +20,14 @@ class VentaSeeder extends Seeder
 				'precio' => 1250,
 				'departamento_id' => 15, // Lima
 				'ciudad' => 'Lima',
+				'nivel' => 1,
+				'estado' => 'activo',
 				'activo' => true,
 				'created_at' => now(),
 				'updated_at' => now(),
 			],
 			[
+				'usuario_id' => 2,
 				'cliente_id' => 2,
 				'fecha' => '2026-03-20',
 				'tipo' => 'venta',
@@ -32,11 +36,14 @@ class VentaSeeder extends Seeder
 				'precio' => 2350,
 				'departamento_id' => 4, // Arequipa
 				'ciudad' => 'Arequipa',
+				'nivel' => 1,
+				'estado' => 'activo',
 				'activo' => true,
 				'created_at' => now(),
 				'updated_at' => now(),
 			],
 			[
+				'usuario_id' => 3,
 				'cliente_id' => 3,
 				'fecha' => '2026-03-19',
 				'tipo' => 'cotización',
@@ -45,11 +52,14 @@ class VentaSeeder extends Seeder
 				'precio' => 400,
 				'departamento_id' => 9,
 				'ciudad' => 'Acoria',
+				'nivel' => 1,
+				'estado' => 'activo',
 				'activo' => true,
 				'created_at' => now(),
 				'updated_at' => now(),
 			],
 			[
+				'usuario_id' => 4,
 				'cliente_id' => 4,
 				'fecha' => '2026-03-18',
 				'tipo' => 'venta',
@@ -58,11 +68,14 @@ class VentaSeeder extends Seeder
 				'precio' => 1800,
 				'departamento_id' => 20, // Piura
 				'ciudad' => 'Piura',
+				'nivel' => 1,
+				'estado' => 'activo',
 				'activo' => true,
 				'created_at' => now(),
 				'updated_at' => now(),
 			],
 			[
+				'usuario_id' => 1,
 				'cliente_id' => 1,
 				'fecha' => '2026-03-15',
 				'tipo' => 'venta',
@@ -71,6 +84,7 @@ class VentaSeeder extends Seeder
 				'precio' => 0,
 				'departamento_id' => 1, // Amazonas
 				'ciudad' => 'Chachapoyas',
+				'nivel' => 1,
 				'estado' => 'anulado',
 				'activo' => true,
 				'created_at' => now(),
