@@ -31,7 +31,7 @@ class VentaItemSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Venta 2 - Cliente Johnson: vuelo + turismo + comida
+            // Venta 2 - Cliente Johnson: vuelo + turismo + restaurante
             [
                 'venta_id' => 2,
                 'tipo' => 'vuelo',
@@ -54,7 +54,7 @@ class VentaItemSeeder extends Seeder
             ],
             [
                 'venta_id' => 2,
-                'tipo' => 'comida',
+                'tipo' => 'restaurante',
                 'nro_clientes' => 3,
                 'precio' => 250.00,
                 'descripcion' => 'Plan alimenticio 5 días - Restaurante La Mar',

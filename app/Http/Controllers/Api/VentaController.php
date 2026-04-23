@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Venta;
+use App\Models\VentaItem;
+use App\Models\VentaRestaurante;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -23,8 +25,26 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Venta::create($request->all());
-        return response()->json($item);
+      $venta = Venta::create($request->input('venta'));
+
+      foreach ($request->input('venta_items') as $item) {
+        $item['venta_id'] = $venta->id;
+        VentaItem::create($item);
+      }
+      
+        // foreach ($request->input('canasta')as $item) {
+        //   switch ($item['tipo']) {
+        //     case 'restaurante':
+        //       $itemConVentaId = array_merge($item, ['venta_id' => $venta->id]);
+        //       VentaRestaurante::create($itemConVentaId);
+        //       break;
+            
+        //     default:
+        //       # code...
+        //       break;
+        //   }
+        // }
+        return response()->json($venta);
     }
 
     /**

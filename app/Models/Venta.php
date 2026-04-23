@@ -18,9 +18,12 @@ class Venta extends Model
         'fecha',
         'tipo',
         'estado_pago',
-				'personas',
-				'departamento_id',
-				'ciudad',
+        'personas',
+        'departamento_id',
+        'ciudad',
+        'costo',
+        'descuento',
+        'motivo_descuento',
         'precio',
         'nivel',
         'estado',
@@ -28,6 +31,8 @@ class Venta extends Model
     ];
 
     protected $casts = [
+        'costo' => 'decimal:2',
+        'descuento' => 'decimal:2',
         'precio' => 'decimal:2',
         'fecha' => 'datetime',
         'activo' => 'boolean',
