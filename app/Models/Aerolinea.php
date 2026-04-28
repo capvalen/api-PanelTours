@@ -13,6 +13,7 @@ class Aerolinea extends Model
 
     protected $fillable = [
         'nombre',
+        'abreviatura',
         'activo',
     ];
 

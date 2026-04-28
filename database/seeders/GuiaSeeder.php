@@ -11,6 +11,18 @@ class GuiaSeeder extends Seeder
     {
         DB::table('guias')->insert([
             [
+                'dni' => '00000000', // DNI genérico para registro placeholder
+                'nombre' => 'Sin Guía',
+                'celular' => '',
+                'contacto_emergencia' => '',
+                'especialidad' => 'N/A',
+                'idiomas' => 'español',
+                'departamento_id' => 12,
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'dni' => '41234567',
                 'nombre' => 'Miguel Ángel Condori Puma',
                 'celular' => '984567123',

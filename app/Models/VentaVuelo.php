@@ -12,13 +12,14 @@ class VentaVuelo extends Model
     protected $table = 'venta_vuelos';
 
     protected $fillable = [
-        'venta_id',
+        'venta_item_id',
         'origen',
         'destino',
         'pasajeros',
         'que_equipaje',
         'lleva_equipaje',
         'kilos',
+        'precio_ticket',
         'precio_soles',
         'precio_dolares',
         'costo_soles',
@@ -44,6 +45,7 @@ class VentaVuelo extends Model
     ];
 
     protected $casts = [
+        'precio_ticket' => 'decimal:2',
         'precio_soles' => 'decimal:2',
         'precio_dolares' => 'decimal:2',
         'costo_soles' => 'decimal:2',
@@ -54,9 +56,9 @@ class VentaVuelo extends Model
         'activo' => 'boolean',
     ];
 
-    public function venta()
+    public function ventaItem()
     {
-        return $this->belongsTo(Venta::class);
+        return $this->belongsTo(VentaItem::class);
     }
 
     public function pasajerosObj()

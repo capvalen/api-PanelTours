@@ -65,7 +65,7 @@ class VentaItemSeeder extends Seeder
             // Venta 3 - cotización: solo auto
             [
                 'venta_id' => 3,
-                'tipo' => 'auto',
+                'tipo' => 'transporte',
                 'nro_clientes' => 1,
                 'precio' => 400.00,
                 'descripcion' => 'Alquiler SUV - 3 días Arequipa',

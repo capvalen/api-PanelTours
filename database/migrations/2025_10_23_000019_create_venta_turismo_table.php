@@ -16,17 +16,17 @@ return new class extends Migration
             $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
             
             // Datos del tour
-            $table->string('nombre_tour', 255);
-            $table->enum('tipo_tour', ['paquete', 'tour'])->default('tour');
             $table->unsignedBigInteger('tour_id')->nullable();
+            $table->string('nombre_tour', 255)->nullable();
+            $table->enum('tipo_tour', ['paquete', 'tour'])->default('tour');
             $table->text('descripcion')->nullable();
             
             // Fechas y duración
-            $table->date('fecha_salida');
+            $table->date('fecha_salida')->nullable();
             $table->date('fecha_retorno')->nullable();
             
             // Capacidad
-            $table->integer('cantidad_personas');
+            $table->integer('cantidad_personas')->nullable();
             $table->integer('cantidad_adultos')->default(0);
             $table->integer('cantidad_ninos')->default(0);
             $table->integer('peruanos_adultos')->default(0);

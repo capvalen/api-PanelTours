@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('venta_auto_id')->constrained('venta_autos')->onDelete('cascade');
+            $table->foreignId('vehiculo_id')->nullable()->constrained('vehiculos')->onDelete('cascade');
 
             $table->string('numero_asiento', 10)->nullable()->comment('piso 1, 3b');
 
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('venta_auto_id');
+            $table->index('vehiculo_id');
         });
     }
 

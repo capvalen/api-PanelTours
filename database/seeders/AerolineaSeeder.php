@@ -9,7 +9,7 @@ class AerolineaSeeder extends Seeder
 {
     public function run(): void
     {
-        $aerolineas = ['LATAM Airlines', 'Sky Airline', 'JetSmart', 'Viva Air', 'Star Perú'];
+        $aerolineas = ['Ninguna','LATAM Airlines', 'Sky Airline', 'JetSmart', 'Viva Air', 'Star Perú'];
 
         foreach ($aerolineas as $nombre) {
             DB::table('aerolineas')->insert([

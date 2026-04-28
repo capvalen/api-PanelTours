@@ -14,20 +14,20 @@ return new class extends Migration
         Schema::create('venta_autos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
-            $table->foreignId('vehiculo_id')->constrained('vehiculos')->onDelete('cascade');
+            $table->foreignId('vehiculo_id')->nullable()->constrained('vehiculos')->onDelete('cascade');
             $table->string('origen', 255)->nullable();
             $table->string('destino', 255)->nullable();
             
             // Fechas del alquiler
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->date('fecha_inicio')->nullable();
+            $table->date('fecha_fin')->nullable();
             $table->time('hora_recogida')->nullable();
             $table->time('hora_devolucion')->nullable();
             
             // Control del alquiler
             $table->enum('estado_alquiler', ['pendiente','reservado', 'activo', 'finalizado', 'cancelado'])->default('pendiente');
-            $table->decimal('costo', 10, 2);
-            $table->decimal('precio', 10, 2);
+            $table->decimal('costo', 10, 2)->default(0);
+            $table->decimal('precio', 10, 2)->default(0);
             $table->integer('pasajeros')->default(1);
             // Entregas
             $table->text('observaciones')->nullable();

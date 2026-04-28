@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Venta;
+use App\Models\VentaAuto;
+use App\Models\VentaHospedaje;
 use App\Models\VentaItem;
 use App\Models\VentaRestaurante;
+use App\Models\VentaTurismo;
+use App\Models\VentaVuelo;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -25,11 +29,37 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
+      $canasta = $request->input('canasta');      
       $venta = Venta::create($request->input('venta'));
 
-      foreach ($request->input('venta_items') as $item) {
-        $item['venta_id'] = $venta->id;
-        VentaItem::create($item);
+      foreach ($canasta as $item) {
+        $item['resumen']['venta_id'] = $venta->id;
+        //var_dump($item); die();
+        $ventaItem = VentaItem::create($item['resumen']);
+        $item['venta_item_id'] = $ventaItem->id;
+        
+        switch ($item['tipo']) {
+          case 'restaurante':
+            VentaRestaurante::create($item);
+            break;
+          case 'vuelo':
+            VentaVuelo::create($item);
+            break;
+          case 'hospedaje':
+            VentaHospedaje::create($item);
+            break;
+          case 'transporte':
+            VentaAuto::create($item);
+            break;
+          case 'turismo':
+            VentaTurismo::create($item);
+            break;
+          default:
+            # code...
+            break;
+        }
+
+
       }
       
         // foreach ($request->input('canasta')as $item) {

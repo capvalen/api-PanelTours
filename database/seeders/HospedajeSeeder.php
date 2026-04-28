@@ -11,6 +11,22 @@ class HospedajeSeeder extends Seeder
     {
         DB::table('hospedajes')->insert([
             [
+                'hospedaje' => 'Sin Hospedaje',
+                'ruc' => '00000000000',
+                'direccion' => 'N/A',
+                'contacto' => '',
+                'celular' => '',
+                'correo' => '',
+                'departamento_id' => 12,
+                'incluye_desayuno' => false,
+                'incluye_estacionamiento' => false,
+                'incluye_wifi' => false,
+                'servicios_extra' => 'N/A',
+                'activo' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'hospedaje' => 'Hotel Libertador Cusco',
                 'ruc' => '20100123456',
                 'direccion' => 'Plazoleta Santo Domingo 259, Cusco',

@@ -12,7 +12,7 @@ class VentaVueloSeeder extends Seeder
         DB::table('venta_vuelos')->insert([
             // Venta vuelo 1: Lima → Cusco (ida)
             [
-                'venta_id' => 1,
+                'venta_item_id' => 1,
                 'origen' => 'Lima (LIM)',
                 'destino' => 'Cusco (CUZ)',
                 'pasajeros' => 2,
@@ -46,7 +46,7 @@ class VentaVueloSeeder extends Seeder
             ],
             // Venta vuelo 1: Cusco → Lima (vuelta)
             [
-                'venta_id' => 1,
+                'venta_item_id' => 1,
                 'origen' => 'Cusco (CUZ)',
                 'destino' => 'Lima (LIM)',
                 'pasajeros' => 2,
@@ -80,7 +80,7 @@ class VentaVueloSeeder extends Seeder
             ],
             // Venta vuelo 2: Lima → Cusco
             [
-                'venta_id' => 2,
+                'venta_item_id' => 2,
                 'origen' => 'Lima (LIM)',
                 'destino' => 'Cusco (CUZ)',
                 'pasajeros' => 1,

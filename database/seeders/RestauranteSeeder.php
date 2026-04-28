@@ -11,12 +11,12 @@ class RestauranteSeeder extends Seeder
     {
         $restaurantes = [
          [
-            'ruc' => '12345678901',
-            'nombre' => 'La Huerta Feliz',
-            'direccion' => 'Av. Principal 123, Miraflores',
-            'contacto' => 'Juan Pérez',
-            'celular' => '987654321',
-            'departameto_id' => 8
+            'ruc' => '00000000',
+            'nombre' => 'Sin restaurant',
+            'direccion' => '',
+            'contacto' => '',
+            'celular' => '',
+            'departameto_id' => 12
         ],
         [
             'ruc' => '12345678902',

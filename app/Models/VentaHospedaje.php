@@ -21,6 +21,7 @@ class VentaHospedaje extends Model
         'hora_checkin',
         'hora_checkout',
         'cantidad_noches',
+        'num_habitaciones',
         'cantidad_adultos',
         'cantidad_ninos',
         'nombres_huespedes',

@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('venta_vuelos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('venta_id')->constrained('ventas')->onDelete('cascade');
+            $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
             $table->string('origen')->nullable();
             $table->string('destino')->nullable();
             $table->integer('pasajeros')->nullable();
             $table->enum('lleva_equipaje', ['si', 'no'])->default('no');
             $table->integer('kilos')->default(0);
             $table->string('que_equipaje')->nullable();
+            $table->decimal('precio_ticket', 10, 2)->nullable();
             $table->decimal('precio_soles', 10, 2)->nullable();
             $table->decimal('precio_dolares', 10, 2)->nullable();
             $table->decimal('costo_soles', 10, 2)->nullable();
@@ -55,7 +56,7 @@ return new class extends Migration
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
-            $table->index('venta_id');
+            $table->index('venta_item_id');
         });
     }
 

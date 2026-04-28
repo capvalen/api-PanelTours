@@ -14,27 +14,28 @@ return new class extends Migration
        Schema::create('venta_restaurantes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
+            $table->foreignId('restaurante_id')->nullable()->constrained('restaurantes')->onDelete('cascade');
 
-            $table->text('nombre_cliente');
+            $table->text('nombre_cliente')->nullable();
             
             // Control de la reserva
 			$table->enum('estado', ['pendiente', 'confirmado', 'cancelado', 'completado'])->default('pendiente'); 
-            $table->string('comprobante', 10)->unique();
+            $table->string('comprobante', 10)->unique()->nullable();
             $table->timestamp('fecha_confirmacion')->nullable();
             $table->text('motivo_cancelacion')->nullable();
             
             // Logística del restaurante (sin mesa, duración ni zona)
-            $table->enum('turno', ['comida', 'cena', 'brunch', 'desayuno', 'madrugada'])->nullable();
+            $table->enum('turno', ['comida', 'cena', 'brunch', 'desayuno', 'madrugada'])->default('comida');
             $table->enum('tipo_servicio', ['buffet', 'carta', 'degustación', 'evento'])->default('carta');
             $table->enum('espacio', ['interior','salón principal', 'salón privado', 'terraza', 'jardín', 'barra'])->default('interior')->nullable();
             
             // Datos de la reserva
-            $table->integer('numero_personas');
+            $table->integer('numero_personas')->nullable();
             $table->decimal('precio', 10, 2)->default(0);
             $table->date('fecha_reserva')->nullable();
             $table->time('hora_reserva')->nullable();
             $table->text('pedido_especial')->nullable();
-            $table->unsignedBigInteger('restaurante_id');
+            
             
             // Timestamps y soft deletes
             $table->timestamps();
@@ -45,8 +46,6 @@ return new class extends Migration
             $table->index('fecha_reserva');
             $table->index('estado');
             
-            // Llaves foráneas
-            $table->foreign('restaurante_id')->references('id')->on('restaurantes')->onDelete('cascade');
         });
     }
 

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('departamentos', function (Blueprint $table) {
             $table->id();
             $table->string('departamento');
+            $table->string('abreviatura', 3)->nullable();
             $table->boolean('activo')->default(true)->comment('no/si');
         });
     }

@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('venta_hospedajes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
-            $table->foreignId('hospedaje_id')->constrained('hospedajes')->onDelete('cascade');
+            $table->foreignId('hospedaje_id')->nullable()->constrained('hospedajes')->onDelete('cascade');
 
-            $table->enum('tipo_habitacion', ['Suite', 'Doble', 'Individual', 'King', 'Queen', 'Familiar', 'Económica', 'Compartida', 'Triple', 'Cuádruple'])->nullable()->comment('Tipos de habitación disponibles');
-            $table->string('numero_habitacion', 20)->nullable()->comment('Ej: "101", "204", "Bungalow 3"');
+            $table->enum('tipo_habitacion', ['Simple','Suite', 'Doble', 'Individual', 'King', 'Queen', 'Familiar', 'Económica', 'Compartida', 'Triple', 'Cuádruple'])->default('Individual')->comment('Tipos de habitación disponibles');
             
             // Datos de la reserva
-            $table->date('fecha_ingreso');
-            $table->date('fecha_salida');
+            $table->date('fecha_ingreso')->nullable();
+            $table->date('fecha_salida')->nullable();
             $table->time('hora_checkin')->nullable();
             $table->time('hora_checkout')->nullable();
-            $table->integer('cantidad_noches');
+            $table->integer('cantidad_noches')->default(1);
+            $table->integer('num_habitaciones')->default(1);
+            $table->string('numero_habitacion', 20)->nullable()->comment('Ej: "101", "204", "Bungalow 3"');
             
             // Huéspedes
             $table->integer('cantidad_adultos')->default(1);
@@ -32,8 +33,8 @@ return new class extends Migration
             $table->text('nombres_huespedes')->nullable();
             
             // Precios
-            $table->decimal('precio_por_noche', 10, 2);
-            $table->decimal('precio', 10, 2);
+            $table->decimal('precio_por_noche', 10, 2)->default(0);
+            $table->decimal('precio', 10, 2)->default(0);
             
             // Estado de pago
             $table->enum('estado_pago', ['pendiente', 'parcial', 'pagado'])->default('pendiente');
@@ -48,7 +49,7 @@ return new class extends Migration
             $table->text('preferencias_especiales')->nullable();
             
             // Contacto
-            $table->string('nombre_titular', 100);
+            $table->string('nombre_titular', 100)->nullable();
             $table->string('documento_titular', 20)->nullable();
             $table->string('email_contacto', 150)->nullable();
             $table->string('telefono_contacto', 20)->nullable();
