@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
             VentaVueloSeeder::class,
             VentaVueloPasajeroSeeder::class,
             VentaAutoPasajeroSeeder::class,
+            PersonaSeeder::class,
 
             // Grupo 6: Finanzas
             PagoSeeder::class,

@@ -29,6 +29,7 @@ class Venta extends Model
         'estado',
         'progreso',
         'nacionalidad',
+        'autorizaciones',
         'activo',
     ];
 
@@ -38,6 +39,7 @@ class Venta extends Model
         'precio' => 'decimal:2',
         'adelanto' => 'decimal:2',
         'fecha' => 'datetime',
+        'autorizaciones' => 'array',
         'activo' => 'boolean',
     ];
 
@@ -79,4 +81,10 @@ class Venta extends Model
     {
         return $this->hasMany(CajaDetalle::class);
     }
+
+    public function personas()
+    {
+        return $this->hasMany(Persona::class);
+    }
 }
+

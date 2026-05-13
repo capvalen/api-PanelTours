@@ -82,7 +82,7 @@ class VentaController extends Controller
      */
     public function show(string $id)
     {
-        return Venta::findOrFail($id)->load('items', 'pagos', 'departamento');
+        return Venta::findOrFail($id)->load('items', 'pagos', 'departamento', 'personas');
     }
 
     /**
