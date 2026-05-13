@@ -16,7 +16,6 @@ class Venta extends Model
         'usuario_id',
         'cliente_id',
         'fecha',
-        'tipo',
         'estado_pago',
         'personas',
         'departamento_id',
@@ -25,8 +24,11 @@ class Venta extends Model
         'descuento',
         'motivo_descuento',
         'precio',
+        'adelanto',
         'nivel',
         'estado',
+        'progreso',
+        'nacionalidad',
         'activo',
     ];
 
@@ -34,6 +36,7 @@ class Venta extends Model
         'costo' => 'decimal:2',
         'descuento' => 'decimal:2',
         'precio' => 'decimal:2',
+        'adelanto' => 'decimal:2',
         'fecha' => 'datetime',
         'activo' => 'boolean',
     ];
@@ -55,7 +58,7 @@ class Venta extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class)->select(['id', 'ruc', 'razon_social', 'dni', 'nombres', 'apellidos']);
+        return $this->belongsTo(Cliente::class)->select(['id', 'ruc', 'razon_social', 'dni', 'nombres', 'apellidos', 'celular']);
     }
 
     public function departamento()

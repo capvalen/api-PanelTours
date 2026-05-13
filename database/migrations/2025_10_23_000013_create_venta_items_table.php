@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('venta_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('venta_id')->constrained('ventas')->onDelete('cascade');
-            $table->enum('tipo', ['vuelo', 'hospedaje', 'transporte', 'restaurante', 'turismo']);
+            $table->enum('tipo', ['vuelo', 'hospedaje', 'transporte', 'restaurante', 'tour']);
             $table->integer('nro_clientes')->default(0)->nullable();
             $table->decimal('precio', 10, 2);
             $table->string('descripcion');

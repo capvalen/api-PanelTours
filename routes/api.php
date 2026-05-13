@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
 	
 	// 7. Módulo Financiero
-	Route::apiResource('pagos', PagoController::class);
+	Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
 	Route::apiResource('deudas', DeudaController::class);
 	
 	//prueba

@@ -30,7 +30,6 @@ return new class extends Migration
             // Huéspedes
             $table->integer('cantidad_adultos')->default(1);
             $table->integer('cantidad_ninos')->default(0);
-            $table->text('nombres_huespedes')->nullable();
             
             // Precios
             $table->decimal('precio_por_noche', 10, 2)->default(0);
@@ -51,8 +50,8 @@ return new class extends Migration
             // Contacto
             $table->string('nombre_titular', 100)->nullable();
             $table->string('documento_titular', 20)->nullable();
-            $table->string('email_contacto', 150)->nullable();
-            $table->string('telefono_contacto', 20)->nullable();
+            $table->text('datos_contacto')->nullable();
+            
             
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();

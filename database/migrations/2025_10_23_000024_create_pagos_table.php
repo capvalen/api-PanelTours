@@ -19,8 +19,8 @@ return new class extends Migration
 						$table->date('fecha_compromiso')->nullable()->comment('Fecha en que el cliente se compromete a pagar');
             $table->decimal('monto_abonado', 10, 2);
             $table->decimal('saldo_pendiente', 10, 2);
-            $table->enum('metodo_pago', ['yape', 'tarjeta', 'depósito', 'efectivo'])->default('efectivo');
-            $table->enum('estado_pago', ['pendiente', 'completado', 'fallido', 'reembolsado'])->default('pendiente');
+            $table->enum('metodo_pago', ['yape', 'plin', 'efectivo', 'tarjeta', 'POS', 'transferencia', 'depósito'])->default('efectivo');
+            $table->enum('estado_pago', ['pendiente', 'pagado', 'confirmado', 'rechazado', 'reembolsado'])->default('pendiente');
             $table->string('codigo_referencia')->nullable()->comment('Para transferencias o depósitos');
 						$table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();

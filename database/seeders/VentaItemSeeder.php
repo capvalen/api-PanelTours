@@ -31,7 +31,7 @@ class VentaItemSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Venta 2 - Cliente Johnson: vuelo + turismo + restaurante
+            // Venta 2 - Cliente Johnson: vuelo + tour + restaurante
             [
                 'venta_id' => 2,
                 'tipo' => 'vuelo',
@@ -44,7 +44,7 @@ class VentaItemSeeder extends Seeder
             ],
             [
                 'venta_id' => 2,
-                'tipo' => 'turismo',
+                'tipo' => 'tour',
                 'nro_clientes' => 3,
                 'precio' => 600.00,
                 'descripcion' => 'Tour Machu Picchu día completo',
@@ -96,7 +96,7 @@ class VentaItemSeeder extends Seeder
             ],
             [
                 'venta_id' => 4,
-                'tipo' => 'turismo',
+                'tipo' => 'tour',
                 'nro_clientes' => 4,
                 'precio' => 350.00,
                 'descripcion' => 'Tour Islas Uros y Taquile',

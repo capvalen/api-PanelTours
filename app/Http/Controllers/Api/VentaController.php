@@ -51,7 +51,7 @@ class VentaController extends Controller
           case 'transporte':
             VentaAuto::create($item);
             break;
-          case 'turismo':
+          case 'tour':
             VentaTurismo::create($item);
             break;
           default:
@@ -82,7 +82,7 @@ class VentaController extends Controller
      */
     public function show(string $id)
     {
-        return Venta::find($id);
+        return Venta::findOrFail($id)->load('items', 'pagos', 'departamento');
     }
 
     /**

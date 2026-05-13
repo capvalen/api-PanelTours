@@ -15,6 +15,7 @@ class VentaItem extends Model
         'venta_id',
         'tipo',
         'precio',
+        'nro_clientes',
         'descripcion',
         'activo',
     ];
@@ -24,6 +25,39 @@ class VentaItem extends Model
         'activo' => 'boolean',
     ];
 
+    protected $appends = ['detalle'];
+
+    protected $with = [
+        'ventaVuelo',
+        'ventaHospedaje',
+        'ventaAuto',
+        'ventaRestaurante',
+        'ventaTurismo',
+        'ventaGuia'
+    ];
+
+    protected $hidden = [
+        'ventaVuelo',
+        'ventaHospedaje',
+        'ventaAuto',
+        'ventaRestaurante',
+        'ventaTurismo',
+        'ventaGuia'
+    ];
+
+    public function getDetalleAttribute()
+    {
+        return match ($this->tipo) {
+            'vuelo' => $this->ventaVuelo,
+            'hospedaje' => $this->ventaHospedaje,
+            'transporte' => $this->ventaAuto,
+            'restaurante' => $this->ventaRestaurante,
+            'tour' => $this->ventaTurismo,
+            'guia' => $this->ventaGuia,
+            default => null,
+        };
+    }
+
     public function venta()
     {
         return $this->belongsTo(Venta::class);
@@ -31,22 +65,22 @@ class VentaItem extends Model
 
     public function ventaVuelo()
     {
-        return $this->hasOne(VentaVuelo::class);
+        return $this->hasOne(VentaVuelo::class)->with('pasajerosObj');
     }
 
     public function ventaHospedaje()
     {
-        return $this->hasOne(VentaHospedaje::class);
+        return $this->hasOne(VentaHospedaje::class)->with('hospedaje');
     }
 
     public function ventaAuto()
     {
-        return $this->hasOne(VentaAuto::class);
+        return $this->hasOne(VentaAuto::class)->with('vehiculo');
     }
 
     public function ventaRestaurante()
     {
-        return $this->hasOne(VentaRestaurante::class);
+        return $this->hasOne(VentaRestaurante::class)->with('restaurante');
     }
 
     public function ventaTurismo()
@@ -56,7 +90,7 @@ class VentaItem extends Model
 
     public function ventaGuia()
     {
-        return $this->hasOne(VentaGuia::class);
+        return $this->hasOne(VentaGuia::class)->with('guia');
     }
 
     // Sobrescribe la consulta base
