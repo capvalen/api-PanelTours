@@ -44,7 +44,11 @@ class ClienteController extends Controller
 		 */
 		public function show(string $id)
 		{
-				return Cliente::find($id);
+				return Cliente::with([
+					'ventas' => function ($q) {
+						$q->with('items')->orderBy('id', 'desc');
+					}
+				])->findOrFail($id);
 		}
 
 		/**

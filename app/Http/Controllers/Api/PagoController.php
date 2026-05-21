@@ -33,6 +33,16 @@ class PagoController extends Controller
             'adelanto' => $nuevoAdelanto,
             'estado_pago' => $estadoPago
         ]);
+
+        // Registrar acción en la tabla de seguimiento
+        $accion = \App\Models\Accion::firstOrCreate(['nombre' => 'pago realizado']);
+        \App\Models\Seguimiento::create([
+            'venta_id' => $idVenta,
+            'accion_id' => $accion->id,
+            'fecha' => now(),
+            'id_usuario' => $venta->usuario_id ?? 1,
+        ]);
+
         $item = Pago::findOrFail($item->id);
 
         return response()->json($item);
@@ -86,6 +96,15 @@ class PagoController extends Controller
         ]);
         
         $item->update(['activo' => 0]);
+
+        // Registrar acción en la tabla de seguimiento
+        $accion = \App\Models\Accion::firstOrCreate(['nombre' => 'pago anulado']);
+        \App\Models\Seguimiento::create([
+            'venta_id' => $idVenta,
+            'accion_id' => $accion->id,
+            'fecha' => now(),
+            'id_usuario' => $venta->usuario_id ?? 1,
+        ]);
         
         return response()->json(["message" => "Pago eliminado"]);
     }

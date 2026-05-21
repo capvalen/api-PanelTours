@@ -46,7 +46,11 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Usuario::create($request->all());
+        $data = $request->all();
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        $item = Usuario::create($data);
         return response()->json($item);
     }
 
@@ -64,7 +68,15 @@ class UsuarioController extends Controller
     public function update(Request $request, string $id)
     {
         $item = Usuario::findOrFail($id);
-        $item->update($request->all());
+        $data = $request->all();
+        if (isset($data['password'])) {
+            if (!empty($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            } else {
+                unset($data['password']);
+            }
+        }
+        $item->update($data);
         return $item;
     }
 

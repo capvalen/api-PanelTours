@@ -30,6 +30,7 @@ use App\Http\Controllers\Api\VentaAutoPasajeroController;
 use App\Http\Controllers\Api\PagoController;
 use App\Http\Controllers\Api\DeudaController;
 use App\Http\Controllers\Api\ArchivoController;
+use App\Http\Controllers\Api\PersonaPublicController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -87,4 +88,9 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::put('/cajas/cerrar/{id}', [CajaController::class, 'cerrar']);
 	Route::post('/archivos', [ArchivoController::class, 'store']);
 	Route::post('/clientes/{id}/adjuntar_archivo', [ClienteController::class, 'adjuntarArchivo']);
+
 });
+
+//sin loguearse:
+	Route::get('/personas/{venta_id}', [PersonaPublicController::class, 'showByVenta']);
+	Route::post('/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);

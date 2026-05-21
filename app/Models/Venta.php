@@ -17,7 +17,7 @@ class Venta extends Model
         'cliente_id',
         'fecha',
         'estado_pago',
-        'personas',
+        'cuantas_personas',
         'departamento_id',
         'ciudad',
         'costo',
@@ -39,6 +39,7 @@ class Venta extends Model
         'precio' => 'decimal:2',
         'adelanto' => 'decimal:2',
         'fecha' => 'datetime',
+        'cuantas_personas' => 'integer',
         'autorizaciones' => 'array',
         'activo' => 'boolean',
     ];
@@ -86,5 +87,9 @@ class Venta extends Model
     {
         return $this->hasMany(Persona::class);
     }
-}
 
+    public function seguimientos()
+    {
+        return $this->hasMany(Seguimiento::class, 'venta_id');
+    }
+}

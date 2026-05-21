@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UsuarioSeeder::class,
             ClienteSeeder::class,
             DepartamentoSeeder::class,
+            AccionSeeder::class,
             GuiaSeeder::class,
             VueloSeeder::class,
             ProveedorSeeder::class,
@@ -52,6 +53,7 @@ class DatabaseSeeder extends Seeder
             // Grupo 6: Finanzas
             PagoSeeder::class,
             DeudaSeeder::class,
+            SeguimientoSeeder::class,
         ]);
     }
 }

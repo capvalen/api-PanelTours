@@ -24,6 +24,9 @@ class ProveedorController extends Controller
 						->orWhere('razon_social', 'like', $buscar . '%');
         });
 			}
+			if ($request->filled('departamento_id')) {
+				$query->where('departamento_id', $request->departamento_id);
+			}
 
 			return $query->orderBy('id', 'desc')->get();
     }

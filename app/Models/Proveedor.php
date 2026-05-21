@@ -21,6 +21,7 @@ class Proveedor extends Model
         'banco',
         'numero_cuenta',
         'categoria',
+        'departamento_id',
         'archivos',
         'activo',
     ];
@@ -37,5 +38,10 @@ class Proveedor extends Model
 		public function getArchivosAttribute($value)
 		{
 			return $value ? json_decode($value, true) : [];
+		}
+
+		public function departamento()
+		{
+			return $this->belongsTo(Departamento::class, 'departamento_id');
 		}
 }

@@ -33,10 +33,6 @@ class VentaHospedaje extends Model
         'requiere_cuna',
         'habitacion_fumador',
         'preferencias_especiales',
-        'nombre_titular',
-        'documento_titular',
-        'email_contacto',
-        'telefono_contacto',
         'activo',
     ];
 

@@ -12,10 +12,10 @@ class VehiculoSeeder extends Seeder
         DB::table('vehiculos')->insert([
             [
                 'tipo_vehiculo' => 'Ningún Vehículo',
-                'placa' => '',
-                'dni_conductor' => '',
-                'nombre_conductor' => '',
-                'licencia_conductor' => '',
+                'placa' => 'Sin placa',
+                'dni_conductor' => 'Sin DNI',
+                'nombre_conductor' => 'Sin conductor',
+                'licencia_conductor' => 'Sin licencia',
                 'edad_conductor' => 0,
                 'tipo_combustible' => 'gasolina',
                 'incluye_seguro' => false,

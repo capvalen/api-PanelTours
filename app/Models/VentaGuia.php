@@ -14,22 +14,17 @@ class VentaGuia extends Model
     protected $fillable = [
         'venta_item_id',
         'guia_id',
-        'ruta',
         'fecha',
         'hora',
         'lugar_encuentro',
-        'precio',
-        'duracion_horas',
+        'costo',
         'tipo_servicio',
-        'cantidad_personas',
-        'pedido_especial',
-        'activo',
     ];
 
     protected $casts = [
         'fecha' => 'date',
-        'precio' => 'decimal:2',
-        'activo' => 'boolean',
+        'costo' => 'decimal:2',
+        'tipo_servicio' => 'string',
     ];
 
     public function ventaItem()

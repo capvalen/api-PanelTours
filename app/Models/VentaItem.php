@@ -65,7 +65,7 @@ class VentaItem extends Model
 
     public function ventaVuelo()
     {
-        return $this->hasOne(VentaVuelo::class)->with('pasajerosObj');
+        return $this->hasOne(VentaVuelo::class);
     }
 
     public function ventaHospedaje()

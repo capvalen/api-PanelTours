@@ -47,11 +47,6 @@ return new class extends Migration
             $table->boolean('habitacion_fumador')->default(false);
             $table->text('preferencias_especiales')->nullable();
             
-            // Contacto
-            $table->string('nombre_titular', 100)->nullable();
-            $table->string('documento_titular', 20)->nullable();
-            $table->text('datos_contacto')->nullable();
-            
             
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();

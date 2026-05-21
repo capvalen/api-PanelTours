@@ -14,18 +14,12 @@ return new class extends Migration
         Schema::create('venta_guias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('venta_item_id')->constrained('venta_items')->onDelete('cascade');
-            $table->foreignId('guia_id')->nullable()->constrained('guias')->onDelete('cascade');
-            $table->string('ruta', 255)->nullable();
-            $table->date('fecha')->nullable();
+            $table->foreignId('guia_id')->constrained('guias')->onDelete('cascade');
+                        $table->date('fecha')->nullable();
             $table->time('hora')->nullable();
             $table->text('lugar_encuentro')->nullable();
-            $table->decimal('precio', 10, 2)->default(0);
             $table->decimal('costo', 10, 2)->default(0);
-            $table->integer('duracion_horas')->nullable(); // Duración del tour en horas
-            $table->enum('tipo_servicio', ['privado', 'grupal', 'empresarial'])->default('privado');
-            $table->integer('cantidad_personas')->default(1); // Número de personas
-            $table->text('pedido_especial')->nullable();
-            $table->boolean('activo')->default(true)->comment('no/si');
+            $table->enum('tipo_servicio', ['privado', 'grupal', 'empresarial', 'individual'])->default('privado');
             $table->timestamps();
         });
     }

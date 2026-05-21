@@ -13,7 +13,7 @@ class VentaGuiaController extends Controller
      */
     public function index()
     {
-        return VentaGuia::orderBy('id', 'desc')->get();
+        return VentaGuia::with('guia')->orderBy('id', 'desc')->get();
     }
 
     /**
