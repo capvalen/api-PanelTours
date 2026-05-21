@@ -15,7 +15,10 @@ class VehiculoController extends Controller
     {
       $buscar = $request->buscar;
 			$query = Vehiculo::where('activo', 1);
-			
+
+			if ($request->filled('departamento_id')) {
+				$query->where('departamento_id', $request->departamento_id);
+			}
 
 			if ($request->has('buscar')) {
 				$query->where(function ($q) use ($buscar) {

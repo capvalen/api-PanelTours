@@ -24,6 +24,7 @@ class Vehiculo extends Model
         'incluye_gps',
         'incluye_silla_bebe',
         'acepta_mascotas',
+        'departamento_id',
         'archivos',
         'activo',
     ];
@@ -36,6 +37,13 @@ class Vehiculo extends Model
         'archivos' => 'array',
         'activo' => 'boolean',
     ];
+
+    protected $with = ['departamento'];
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
+    }
 
     public function ventaAutos()
     {

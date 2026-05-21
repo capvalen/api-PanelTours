@@ -18,7 +18,7 @@ return new class extends Migration
 				$table->string('dni_conductor', 8)->nullable();
 				$table->string('nombre_conductor')->nullable();
 				$table->string('licencia_conductor', 20)->nullable();
-				$table->integer('edad_conductor')->default(0);
+				$table->integer('edad_conductor')->nullable()->default(0);
 				$table->enum('tipo_combustible', ['gasolina', 'diesel', 'electrico', 'hibrido'])->default('gasolina');
 				$table->boolean('incluye_seguro')->default(false);
 				$table->string('seguro')->nullable();

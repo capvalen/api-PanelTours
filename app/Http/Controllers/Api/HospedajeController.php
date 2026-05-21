@@ -11,9 +11,24 @@ class HospedajeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Hospedaje::orderBy('id', 'desc')->get();
+        $query = Hospedaje::query();
+
+        if ($request->filled('departamento_id')) {
+            $query->where('departamento_id', $request->departamento_id);
+        }
+
+        if ($request->filled('buscar')) {
+            $query->where(function ($q) use ($request) {
+                $buscar = $request->buscar;
+                $q->where('ruc', 'like', '%'.$buscar.'%')
+                    ->orWhere('hospedaje', 'like', '%'.$buscar.'%')
+                    ->orWhere('contacto', 'like', '%'.$buscar.'%');
+            });
+        }
+
+        return $query->orderBy('id', 'desc')->get();
     }
 
     /**
