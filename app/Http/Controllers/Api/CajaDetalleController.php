@@ -13,11 +13,18 @@ class CajaDetalleController extends Controller
      */
     public function index(Request $request)
     {
-      $query = CajaDetalle::orderBy('id', 'desc');
-			if ($request->has('caja_id')) {
-				$query->where('caja_id', $request->caja_id);
-			}
-			return $query->get();
+        $query = CajaDetalle::where('activo', 1)->orderBy('id', 'desc');
+        if ($request->has('caja_id')) {
+            $query->where('caja_id', $request->caja_id);
+        }
+
+        $internos = (clone $query)->where('venta_id', null)->get();
+        $especiales = (clone $query)->where('venta_id', '!=', null)->with('venta.cliente')->get();
+
+        return response()->json([
+            'internos' => $internos,
+            'especiales' => $especiales,
+        ]);
     }
 
     /**

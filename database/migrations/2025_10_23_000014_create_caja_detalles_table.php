@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 						$table->foreignId('caja_id')->constrained('cajas')->onDelete('cascade');
             $table->enum('tipo', ['ingreso', 'egreso']);
-            $table->enum('categoria', ['ingreso','salida','venta turismo', 'gasto operativo', 'servicios básicos', 'pago de personal', 'pago de proveedores', 'otros']);
+            $table->enum('categoria', ['ingreso','salida','venta', 'gasto operativo', 'servicios básicos', 'pago de personal', 'pago de proveedores', 'otros']);
             $table->decimal('monto', 10, 2);
             $table->string('concepto')->nullable();
             $table->dateTime('fecha');
@@ -24,7 +24,8 @@ return new class extends Migration
             $table->foreignId('venta_id')->nullable()->constrained('ventas')->onDelete('set null');
             $table->text('observaciones')->nullable();
 						$table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
-            $table->enum('metodo_pago', ['efectivo', 'tarjeta', 'yape', 'plin', 'cuenta bancaria'])->nullable();
+            $table->enum('metodo_pago', ['efectivo', 'tarjeta', 'yape', 'plin', 'POS', 'cuenta bancaria'])->nullable();
+            $table->enum('estado_pago', ['pendiente','adelanto','completo','confirmado', 'anulado','rechazado','reembolsado'])->default('completo')->nullable();
 
 
 						$table->boolean('activo')->default(true)->comment('no/si');

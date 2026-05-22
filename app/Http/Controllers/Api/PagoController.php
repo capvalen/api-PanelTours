@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Pago;
 use App\Models\Venta;
+use App\Models\Caja;
+use App\Models\CajaDetalle;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -27,12 +29,30 @@ class PagoController extends Controller
         $data['venta_id'] = $idVenta;
         $item = Pago::create($data);
         $nuevoAdelanto = (float) $venta->adelanto + (float) $item->monto_abonado;
-        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : 'adelantado';
+        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : 'adelanto';
         
         $venta->update([
             'adelanto' => $nuevoAdelanto,
             'estado_pago' => $estadoPago
         ]);
+
+        // Registrar en caja detalles
+        $cajaAbierta = Caja::where('estado', 'abierta')->first();
+        if ($cajaAbierta) {
+            CajaDetalle::create([
+                'caja_id' => $cajaAbierta->id,
+                'tipo' => 'ingreso',
+                'categoria' => 'venta',
+                'monto' => $item->monto_abonado,
+                'concepto' => $data['concepto'] ?: 'Pago de venta #' . $idVenta,
+                'fecha' => now(),
+                'comprobante_pago' => 'interno',
+                'venta_id' => $idVenta,
+                'metodo_pago' => $item->metodo_pago,
+                'estado_pago' => $estadoPago,
+                'proveedor_id' => 1,
+            ]);
+        }
 
         // Registrar acción en la tabla de seguimiento
         $accion = \App\Models\Accion::firstOrCreate(['nombre' => 'pago realizado']);
@@ -69,7 +89,7 @@ class PagoController extends Controller
         $montoNuevo = (float) $item->monto_abonado;
 
         $nuevoAdelanto = (float) $venta->adelanto - $montoAnterior + $montoNuevo;
-        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : ($nuevoAdelanto > 0 ? 'adelantado' : 'pendiente');
+        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : ($nuevoAdelanto > 0 ? 'adelanto' : 'pendiente');
 
         $venta->update([
             'adelanto' => $nuevoAdelanto,
@@ -88,7 +108,7 @@ class PagoController extends Controller
         $venta = Venta::findOrFail($idVenta);
 
         $nuevoAdelanto = (float) $venta->adelanto - (float) $item->monto_abonado;
-        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : ($nuevoAdelanto > 0 ? 'adelantado' : 'pendiente');
+        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : ($nuevoAdelanto > 0 ? 'adelanto' : 'pendiente');
 
         $venta->update([
             'adelanto' => $nuevoAdelanto,

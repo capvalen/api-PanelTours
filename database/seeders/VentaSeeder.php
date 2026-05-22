@@ -80,7 +80,7 @@ class VentaSeeder extends Seeder
 				'usuario_id' => 4,
 				'cliente_id' => 4,
 				'fecha' => '2026-03-18',
-				'estado_pago' => 'adelantado',
+				'estado_pago' => 'adelanto',
 				'cuantas_personas' => 1,
 				'precio' => 1800,
 				'adelanto' => 500,

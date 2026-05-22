@@ -53,7 +53,11 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('hospedajes', HospedajeController::class);
 	Route::apiResource('restaurantes', RestauranteController::class);
 	Route::apiResource('vehiculos', VehiculoController::class);
-	
+
+	// 7. Módulo Financiero: debe ir antes de ventas por conflicto
+	Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
+	Route::apiResource('deudas', DeudaController::class);
+
 	// 3. Tablas Transaccionales Core
 	Route::apiResource('ventas', VentaController::class);
 	Route::apiResource('cajas', CajaController::class);
@@ -74,9 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
 	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
 	
-	// 7. Módulo Financiero
-	Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
-	Route::apiResource('deudas', DeudaController::class);
+
 	
 	//prueba
 	Route::get('/prueba', function(){

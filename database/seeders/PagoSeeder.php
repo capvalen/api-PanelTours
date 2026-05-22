@@ -18,7 +18,7 @@ class PagoSeeder extends Seeder
                 'monto_abonado' => 2350.00,
                 'saldo_pendiente' => 0.00,
                 'metodo_pago' => 'tarjeta',
-                'estado_pago' => 'pagado',
+                'estado_pago' => 'completo',
                 'codigo_referencia' => 'VISA-2026032045678',
                 'activo' => true,
                 'created_at' => now(),

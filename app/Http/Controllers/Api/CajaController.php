@@ -23,7 +23,7 @@ class CajaController extends Controller
 					$query->where('estado', 'abierta');
         }
 				$cajas = $query->with('usuario')
-				->orderBy('fecha_apertura', 'desc')
+				->orderBy('id', 'desc')
 				->get();
 				return $cajas; 
     }
