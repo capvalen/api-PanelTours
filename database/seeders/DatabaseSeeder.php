@@ -33,10 +33,12 @@ class DatabaseSeeder extends Seeder
 
             // Grupo 3: Tablas de transacción
             VentaSeeder::class,
+            CotizacionSeeder::class,
             CajaSeeder::class,
 
             // Grupo 4: Detalle e items
             VentaItemSeeder::class,
+            CotizacionItemSeeder::class,
             CajaDetalleSeeder::class,
             VentaHospedajeSeeder::class,
             VentaAutoSeeder::class,

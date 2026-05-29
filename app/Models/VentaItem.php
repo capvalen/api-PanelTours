@@ -15,13 +15,15 @@ class VentaItem extends Model
         'venta_id',
         'tipo',
         'precio',
-        'nro_clientes',
+        'descuento',
+        'motivo_descuento',
         'descripcion',
         'activo',
     ];
 
     protected $casts = [
         'precio' => 'decimal:2',
+        'descuento' => 'decimal:2',
         'activo' => 'boolean',
     ];
 

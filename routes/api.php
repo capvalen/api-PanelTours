@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\VehiculoController;
 use App\Http\Controllers\Api\VentaController;
 use App\Http\Controllers\Api\CajaController;
 use App\Http\Controllers\Api\VentaItemController;
+use App\Http\Controllers\Api\CotizacionController;
+use App\Http\Controllers\Api\CotizacionItemController;
 use App\Http\Controllers\Api\CajaDetalleController;
 use App\Http\Controllers\Api\VentaVueloController;
 use App\Http\Controllers\Api\VentaHospedajeController;
@@ -64,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
 	
 	// 4. Tablas Detalle e Items
 	Route::apiResource('venta_items', VentaItemController::class);
+ 	Route::apiResource('cotizacion', CotizacionController::class);
+ 	Route::apiResource('cotizacion_items', CotizacionItemController::class);
 	Route::apiResource('caja_detalles', CajaDetalleController::class);
 	
 	// 5. Detalles Específicos de Items de Venta

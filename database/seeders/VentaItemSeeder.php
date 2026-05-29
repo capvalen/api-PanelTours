@@ -14,7 +14,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 1,
                 'tipo' => 'vuelo',
-                'nro_clientes' => 2,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 850.00,
                 'descripcion' => 'Vuelo Lima - Cusco ida y vuelta',
                 'activo' => true,
@@ -24,7 +25,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 1,
                 'tipo' => 'hospedaje',
-                'nro_clientes' => 2,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 1200.00,
                 'descripcion' => 'Hospedaje Hotel Libertador Cusco - 4 noches',
                 'activo' => true,
@@ -35,7 +37,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 2,
                 'tipo' => 'vuelo',
-                'nro_clientes' => 3,
+                'descuento' => 50.00,
+                'motivo_descuento' => 'Descuento paquete',
                 'precio' => 1500.00,
                 'descripcion' => 'Vuelo Lima - Cusco - Puerto Maldonado ida y vuelta',
                 'activo' => true,
@@ -45,7 +48,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 2,
                 'tipo' => 'tour',
-                'nro_clientes' => 3,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 600.00,
                 'descripcion' => 'Tour Machu Picchu día completo',
                 'activo' => true,
@@ -55,7 +59,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 2,
                 'tipo' => 'restaurante',
-                'nro_clientes' => 3,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 250.00,
                 'descripcion' => 'Plan alimenticio 5 días - Restaurante La Mar',
                 'activo' => true,
@@ -66,7 +71,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 3,
                 'tipo' => 'transporte',
-                'nro_clientes' => 1,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 400.00,
                 'descripcion' => 'Alquiler SUV - 3 días Arequipa',
                 'activo' => true,
@@ -77,7 +83,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 4,
                 'tipo' => 'vuelo',
-                'nro_clientes' => 4,
+                'descuento' => 20.00,
+                'motivo_descuento' => 'Dscto especial',
                 'precio' => 650.00,
                 'descripcion' => 'Vuelo Lima - Juliaca ida y vuelta',
                 'activo' => true,
@@ -87,7 +94,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 4,
                 'tipo' => 'hospedaje',
-                'nro_clientes' => 4,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 800.00,
                 'descripcion' => 'Hospedaje en Puno - 3 noches',
                 'activo' => true,
@@ -97,7 +105,8 @@ class VentaItemSeeder extends Seeder
             [
                 'venta_id' => 4,
                 'tipo' => 'tour',
-                'nro_clientes' => 4,
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
                 'precio' => 350.00,
                 'descripcion' => 'Tour Islas Uros y Taquile',
                 'activo' => true,

@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('venta_items', function (Blueprint $table) {
+        Schema::create('cotizacion_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('venta_id')->constrained('ventas')->onDelete('cascade');
+            $table->foreignId('cotizacion_id')->constrained('cotizacion')->onDelete('cascade');
             $table->enum('tipo', ['vuelo', 'hospedaje', 'transporte', 'restaurante', 'tour']);
             $table->decimal('descuento', 10, 2)->default(0)->nullable();
             $table->string('motivo_descuento')->nullable();
             $table->decimal('precio', 10, 2);
             $table->string('descripcion');
-						$table->boolean('activo')->default(true)->comment('no/si');
+            $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
-						$table->index('venta_id');
+            $table->index('cotizacion_id');
             $table->index('tipo');
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('venta_items');
+        Schema::dropIfExists('cotizacion_items');
     }
 };

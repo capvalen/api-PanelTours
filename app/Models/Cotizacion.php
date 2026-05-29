@@ -6,17 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class Venta extends Model
+class Cotizacion extends Model
 {
     use HasFactory;
 
-    protected $table = 'ventas';
+    protected $table = 'cotizacion';
 
     protected $fillable = [
         'usuario_id',
         'cliente_id',
         'fecha',
-        'estado_pago',
         'adults',
         'kids',
         'cuantas_personas',
@@ -27,11 +26,8 @@ class Venta extends Model
         'motivo_descuento',
         'precio',
         'adelanto',
-        'nivel',
         'estado',
-        'progreso',
         'nacionalidad',
-        'autorizaciones',
         'activo',
     ];
 
@@ -44,19 +40,17 @@ class Venta extends Model
         'adults' => 'integer',
         'kids' => 'integer',
         'cuantas_personas' => 'integer',
-        'autorizaciones' => 'array',
         'activo' => 'boolean',
     ];
 
     protected $with = ['cliente', 'usuario'];
 
-		// Global Scope para filtrar solo activos
-		protected static function booted()
-		{
-			static::addGlobalScope('activo', function (Builder $builder) {
-				$builder->where('activo', 1);
-			});
-		}
+    protected static function booted()
+    {
+        static::addGlobalScope('activo', function (Builder $builder) {
+            $builder->where('activo', 1);
+        });
+    }
 
     public function usuario()
     {
@@ -72,28 +66,9 @@ class Venta extends Model
     {
         return $this->belongsTo(Departamento::class);
     }
+
     public function items()
     {
-        return $this->hasMany(VentaItem::class);
-    }
-
-    public function pagos()
-    {
-        return $this->hasMany(Pago::class);
-    }
-
-    public function cajaDetalles()
-    {
-        return $this->hasMany(CajaDetalle::class);
-    }
-
-    public function personas()
-    {
-        return $this->hasMany(Persona::class);
-    }
-
-    public function seguimientos()
-    {
-        return $this->hasMany(Seguimiento::class, 'venta_id');
+        return $this->hasMany(CotizacionItem::class);
     }
 }
