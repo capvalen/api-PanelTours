@@ -188,12 +188,25 @@ class CotizacionController extends Controller
 
         $codigo = 'COT-' . str_pad($cotizacion->id, 3, '0', STR_PAD_LEFT);
 
+        $logoPath = public_path('images/logo.png');
+        $logoBase64 = '';
+        if (file_exists($logoPath)) {
+            $img = imagecreatefrompng($logoPath);
+            if ($img) {
+                ob_start();
+                imagepng($img);
+                $logoBase64 = base64_encode(ob_get_clean());
+                imagedestroy($img);
+            }
+        }
+
         $data = [
             'cotizacion' => $cotizacion,
             'cliente' => $cotizacion->cliente,
             'items' => $cotizacion->items,
             'total' => $cotizacion->items->sum('precio'),
             'codigo' => $codigo,
+            'logoBase64' => $logoBase64,
         ];
 
         $pdf = Pdf::loadView('pdf.cotizacion', $data);

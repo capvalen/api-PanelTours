@@ -98,10 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::put('/logistica/{id}', [LogisticaController::class, 'update']);
 	Route::post('/logistica/vincular-venta', [LogisticaController::class, 'vincularVenta']);
 
-	//prueba
-	Route::get('/prueba', function(){
-		return "hola mundo";
-	});
+	Route::get('/saludo_token', function(){ return "hola token"; });
 
 	//Personalizadas
 	Route::put('/cajas/aperturar', [CajaController::class, 'aperturar']);
@@ -124,3 +121,6 @@ Route::get('/ticket-pdf/{token}', [PagoController::class, 'generarTicketPdf']);
 
 // Público - manifiesto PDF con ID cifrado
 Route::get('/manifiesto-pdf/{token}', [LogisticaController::class, 'generarManifiestoPdf']);
+
+//saludo público
+Route::get('/saludo', function(){ return "hola token"; });

@@ -122,7 +122,7 @@
         <table style="width: 100%;">
             <tr>
                 <td style="width: 90px;">
-                    <img src="data:image/webp;base64,{{ base64_encode(file_get_contents(public_path('images/logo.webp'))) }}" alt="Logo" style="max-width: 80px; max-height: 60px;">
+                    <img src="data:image/webp;base64,{{ $logoBase64 }}" alt="Logo" style="max-width: 80px; max-height: 60px;">
                 </td>
                 <td>
                     <h1>Panel Tours</h1>
