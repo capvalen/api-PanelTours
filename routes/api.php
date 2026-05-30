@@ -95,8 +95,14 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::post('/archivos', [ArchivoController::class, 'store']);
 	Route::post('/clientes/{id}/adjuntar_archivo', [ClienteController::class, 'adjuntarArchivo']);
 
+	//Cotización: conversión
+	Route::post('/cotizacion/{id}/convertir-reserva', [CotizacionController::class, 'convertirReserva']);
+	
 });
 
 //sin loguearse:
-	Route::get('/personas/{venta_id}', [PersonaPublicController::class, 'showByVenta']);
-	Route::post('/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);
+Route::get('/personas/{venta_id}', [PersonaPublicController::class, 'showByVenta']);
+Route::post('/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);
+
+// Cotización - PDF y conversión
+Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarPdf']);

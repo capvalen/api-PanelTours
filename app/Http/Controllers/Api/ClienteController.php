@@ -20,10 +20,12 @@ class ClienteController extends Controller
 			if ($request->has('buscar')) {
 				$query->where(function ($q) use ($buscar) {
 					//se crea una sub query
-					$q->where('dni', $buscar)
-						->orWhere('ruc', $buscar)
+					$q->where('dni', 'like', $buscar.'%')
+						->orWhere('ruc', 'like', $buscar.'%')
+						->orWhere('celular', 'like', $buscar.'%')
+						->orWhere('telefono', 'like', $buscar.'%')
 						->orWhere(DB::raw("CONCAT(apellidos, ' ', nombres)"), 'like', '%'.$buscar . '%')
-						->orWhere('razon_social', 'like', $buscar . '%');
+						->orWhere('razon_social', 'like', '%'.$buscar.'%');
         });
 			}
 

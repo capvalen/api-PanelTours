@@ -15,14 +15,19 @@ class CotizacionItem extends Model
         'cotizacion_id',
         'tipo',
         'precio',
+        'precio_adulto',
+        'precio_kids',
         'descuento',
         'motivo_descuento',
         'descripcion',
+        'destino',
         'activo',
     ];
 
     protected $casts = [
         'precio' => 'decimal:2',
+        'precio_adulto' => 'decimal:2',
+        'precio_kids' => 'decimal:2',
         'descuento' => 'decimal:2',
         'activo' => 'boolean',
     ];

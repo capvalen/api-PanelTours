@@ -23,6 +23,8 @@
              $table->foreignId('departamento_id')->constrained('departamentos')->onDelete('cascade');
  						$table->string('ciudad')->nullable();
              $table->decimal('precio', 10, 2)->default(0)->nullable();
+             $table->decimal('precio_adultos', 10, 2)->default(0)->nullable();
+             $table->decimal('precio_kids', 10, 2)->default(0)->nullable();
              $table->decimal('adelanto', 10, 2)->default(0)->nullable();
              $table->decimal('costo', 10, 2)->default(0)->nullable();
              $table->decimal('descuento', 10, 2)->default(0)->nullable();
