@@ -21,6 +21,7 @@ class VentaItem extends Model
         'motivo_descuento',
         'descripcion',
         'destino',
+        'estado_pago',
         'activo',
     ];
 

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
             $table->date('fecha');
+            $table->date('fecha_inicio')->nullable();
+            $table->date('fecha_fin')->nullable();
             $table->integer('adults')->nullable()->default(0);
             $table->integer('kids')->nullable()->default(0);
             $table->integer('cuantas_personas')->default(0);
@@ -28,7 +30,7 @@ return new class extends Migration
             $table->decimal('costo', 10, 2)->default(0)->nullable();
             $table->decimal('descuento', 10, 2)->default(0)->nullable();
             $table->string('motivo_descuento')->nullable();
-            $table->enum('estado', ['activo', 'anulado', 'confirmado', 'operativo', 'en curso', 'finalizado' ])->default('activo')->comment('no/si');
+            $table->enum('estado', ['activo', 'anulado', 'convertido'])->default('activo');
             $table->enum('nacionalidad', ['peruana', 'extranjera'])->default('peruana');
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();

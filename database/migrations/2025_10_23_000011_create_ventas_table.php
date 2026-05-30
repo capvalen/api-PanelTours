@@ -16,7 +16,9 @@
              $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
              $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
              $table->date('fecha');
-             $table->enum('estado_pago', ['pendiente','adelanto','completo','confirmado', 'anulado','rechazado','reembolsado'])->default('pendiente');
+             $table->date('fecha_inicio')->nullable();
+             $table->date('fecha_fin')->nullable();
+             $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
              $table->integer('adults')->nullable()->default(0);
              $table->integer('kids')->nullable()->default(0);
              $table->integer('cuantas_personas')->default(0);

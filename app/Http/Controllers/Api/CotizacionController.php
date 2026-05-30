@@ -212,14 +212,17 @@ class CotizacionController extends Controller
 
         return DB::transaction(function () use ($cotizacion, $request) {
             // Crear la venta a partir de la cotización
-            $venta = Venta::create([
+            $venta = Venta::create(
+                [
                 'cliente_id' => $cotizacion->cliente_id,
-                'user_id' => $cotizacion->usuario_id,
+                'user_id' => $request->usuario_id ?? $cotizacion->usuario_id,
                 'fecha' => now()->toDateString(),
                 'adults' => $cotizacion->adults,
                 'kids' => $cotizacion->kids,
                 'cuantas_personas' => $cotizacion->cuantas_personas,
                 'departamento_id' => $cotizacion->departamento_id,
+                'fecha_inicio' => $cotizacion->fecha_inicio,
+                'fecha_fin' => $cotizacion->fecha_fin,
                 'precio_adultos' => $cotizacion->precio_adultos,
                 'precio_kids' => $cotizacion->precio_kids,
                 'costo' => $cotizacion->costo,
@@ -227,8 +230,11 @@ class CotizacionController extends Controller
                 'motivo_descuento' => $cotizacion->motivo_descuento,
                 'precio' => $cotizacion->precio,
                 'adelanto' => $cotizacion->adelanto ?? 0,
-                'estado' => 'pendiente',
                 'nacionalidad' => $cotizacion->nacionalidad,
+                'usuario_id' => $cotizacion->usuario_id,
+                'estado' => 'activo',
+                'estado_pago' => 'pendiente',
+                'progreso' => 'venta'
             ]);
 
             // Copiar items de la cotización a la venta

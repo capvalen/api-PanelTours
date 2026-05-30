@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
 						$table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
             $table->enum('metodo_pago', ['efectivo', 'tarjeta', 'yape', 'plin', 'POS', 'cuenta bancaria'])->nullable();
-            $table->enum('estado_pago', ['pendiente','adelanto','completo','confirmado', 'anulado','rechazado','reembolsado'])->default('completo')->nullable();
+            $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pagado')->nullable();
 
 
 						$table->boolean('activo')->default(true)->comment('no/si');

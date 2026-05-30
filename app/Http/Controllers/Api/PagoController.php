@@ -29,7 +29,7 @@ class PagoController extends Controller
         $data['venta_id'] = $idVenta;
         $item = Pago::create($data);
         $nuevoAdelanto = (float) $venta->adelanto + (float) $item->monto_abonado;
-        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : 'adelanto';
+        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'pagado' : 'adelantado';
         
         $venta->update([
             'adelanto' => $nuevoAdelanto,
@@ -89,7 +89,7 @@ class PagoController extends Controller
         $montoNuevo = (float) $item->monto_abonado;
 
         $nuevoAdelanto = (float) $venta->adelanto - $montoAnterior + $montoNuevo;
-        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : ($nuevoAdelanto > 0 ? 'adelanto' : 'pendiente');
+        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'pagado' : ($nuevoAdelanto > 0 ? 'adelantado' : 'pendiente');
 
         $venta->update([
             'adelanto' => $nuevoAdelanto,
@@ -108,7 +108,7 @@ class PagoController extends Controller
         $venta = Venta::findOrFail($idVenta);
 
         $nuevoAdelanto = (float) $venta->adelanto - (float) $item->monto_abonado;
-        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'completo' : ($nuevoAdelanto > 0 ? 'adelanto' : 'pendiente');
+        $estadoPago = $nuevoAdelanto >= $venta->precio ? 'pagado' : ($nuevoAdelanto > 0 ? 'adelantado' : 'pendiente');
 
         $venta->update([
             'adelanto' => $nuevoAdelanto,

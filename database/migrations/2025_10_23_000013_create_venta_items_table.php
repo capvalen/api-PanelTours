@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('precio_kids', 10, 2)->default(0)->nullable();
             $table->string('descripcion');
             $table->string('destino')->nullable();
+            $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
 						$table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 
