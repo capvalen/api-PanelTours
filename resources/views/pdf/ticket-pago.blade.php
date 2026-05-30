@@ -199,10 +199,11 @@
     <div class="total-box">
         <div class="label">Monto abonado</div>
         <div class="monto">S/ {{ number_format($pago->monto_abonado, 2) }}</div>
-        @if($pago->saldo_pendiente > 0)
-            <div class="saldo" style="color: #c00;">Saldo pendiente: S/ {{ number_format($pago->saldo_pendiente, 2) }}</div>
+        @php $saldo = max(0, ($venta->precio ?? 0) - ($venta->adelanto ?? 0)); @endphp
+        @if($saldo > 0)
+            <div class="saldo" >Saldo pendiente: S/ {{ number_format($saldo, 2) }}</div>
         @else
-            <div class="saldo" style="color: #0a0;">PAGO COMPLETO</div>
+            <div class="saldo" >PAGO COMPLETO</div>
         @endif
     </div>
 

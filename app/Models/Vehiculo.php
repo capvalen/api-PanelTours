@@ -16,6 +16,7 @@ class Vehiculo extends Model
         'placa',
         'dni_conductor',
         'nombre_conductor',
+        'celular',
         'licencia_conductor',
         'edad_conductor',
         'tipo_combustible',

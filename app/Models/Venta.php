@@ -46,9 +46,9 @@ class Venta extends Model
         'precio_adultos' => 'decimal:2',
         'precio_kids' => 'decimal:2',
         'adelanto' => 'decimal:2',
-        'fecha' => 'datetime',
-        'fecha_inicio' => 'date',
-        'fecha_fin' => 'date',
+        'fecha' => 'date:Y-m-d',
+        'fecha_inicio' => 'date:Y-m-d',
+        'fecha_fin' => 'date:Y-m-d',
         'adults' => 'integer',
         'kids' => 'integer',
         'cuantas_personas' => 'integer',
@@ -103,5 +103,10 @@ class Venta extends Model
     public function seguimientos()
     {
         return $this->hasMany(Seguimiento::class, 'venta_id');
+    }
+
+    public function logistica()
+    {
+        return $this->belongsToMany(Logistica::class, 'logistica_ventas', 'venta_id', 'logistica_id');
     }
 }

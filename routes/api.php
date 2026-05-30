@@ -34,6 +34,7 @@ use App\Http\Controllers\Api\DeudaController;
 use App\Http\Controllers\Api\ArchivoController;
 use App\Http\Controllers\Api\PersonaController;
 use App\Http\Controllers\Api\PersonaPublicController;
+use App\Http\Controllers\Api\LogisticaController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -90,6 +91,13 @@ Route::middleware('auth:sanctum')->group(function () {
 	
 
 
+	//Logística
+	Route::get('/logistica', [LogisticaController::class, 'index']);
+	Route::get('/logistica/{id}', [LogisticaController::class, 'show']);
+	Route::post('/logistica', [LogisticaController::class, 'store']);
+	Route::put('/logistica/{id}', [LogisticaController::class, 'update']);
+	Route::post('/logistica/vincular-venta', [LogisticaController::class, 'vincularVenta']);
+
 	//prueba
 	Route::get('/prueba', function(){
 		return "hola mundo";
@@ -112,4 +120,7 @@ Route::post('/personas/{venta_id}', [PersonaPublicController::class, 'storeByVen
 
 // Cotización y Venta - PDF
 Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarPdf']);
-Route::get('/ventas/{idVenta}/pagos/{pago}/ticket', [PagoController::class, 'generarTicketPdf']);
+Route::get('/ticket-pdf/{token}', [PagoController::class, 'generarTicketPdf']);
+
+// Público - manifiesto PDF con ID cifrado
+Route::get('/manifiesto-pdf/{token}', [LogisticaController::class, 'generarManifiestoPdf']);

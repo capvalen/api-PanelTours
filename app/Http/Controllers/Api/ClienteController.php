@@ -22,9 +22,11 @@ class ClienteController extends Controller
 					//se crea una sub query
 					$q->where('dni', 'like', $buscar.'%')
 						->orWhere('ruc', 'like', $buscar.'%')
+						->orWhere(DB::raw("CONCAT(apellidos, ' ', nombres)"), 'like', '%'. $buscar . '%')
+						->orWhere('apellidos', 'like', '%'.$buscar.'%')
+						->orWhere('nombres', 'like', '%'.$buscar.'%')
 						->orWhere('celular', 'like', $buscar.'%')
 						->orWhere('telefono', 'like', $buscar.'%')
-						->orWhere(DB::raw("CONCAT(apellidos, ' ', nombres)"), 'like', '%'.$buscar . '%')
 						->orWhere('razon_social', 'like', '%'.$buscar.'%');
         });
 			}

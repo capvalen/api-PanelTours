@@ -17,6 +17,7 @@ return new class extends Migration
 				$table->string('placa', 10)->unique();
 				$table->string('dni_conductor', 8)->nullable();
 				$table->string('nombre_conductor')->nullable();
+				$table->string('celular', 20)->nullable();
 				$table->string('licencia_conductor', 20)->nullable();
 				$table->integer('edad_conductor')->nullable()->default(0);
 				$table->enum('tipo_combustible', ['gasolina', 'diesel', 'electrico', 'hibrido'])->default('gasolina');

@@ -30,6 +30,10 @@ class VehiculoController extends Controller
         });
 			}
 
+			if ($request->filled('limite')) {
+				$query->limit($request->limite);
+			}
+
 			return $query->orderBy('id', 'desc')->get();
     }
 

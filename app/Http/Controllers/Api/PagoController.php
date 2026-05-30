@@ -130,8 +130,16 @@ class PagoController extends Controller
         return response()->json(["message" => "Pago eliminado"]);
     }
 
-    public function generarTicketPdf(int $idVenta, int $id)
+    public function generarTicketPdf(string $token)
     {
+        $decoded = base64_decode($token);
+        $json = strrev($decoded);
+        $data = json_decode($json, true);
+        $idVenta = $data['idVenta'] ?? null;
+        $id = $data['pago'] ?? null;
+        if (!$idVenta || !$id) {
+            return response()->json(['error' => 'Parámetro inválido'], 400);
+        }
         $pago = Pago::withoutGlobalScope('activo')->where('venta_id', $idVenta)->findOrFail($id);
         $venta = $pago->venta;
         $cliente = $venta->cliente;

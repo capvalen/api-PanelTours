@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nombre', 150);
             $table->date('fecha_nacimiento')->nullable();
             
-            $table->enum('parentesco', [
+            $table->enum('parentesco', ['titular',
                 'padre', 'madre', 'hijo', 'hermano/a', 'tio/a', 
                 'amistad', 'jefe', 'empleado', 'esposo/a', 'pareja', 
                 'acompañante', 'tutor/a', 'alumno'

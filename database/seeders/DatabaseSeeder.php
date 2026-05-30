@@ -56,6 +56,9 @@ class DatabaseSeeder extends Seeder
             PagoSeeder::class,
             DeudaSeeder::class,
             SeguimientoSeeder::class,
+
+            // Grupo 7: Logística
+            LogisticaSeeder::class,
         ]);
     }
 }
