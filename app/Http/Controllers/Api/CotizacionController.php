@@ -49,6 +49,11 @@ class CotizacionController extends Controller
             }
         }
 
+        // Filtro por estado
+        if (request()->has('estado') && request()->filled('estado')) {
+            $query->where('estado', request('estado'));
+        }
+
         // Límite de resultados para no sobrecargar
         $query->limit(request('limit', 50));
 

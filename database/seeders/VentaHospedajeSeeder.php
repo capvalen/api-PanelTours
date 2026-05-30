@@ -24,7 +24,7 @@ class VentaHospedajeSeeder extends Seeder
                 'cantidad_ninos' => 0,
                 'precio_por_noche' => 280.00,
                 'precio' => 1321.60,
-                'estado_pago' => 'parcial',
+                'estado_pago' => 'adelantado',
                 'estado' => 'confirmado',
                 'motivo_cancelacion' => null,
                 'requiere_cuna' => false,

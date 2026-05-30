@@ -18,11 +18,15 @@ class VentaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Venta::orderBy('id', 'desc')
-        ->with('items', 'departamento')
-        ->get();
+        $query = Venta::orderBy('id', 'desc')->with('items', 'departamento');
+
+        if ($request->filled('fecha')) {
+            $query->whereDate('fecha', $request->fecha);
+        }
+
+        return $query->get();
     }
 
     /**

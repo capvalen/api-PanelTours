@@ -7,6 +7,7 @@ use App\Models\Pago;
 use App\Models\Venta;
 use App\Models\Caja;
 use App\Models\CajaDetalle;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -127,5 +128,43 @@ class PagoController extends Controller
         ]);
         
         return response()->json(["message" => "Pago eliminado"]);
+    }
+
+    public function generarTicketPdf(int $idVenta, int $id)
+    {
+        $pago = Pago::withoutGlobalScope('activo')->where('venta_id', $idVenta)->findOrFail($id);
+        $venta = $pago->venta;
+        $cliente = $venta->cliente;
+        $items = $venta->items;
+        $codigo = 'TICKET-' . str_pad($pago->id, 3, '0', STR_PAD_LEFT);
+        $ventaCodigo = 'GEA-' . str_pad($venta->id, 3, '0', STR_PAD_LEFT);
+
+        $logoPath = public_path('images/logo.webp');
+        $logoBase64 = '';
+        if (file_exists($logoPath)) {
+            $img = imagecreatefromwebp($logoPath);
+            if ($img) {
+                imagefilter($img, IMG_FILTER_GRAYSCALE);
+                ob_start();
+                imagewebp($img);
+                $logoBase64 = base64_encode(ob_get_clean());
+                imagedestroy($img);
+            }
+        }
+
+        $data = [
+            'pago' => $pago,
+            'venta' => $venta,
+            'cliente' => $cliente,
+            'items' => $items,
+            'codigo' => $codigo,
+            'ventaCodigo' => $ventaCodigo,
+            'logoBase64' => $logoBase64,
+        ];
+
+        $pdf = Pdf::loadView('pdf.ticket-pago', $data);
+        $pdf->setPaper([0, 0, 226.77, 500], 'portrait');
+
+        return $pdf->stream("{$codigo}.pdf");
     }
 }

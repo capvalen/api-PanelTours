@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('contacto_pagar')->nullable();
             $table->string('comprobante')->nullable();
             $table->enum('medio_pago', ['yape', 'plin','tarjeta','depósito bancario','efectivo','POS'])->default('efectivo')->nullable();
-            $table->enum('estado_pago', ['pendiente', 'completado', 'fallido', 'condonado'])->default('pendiente');
+            $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
             $table->string('codigo_referencia')->nullable()->comment('Para transferencias o depósitos');
             $table->tinyInteger('activo')->default(1);
             $table->timestamps();

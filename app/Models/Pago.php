@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +33,13 @@ class Pago extends Model
         'saldo_pendiente' => 'decimal:2',
         'activo' => 'boolean',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('activo', function (Builder $builder) {
+            $builder->where('activo', 1);
+        });
+    }
 
     public function venta()
     {

@@ -36,7 +36,7 @@ return new class extends Migration
             $table->decimal('precio', 10, 2)->default(0);
             
             // Estado de pago
-            $table->enum('estado_pago', ['pendiente', 'parcial', 'pagado'])->default('pendiente');
+            $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
             
             // Estado de la reserva
             $table->enum('estado', ['pendiente','reservado', 'confirmado', 'checkin', 'checkout', 'cancelado'])->default('pendiente');

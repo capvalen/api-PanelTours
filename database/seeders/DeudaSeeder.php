@@ -32,7 +32,7 @@ class DeudaSeeder extends Seeder
                 'contacto_pagar' => 'Miguel Condori - 984567123',
                 'comprobante' => 'RH-2026-015',
                 'medio_pago' => 'yape',
-                'estado_pago' => 'completado',
+                'estado_pago' => 'pagado',
                 'codigo_referencia' => 'YAPE-20260322-001',
                 'activo' => 1,
                 'created_at' => now(),

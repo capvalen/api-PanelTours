@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\VentaAutoPasajeroController;
 use App\Http\Controllers\Api\PagoController;
 use App\Http\Controllers\Api\DeudaController;
 use App\Http\Controllers\Api\ArchivoController;
+use App\Http\Controllers\Api\PersonaController;
 use App\Http\Controllers\Api\PersonaPublicController;
 
 Route::get('/user', function (Request $request) {
@@ -55,6 +56,9 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('hospedajes', HospedajeController::class);
 	Route::apiResource('restaurantes', RestauranteController::class);
 	Route::apiResource('vehiculos', VehiculoController::class);
+
+		// Personas (autenticado)
+	Route::apiResource('personas', PersonaController::class)->except(['options']);
 
 	// 7. Módulo Financiero: debe ir antes de ventas por conflicto
 	Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
@@ -84,6 +88,8 @@ Route::middleware('auth:sanctum')->group(function () {
 	
 
 	
+
+
 	//prueba
 	Route::get('/prueba', function(){
 		return "hola mundo";
@@ -104,5 +110,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/personas/{venta_id}', [PersonaPublicController::class, 'showByVenta']);
 Route::post('/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);
 
-// Cotización - PDF y conversión
+// Cotización y Venta - PDF
 Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarPdf']);
+Route::get('/ventas/{idVenta}/pagos/{pago}/ticket', [PagoController::class, 'generarTicketPdf']);
