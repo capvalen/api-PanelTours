@@ -101,7 +101,7 @@
             padding: 2px 8px;
             font-size: 10px;
             border-radius: 10px;
-            background: #28a745;
+            background: #5a5a5a;
             color: white;
         }
         .resumen-box {
@@ -125,12 +125,15 @@
                     <img src="data:image/webp;base64,{{ $logoBase64 }}" alt="Logo" style="max-width: 80px; max-height: 60px;">
                 </td>
                 <td>
-                    <h1>Panel Tours</h1>
-                    <div class="codigo">{{ $codigo }}</div>
+                    <h1 class="mb-0">Grupo Euro Andino S.A.C.</h1>
+                    <div style="font-size: 10px; color: #023475; font-weight: bold; margin-top: 2px;">RUC: 20568390629</div>
+                    <div style="font-size: 10px; color: #666;">Dirección: Cal. Independencia N° 415 - El Tambo - Huancayo - Junín</div>
+                    <div style="font-size: 10px; color: #666;">Contacto: 947614293</div>
                 </td>
                 <td style="text-align: right;">
-                    <div class="fecha">Fecha: {{ \Carbon\Carbon::parse($cotizacion->fecha)->format('d/m/Y') }}</div>
-                    <div style="margin-top: 5px;"><span class="badge">{{ ucfirst($cotizacion->estado) }}</span></div>
+                    <div class="codigo">{{ $codigo }}</div>
+                    <div class="fecha">Fecha de cotización: {{ \Carbon\Carbon::parse($cotizacion->fecha)->format('d/m/Y') }}</div>
+                    <div style="margin-top: 5px;"><span class="badge">Cotización en curso</span></div>
                 </td>
             </tr>
         </table>
@@ -138,24 +141,32 @@
 
     <div class="section">
         <div class="section-title">Datos del Cliente</div>
-        <table class="info">
+        <table style="width: 100%; border-collapse: collapse;">
             <tr>
-                <td class="label">Nombre:</td>
-                <td class="value">
-                    {{ $cliente->razon_social ?? ($cliente->apellidos . ' ' . $cliente->nombres) }}
+                <td style="width: 50%; vertical-align: top;">
+                    <table class="info">
+                        <tr>
+                            <td class="label">Nombre / Razón Social:</td>
+                            <td class="value">{{ $cliente->razon_social ?? ($cliente->apellidos . ' ' . $cliente->nombres) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">DNI / RUC:</td>
+                            <td class="value">{{ $cliente->dni ?? $cliente->ruc ?? '-' }}</td>
+                        </tr>
+                    </table>
                 </td>
-            </tr>
-            <tr>
-                <td class="label">DNI / RUC:</td>
-                <td class="value">{{ $cliente->dni ?? $cliente->ruc ?? '-' }}</td>
-            </tr>
-            <tr>
-                <td class="label">Celular:</td>
-                <td class="value">{{ $cliente->celular ?? '-' }}</td>
-            </tr>
-            <tr>
-                <td class="label">Nacionalidad:</td>
-                <td class="value">{{ ucfirst($cotizacion->nacionalidad ?? 'Peruana') }}</td>
+                <td style="width: 50%; vertical-align: top;">
+                    <table class="info">
+                        <tr>
+                            <td class="label">Celular:</td>
+                            <td class="value">{{ $cliente->celular ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Nacionalidad:</td>
+                            <td class="value">{{ ucfirst($cotizacion->nacionalidad ?? 'Peruana') }}</td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
         </table>
     </div>
@@ -166,12 +177,14 @@
             <tr>
                 <td class="label">Destino:</td>
                 <td class="value">{{ $cotizacion->departamento->departamento ?? '-' }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <span style="color: #666; font-weight: bold;">Adultos:</span> {{ $cotizacion->adults ?? 0 }} &nbsp;&nbsp;&nbsp;
-                    <span style="color: #666; font-weight: bold;">Niños:</span> {{ $cotizacion->kids ?? 0 }} &nbsp;&nbsp;&nbsp;
-                    <span style="color: #666; font-weight: bold;">Total personas:</span> {{ $cotizacion->cuantas_personas ?? ($cotizacion->adults + $cotizacion->kids) }}
+                <td style="padding: 4px 8px;">
+                    <span style="color: #666; font-weight: bold;">Adultos:</span> {{ $cotizacion->adults ?? 0 }}
+                </td>
+                <td style="padding: 4px 8px;">
+                    <span style="color: #666; font-weight: bold;">Niños:</span> {{ $cotizacion->kids ?? 0 }}
+                </td>
+                <td style="padding: 4px 8px;">
+                    <span style="color: #666; font-weight: bold;">Total:</span> {{ $cotizacion->cuantas_personas ?? ($cotizacion->adults + $cotizacion->kids) }}
                 </td>
             </tr>
         </table>
@@ -186,7 +199,6 @@
                         <th style="width: 30px;">#</th>
                         <th>Tipo</th>
                         <th>Servicio</th>
-                        <th>Destino</th>
                         <th class="text-end">P. Adulto</th>
                         <th class="text-end">P. Niño</th>
                         <th class="text-end">Subtotal</th>
@@ -195,13 +207,12 @@
                 <tbody>
                     @foreach($items as $index => $item)
                         <tr>
-                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td class="text-center">{{ $index + 1 }}.</td>
                             <td>{{ ucfirst($item->tipo) }}</td>
                             <td>{{ $item->descripcion ?? '-' }}</td>
-                            <td>{{ $item->destino ?? '-' }}</td>
-                            <td class="text-end">S/ {{ number_format($item->precio_adulto, 2) }}</td>
-                            <td class="text-end">S/ {{ number_format($item->precio_kids, 2) }}</td>
-                            <td class="text-end fw-bold">S/ {{ number_format($item->precio, 2) }}</td>
+                            <td class="">S/ {{ number_format($item->precio_adulto, 2) }}</td>
+                            <td class="">S/ {{ number_format($item->precio_kids, 2) }}</td>
+                            <td class="fw-bold">S/ {{ number_format($item->precio, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -217,7 +228,7 @@
     </div>
 
     <div class="footer">
-        <p>Panel Tours - Cotización generada el {{ now()->format('d/m/Y H:i') }}</p>
+        <p>Panel Tours - Cotización generada el {{ now()->format('d/m/Y H:i a') }}</p>
         <p>Este documento es una cotización informativa, no constituye una factura o comprobante de pago.</p>
     </div>
 </body>

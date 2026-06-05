@@ -32,6 +32,10 @@ class Cotizacion extends Model
         'adelanto',
         'estado',
         'nacionalidad',
+        'ruta',
+        'servicios',
+        'incluye',
+        'no_incluye',
         'activo',
     ];
 
@@ -48,6 +52,9 @@ class Cotizacion extends Model
         'adults' => 'integer',
         'kids' => 'integer',
         'cuantas_personas' => 'integer',
+        'servicios' => 'array',
+        'incluye' => 'array',
+        'no_incluye' => 'array',
         'activo' => 'boolean',
     ];
 

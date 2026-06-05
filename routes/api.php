@@ -87,10 +87,6 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
 	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
 	
-
-	
-
-
 	//Logística
 	Route::get('/logistica', [LogisticaController::class, 'index']);
 	Route::get('/logistica/{id}', [LogisticaController::class, 'show']);

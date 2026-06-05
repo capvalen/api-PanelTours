@@ -35,6 +35,10 @@ class Venta extends Model
         'estado',
         'progreso',
         'nacionalidad',
+        'ruta',
+        'servicios',
+        'incluye',
+        'no_incluye',
         'autorizaciones',
         'activo',
     ];
@@ -52,6 +56,9 @@ class Venta extends Model
         'adults' => 'integer',
         'kids' => 'integer',
         'cuantas_personas' => 'integer',
+        'servicios' => 'array',
+        'incluye' => 'array',
+        'no_incluye' => 'array',
         'autorizaciones' => 'array',
         'activo' => 'boolean',
     ];
