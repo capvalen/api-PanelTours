@@ -36,6 +36,7 @@ class Venta extends Model
         'progreso',
         'nacionalidad',
         'ruta',
+        'punto_recojo',
         'servicios',
         'incluye',
         'no_incluye',

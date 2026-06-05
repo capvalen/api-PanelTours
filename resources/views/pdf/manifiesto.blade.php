@@ -120,9 +120,13 @@
                 <th>Alergias</th>
                 <th>Pedido especial</th>
                 <th>Celular</th>
+                <th>Saldo</th>
             </tr>
         </thead>
         <tbody>
+            <tr style="background:#f9f9f9;">
+                <td colspan="9"><strong>Vendedor:</strong> {{ $logistica->usuario->nombre ?? $logistica->usuario->usuario ?? 'Desconocido' }} · <strong>Punto de recojo:</strong> {{ $logistica->ventas->first()?->punto_recojo ?? '-' }}</td>
+            </tr>
             @foreach($logistica->ventas as $venta)
                 @php
                     $personas = $venta->personas ?? [];
@@ -131,7 +135,7 @@
                 @endphp
                 @if(count($personas) > 0)
                     <tr>
-                        <td colspan="8" class="venta-title">
+                        <td colspan="9" class="venta-title">
                             {{ $venta->cliente->razon_social ?? ($venta->cliente->apellidos . ' ' . $venta->cliente->nombres) ?? 'Sin cliente' }}
                             @if($venta->ciudad) - {{ $venta->ciudad }} @endif
                         </td>
@@ -154,6 +158,7 @@
                             <td>{{ $persona->alergia === 'si' ? 'Sí' : 'No' }}@if($persona->alergia === 'si' && $persona->detalle_alergia) ({{ $persona->detalle_alergia }}) @endif</td>
                             <td>{{ $persona->pedido_especial ?? '-' }}</td>
                             <td>{{ $venta->cliente->celular ?? '-' }}</td>
+                            <td>@if($persona->es_titular)@if($venta->precio - $venta->adelanto > 0)<span style="color:#c00;">Debe S/ {{ number_format($venta->precio - $venta->adelanto, 2) }}</span>@else<span style="color:#0a0;">100% Pagado</span>@endif @endif</td>
                         </tr>
                     @endforeach
                 @endif
