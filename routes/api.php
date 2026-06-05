@@ -108,8 +108,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 //sin loguearse:
-Route::get('/personas/{venta_id}', [PersonaPublicController::class, 'showByVenta']);
-Route::post('/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);
+Route::get('/reporte/personas/{venta_id}', [PersonaPublicController::class, 'showByVenta']);
+Route::post('/reporte/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);
 
 // Cotización y Venta - PDF
 Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarPdf']);

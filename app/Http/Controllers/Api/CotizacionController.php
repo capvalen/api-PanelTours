@@ -7,6 +7,7 @@ use App\Models\Cotizacion;
 use App\Models\CotizacionItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Venta;
 use App\Models\VentaItem;
@@ -200,6 +201,33 @@ class CotizacionController extends Controller
             }
         }
 
+        $tourData = null;
+        foreach ($cotizacion->items as $item) {
+					if (!empty($item->id_tour)) {
+						try {
+								$url = rtrim(env('VITE_API_GRUPO', ''), '/') . '/verTourPorId_v2.php';
+								$client = new \GuzzleHttp\Client(['verify' => false, 'timeout' => 10]);
+								$response = $client->post($url, [
+										'json' => ['id' => $item->id_tour],
+								]);
+								$body = json_decode($response->getBody(), true);
+								$content = $body['contenido'] ?? $body['datos'] ?? $body;
+								
+								$tourData = [
+									'nombre' => $content['nombre'] ?? null,
+									'incluidos' => $content['incluye'] ?? null,
+									'noincluidos' => $content['noIncluye'] ?? null,
+									'descripcion' => $content['descripcion'] ?? null,
+									'itinerario' => $content['itinerario'] ?? null,
+									'partida' => $content['partida'] ?? null,
+								];
+						} catch (\Exception $e) {
+								Log::warning('Error al obtener tour web: ' . $e->getMessage());
+						}
+						break;
+					}
+        }
+
         $data = [
             'cotizacion' => $cotizacion,
             'cliente' => $cotizacion->cliente,
@@ -207,6 +235,7 @@ class CotizacionController extends Controller
             'total' => $cotizacion->items->sum('precio'),
             'codigo' => $codigo,
             'logoBase64' => $logoBase64,
+            'tourData' => $tourData,
         ];
 
         $pdf = Pdf::loadView('pdf.cotizacion', $data);
@@ -271,6 +300,7 @@ class CotizacionController extends Controller
                     'descuento' => $item->descuento,
                     'motivo_descuento' => $item->motivo_descuento,
                     'precio' => $item->precio,
+                    'id_tour' => $item->id_tour,
                 ]);
             }
 

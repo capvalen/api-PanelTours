@@ -12,17 +12,8 @@ class VentaItem extends Model
     protected $table = 'venta_items';
 
     protected $fillable = [
-        'venta_id',
-        'tipo',
-        'precio',
-        'precio_adulto',
-        'precio_kids',
-        'descuento',
-        'motivo_descuento',
-        'descripcion',
-        'destino',
-        'estado_pago',
-        'activo',
+        'venta_id', 'tipo', 'precio', 'precio_adulto', 'precio_kids',
+        'descuento', 'motivo_descuento', 'descripcion', 'destino', 'estado_pago', 'activo', 'id_tour',
     ];
 
     protected $casts = [

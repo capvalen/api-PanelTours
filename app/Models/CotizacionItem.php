@@ -12,16 +12,8 @@ class CotizacionItem extends Model
     protected $table = 'cotizacion_items';
 
     protected $fillable = [
-        'cotizacion_id',
-        'tipo',
-        'precio',
-        'precio_adulto',
-        'precio_kids',
-        'descuento',
-        'motivo_descuento',
-        'descripcion',
-        'destino',
-        'activo',
+        'cotizacion_id', 'tipo', 'precio', 'precio_adulto', 'precio_kids',
+        'descuento', 'motivo_descuento', 'descripcion', 'destino', 'activo', 'id_tour',
     ];
 
     protected $casts = [

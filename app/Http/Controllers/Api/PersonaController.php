@@ -36,6 +36,12 @@ class PersonaController extends Controller
             'pais_emision'          => ['nullable', 'string', 'max:100'],
             'vacunas'               => ['nullable', 'in:si,no'],
             'detalle_vacunas'       => ['nullable', 'string'],
+            'alergia'               => ['nullable', 'in:si,no'],
+            'detalle_alergia'       => ['nullable', 'string'],
+            'pedido_especial'       => ['nullable', 'string'],
+            'celular'               => ['nullable', 'string', 'max:20'],
+            'contacto_emergencia'   => ['nullable', 'string', 'max:150'],
+            'celular_emergencia'    => ['nullable', 'string', 'max:20'],
             'observaciones'         => ['nullable', 'string'],
         ]);
 
@@ -53,6 +59,12 @@ class PersonaController extends Controller
             'pais_emision'              => $validated['pais_emision'] ?? null,
             'vacunas'                   => $validated['vacunas'] ?? 'no',
             'detalle_vacunas'           => $validated['detalle_vacunas'] ?? null,
+            'alergia'                   => $validated['alergia'] ?? 'no',
+            'detalle_alergia'           => $validated['detalle_alergia'] ?? null,
+            'pedido_especial'           => $validated['pedido_especial'] ?? null,
+            'celular'                   => $validated['celular'] ?? null,
+            'contacto_emergencia'       => $validated['contacto_emergencia'] ?? null,
+            'celular_emergencia'        => $validated['celular_emergencia'] ?? null,
             'observaciones'             => $validated['observaciones'] ?? null,
             'activo'                    => 1,
         ]);
@@ -82,6 +94,12 @@ class PersonaController extends Controller
             'pais_emision'          => ['nullable', 'string', 'max:100'],
             'vacunas'               => ['nullable', 'in:si,no'],
             'detalle_vacunas'       => ['nullable', 'string'],
+            'alergia'               => ['nullable', 'in:si,no'],
+            'detalle_alergia'       => ['nullable', 'string'],
+            'pedido_especial'       => ['nullable', 'string'],
+            'celular'               => ['nullable', 'string', 'max:20'],
+            'contacto_emergencia'   => ['nullable', 'string', 'max:150'],
+            'celular_emergencia'    => ['nullable', 'string', 'max:20'],
             'observaciones'         => ['nullable', 'string'],
         ]);
 

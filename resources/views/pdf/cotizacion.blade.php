@@ -227,8 +227,80 @@
         </div>
     </div>
 
+    @if($tourData)
+			<div class="section">
+					<div class="section-title">Detalles del Tour</div>
+					@if($tourData['nombre'])
+							<h2 style="font-size: 16px; color: #023475; margin-bottom: 12px;">{!! $tourData['nombre'] !!}</h2>
+					@endif
+
+					@if($tourData['descripcion'])
+							<p style="margin-bottom: 8px;"><strong>Descripción:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['descripcion'] !!}</div>
+					@endif
+
+					@if($tourData['partida'])
+							<p style="margin-bottom: 8px;"><strong>Punto de partida:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['partida'] !!}</div>
+					@endif
+
+					@if($tourData['itinerario'])
+							<p style="margin-bottom: 8px;"><strong>Itinerario:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['itinerario'] !!}</div>
+					@endif
+
+					@if($tourData['incluidos'])
+							<p style="margin-bottom: 8px;"><strong>Incluye:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['incluidos'] !!}</div>
+					@endif
+
+					@if($tourData['noincluidos'])
+							<p style="margin-bottom: 8px;"><strong>No incluye:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['noincluidos'] !!}</div>
+					@endif
+			</div>
+    @endif
+
+    @if($cotizacion->ruta || count($cotizacion->servicios ?? []) > 0 || count($cotizacion->incluye ?? []) > 0 || count($cotizacion->no_incluye ?? []) > 0)
+			<div class="section">
+					<div class="section-title">Información Extra</div>
+
+					@if($cotizacion->ruta)
+							<p style="margin-bottom: 8px;"><strong>Ruta:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{{ $cotizacion->ruta }}</div>
+					@endif
+
+					@if(count($cotizacion->servicios ?? []) > 0)
+							<p style="margin-bottom: 4px;"><strong>Servicios:</strong></p>
+							<ul style="font-size: 11px; color: #555; margin-bottom: 12px; padding-left: 20px;">
+									@foreach($cotizacion->servicios as $srv)
+											<li>{{ $srv }}</li>
+									@endforeach
+							</ul>
+					@endif
+
+					@if(count($cotizacion->incluye ?? []) > 0)
+							<p style="margin-bottom: 4px;"><strong>Incluye:</strong></p>
+							<ul style="font-size: 11px; color: #555; margin-bottom: 12px; padding-left: 20px;">
+									@foreach($cotizacion->incluye as $inc)
+											<li>{{ $inc }}</li>
+									@endforeach
+							</ul>
+					@endif
+
+					@if(count($cotizacion->no_incluye ?? []) > 0)
+							<p style="margin-bottom: 4px;"><strong>No incluye:</strong></p>
+							<ul style="font-size: 11px; color: #555; margin-bottom: 12px; padding-left: 20px;">
+									@foreach($cotizacion->no_incluye as $noinc)
+											<li>{{ $noinc }}</li>
+									@endforeach
+							</ul>
+					@endif
+			</div>
+    @endif
+
     <div class="footer">
-        <p>Panel Tours - Cotización generada el {{ now()->format('d/m/Y H:i a') }}</p>
+        <p>Grupo Euro Andino - Cotización generada el {{ now()->format('d/m/Y H:i a') }}</p>
         <p>Este documento es una cotización informativa, no constituye una factura o comprobante de pago.</p>
     </div>
 </body>

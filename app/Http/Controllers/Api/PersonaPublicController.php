@@ -43,6 +43,12 @@ class PersonaPublicController extends Controller
                 'pais_emision' => $persona->pais_emision,
                 'vacunas' => $persona->vacunas,
                 'detalle_vacunas' => $persona->detalle_vacunas,
+                'alergia' => $persona->alergia,
+                'detalle_alergia' => $persona->detalle_alergia,
+                'pedido_especial' => $persona->pedido_especial,
+                'celular' => $persona->celular,
+                'contacto_emergencia' => $persona->contacto_emergencia,
+                'celular_emergencia' => $persona->celular_emergencia,
                 'observaciones' => $persona->observaciones,
             ];
         })->values();
@@ -62,7 +68,7 @@ class PersonaPublicController extends Controller
                 'nro_clientes' => $ventaItemPrioritario?->nro_clientes,
             ],
             'venta_id' => $venta->id,
-            'total' => $personas->count(),
+            'total' => $venta->cuantas_personas,// $personas->count(),
             'titular' => $titular,
             'personas' => $personas,
         ]);
@@ -108,6 +114,12 @@ class PersonaPublicController extends Controller
             'personas.*.pais_emision' => ['nullable', 'string', 'max:100'],
             'personas.*.vacunas' => ['nullable', 'in:si,no'],
             'personas.*.detalle_vacunas' => ['nullable', 'string'],
+            'personas.*.alergia' => ['nullable', 'in:si,no'],
+            'personas.*.detalle_alergia' => ['nullable', 'string'],
+            'personas.*.pedido_especial' => ['nullable', 'string'],
+            'personas.*.celular' => ['nullable', 'string', 'max:20'],
+            'personas.*.contacto_emergencia' => ['nullable', 'string', 'max:150'],
+            'personas.*.celular_emergencia' => ['nullable', 'string', 'max:20'],
             'autorizaciones' => ['required', 'array'],
             'autorizaciones.uso_imagen' => ['required', 'boolean'],
             'autorizaciones.politica_privacidad' => ['required', 'boolean'],
@@ -134,6 +146,12 @@ class PersonaPublicController extends Controller
                     'pais_emision' => $persona['pais_emision'] ?? null,
                     'vacunas' => $persona['vacunas'] ?? 'no',
                     'detalle_vacunas' => $persona['detalle_vacunas'] ?? null,
+                    'alergia' => $persona['alergia'] ?? 'no',
+                    'detalle_alergia' => $persona['detalle_alergia'] ?? null,
+                    'pedido_especial' => $persona['pedido_especial'] ?? null,
+                    'celular' => $persona['celular'] ?? null,
+                    'contacto_emergencia' => $persona['contacto_emergencia'] ?? null,
+                    'celular_emergencia' => $persona['celular_emergencia'] ?? null,
                     'activo' => 1,
                 ]);
             }
