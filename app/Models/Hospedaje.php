@@ -23,6 +23,10 @@ class Hospedaje extends Model
         'incluye_estacionamiento',
         'incluye_wifi',
         'servicios_extra',
+        'banco',
+        'numero_cuenta',
+        'aplicativo',
+        'propietario_aplicativo',
         'archivos',
         'activo',
     ];

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Manifiesto {{ $logistica->titulo }}</title>
     <style>
-        @page { margin: 10mm; }
+        @page { margin: 8mm; size: landscape; }
         body {
             font-family: 'DejaVu Sans', sans-serif;
             font-size: 12px;
@@ -64,9 +64,17 @@
 </head>
 <body>
     <div class="header">
-        <img src="data:image/webp;base64,{{ $logoBase64 }}" alt="Logo">
-        <h2>MANIFIESTO DE PASAJEROS</h2>
-        <p>{{ $logistica->titulo }} - {{ \Carbon\Carbon::parse($logistica->fecha)->format('d/m/Y') }}</p>
+        <table style="margin: 0 auto; border-collapse: collapse;">
+            <tr>
+                <td style="width: 80px; vertical-align: middle; text-align: center;">
+                    <img src="data:image/webp;base64,{{ $logoBase64 }}" alt="Logo" style="max-width: 70px;">
+                </td>
+                <td style="vertical-align: middle; text-align: center;">
+                    <h2 style="margin: 0; font-size: 16px;">MANIFIESTO DE PASAJEROS</h2>
+                    <p style="margin: 0; font-size: 12px; color: #555;">{{ $logistica->titulo }} - {{ \Carbon\Carbon::parse($logistica->fecha)->format('d/m/Y') }}</p>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <table class="info-grid">
@@ -82,10 +90,6 @@
             <td class="label">Lugar:</td>
             <td>{{ $logistica->lugar ?? '-' }}</td>
         </tr>
-        <tr>
-            <td class="label">Estado:</td>
-            <td>{{ ucfirst($logistica->estado) }}</td>
-        </tr>
         @if($logistica->guia)
         <tr>
             <td class="label">Guía:</td>
@@ -96,12 +100,6 @@
         <tr>
             <td class="label">Vehículo:</td>
             <td colspan="3">{{ $logistica->vehiculo->placa }} - {{ $logistica->vehiculo->tipo_vehiculo }} / Conductor: {{ $logistica->vehiculo->nombre_conductor ?? '-' }}</td>
-        </tr>
-        @endif
-        @if($logistica->usuario)
-        <tr>
-            <td class="label">Vendedor:</td>
-            <td colspan="3">{{ $logistica->usuario->nombre ?? $logistica->usuario->usuario ?? '-' }}</td>
         </tr>
         @endif
     </table>
@@ -117,7 +115,7 @@
                 <th style="width: 30px;">N°</th>
                 <th>Nombre</th>
                 <th>DNI</th>
-                <th>Cliente</th>
+                <th>Edad</th>
                 <th>Celular</th>
             </tr>
         </thead>
@@ -136,13 +134,19 @@
                         </td>
                     </tr>
                     @foreach($personas as $idx => $persona)
+                        @php
+                            $edad = null;
+                            if ($persona->fecha_nacimiento) {
+                                $edad = \Carbon\Carbon::parse($persona->fecha_nacimiento)->age;
+                            }
+                        @endphp
                         <tr>
                             <td style="text-align:center;">{{ $idx + 1 }}</td>
                             <td>{{ $persona->nombre }}
                                 @if($persona->es_titular) <strong>(Titular)</strong> @endif
                             </td>
                             <td>{{ $persona->dni ?? '-' }}</td>
-                            <td>{{ $venta->cliente->razon_social ?? ($venta->cliente->apellidos . ' ' . $venta->cliente->nombres) ?? '-' }}</td>
+                            <td>{{ $edad !== null ? $edad . ' años' : '-' }}</td>
                             <td>{{ $venta->cliente->celular ?? '-' }}</td>
                         </tr>
                     @endforeach
@@ -161,8 +165,7 @@
     </p>
 
     <div class="footer">
-        <p>Generado el {{ now()->format('d/m/Y g:i a') }}</p>
-        <p>Grupo Euroandino S.A.C.</p>
+        <p>Generado el {{ now()->format('d/m/Y g:i a') }} · Grupo Euroandino S.A.C.</p>
     </div>
 </body>
 </html>

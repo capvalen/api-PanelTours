@@ -20,6 +20,8 @@ class Proveedor extends Model
         'celular',
         'banco',
         'numero_cuenta',
+        'aplicativo',
+        'propietario_aplicativo',
         'categoria',
         'departamento_id',
         'archivos',
