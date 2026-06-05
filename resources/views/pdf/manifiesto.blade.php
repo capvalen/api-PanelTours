@@ -116,6 +116,9 @@
                 <th>Nombre</th>
                 <th>DNI</th>
                 <th>Edad</th>
+                <th>Enfermedades</th>
+                <th>Alergias</th>
+                <th>Pedido especial</th>
                 <th>Celular</th>
             </tr>
         </thead>
@@ -128,7 +131,7 @@
                 @endphp
                 @if(count($personas) > 0)
                     <tr>
-                        <td colspan="5" class="venta-title">
+                        <td colspan="8" class="venta-title">
                             {{ $venta->cliente->razon_social ?? ($venta->cliente->apellidos . ' ' . $venta->cliente->nombres) ?? 'Sin cliente' }}
                             @if($venta->ciudad) - {{ $venta->ciudad }} @endif
                         </td>
@@ -147,6 +150,9 @@
                             </td>
                             <td>{{ $persona->dni ?? '-' }}</td>
                             <td>{{ $edad !== null ? $edad . ' años' : '-' }}</td>
+                            <td>{{ $persona->enfermedades === 'si' ? 'Sí' : 'No' }}@if($persona->enfermedades === 'si' && $persona->detalle_enfermedades) ({{ $persona->detalle_enfermedades }}) @endif</td>
+                            <td>{{ $persona->alergia === 'si' ? 'Sí' : 'No' }}@if($persona->alergia === 'si' && $persona->detalle_alergia) ({{ $persona->detalle_alergia }}) @endif</td>
+                            <td>{{ $persona->pedido_especial ?? '-' }}</td>
                             <td>{{ $venta->cliente->celular ?? '-' }}</td>
                         </tr>
                     @endforeach
