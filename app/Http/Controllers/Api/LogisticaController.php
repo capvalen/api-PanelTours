@@ -36,7 +36,13 @@ class LogisticaController extends Controller
     public function update(Request $request, int $id)
     {
         $item = Logistica::findOrFail($id);
+        $oldEstado = $item->estado;
         $item->update($request->all());
+
+        if ($oldEstado !== 'finalizado' && $item->estado === 'finalizado') {
+            $item->generarComisiones($request->input('monto'));
+        }
+
         return response()->json($item);
     }
 

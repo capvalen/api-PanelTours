@@ -35,6 +35,8 @@ use App\Http\Controllers\Api\ArchivoController;
 use App\Http\Controllers\Api\PersonaController;
 use App\Http\Controllers\Api\PersonaPublicController;
 use App\Http\Controllers\Api\LogisticaController;
+use App\Http\Controllers\Api\ComisionController;
+use App\Http\Controllers\Api\ComisionPagoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -87,6 +89,10 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
 	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
 	
+	// Comisiones
+	Route::apiResource('comisiones', ComisionController::class);
+	Route::apiResource('comision-pagos', ComisionPagoController::class);
+
 	//Logística
 	Route::get('/logistica', [LogisticaController::class, 'index']);
 	Route::get('/logistica/{id}', [LogisticaController::class, 'show']);

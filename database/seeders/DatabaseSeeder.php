@@ -59,6 +59,10 @@ class DatabaseSeeder extends Seeder
 
             // Grupo 7: Logística
             LogisticaSeeder::class,
+
+            // Grupo 8: Comisiones (depende de logística)
+            ComisionSeeder::class,
+            ComisionPagoSeeder::class,
         ]);
     }
 }

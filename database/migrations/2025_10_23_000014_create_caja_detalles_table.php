@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 						$table->foreignId('caja_id')->constrained('cajas')->onDelete('cascade');
             $table->enum('tipo', ['ingreso', 'egreso']);
-            $table->enum('categoria', ['ingreso','salida','venta', 'gasto operativo', 'servicios básicos', 'pago de personal', 'pago de proveedores', 'otros']);
+            $table->enum('categoria', ['ingreso','salida','venta', 'gasto operativo', 'servicios básicos', 'pago de personal', 'pago de proveedores', 'pago de comisión', 'otros']);
             $table->decimal('monto', 10, 2);
             $table->string('concepto')->nullable();
             $table->dateTime('fecha');

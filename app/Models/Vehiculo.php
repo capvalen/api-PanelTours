@@ -54,6 +54,11 @@ class Vehiculo extends Model
     {
         return $this->hasMany(VentaAuto::class);
     }
+
+    public function comisiones()
+    {
+        return $this->morphMany(Comision::class, 'comisionable');
+    }
     public function getArchivosAttribute($value)
     {
         return $value ? json_decode($value, true) : [];

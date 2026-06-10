@@ -113,6 +113,52 @@ class VentaItemSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            // Venta 8: Arequipa
+            [
+                'venta_id' => 8,
+                'tipo' => 'tour',
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
+                'precio' => 1000.00,
+                'descripcion' => 'City Tour Arequipa + Monasterio Santa Catalina',
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'venta_id' => 8,
+                'tipo' => 'restaurante',
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
+                'precio' => 800.00,
+                'descripcion' => 'Plan alimenticio 2 días',
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            // Venta 9: Cusco
+            [
+                'venta_id' => 9,
+                'tipo' => 'tour',
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
+                'precio' => 1500.00,
+                'descripcion' => 'Tour Valle Sagrado día completo',
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'venta_id' => 9,
+                'tipo' => 'hospedaje',
+                'descuento' => 0.00,
+                'motivo_descuento' => null,
+                'precio' => 1000.00,
+                'descripcion' => 'Hospedaje Cusco - 3 noches',
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

@@ -41,4 +41,9 @@ class Guia extends Model
     {
         return $this->hasMany(VentaGuia::class);
     }
+
+    public function comisiones()
+    {
+        return $this->morphMany(Comision::class, 'comisionable');
+    }
 }
