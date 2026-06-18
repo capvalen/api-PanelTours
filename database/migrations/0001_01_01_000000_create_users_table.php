@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('user')->unique();
-            $table->enum('perfil', ['administrador', 'agente', 'contador']);
+            $table->enum('perfil', ['administrador', 'counter', 'logística', 'caja']);
             $table->string('password');
 						$table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();

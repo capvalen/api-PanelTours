@@ -302,6 +302,7 @@
     <div class="footer">
         <p>Grupo Euro Andino - Cotización generada el {{ now()->format('d/m/Y H:i a') }}</p>
         <p>Este documento es una cotización informativa, no constituye una factura o comprobante de pago.</p>
+        <p>Visite nuestra web: <a href="https://grupoeuroandino.com" style="color: #023475; text-decoration: none;">https://grupoeuroandino.com</a></p>
     </div>
 </body>
 </html>
