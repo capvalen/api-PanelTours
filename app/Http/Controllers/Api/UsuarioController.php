@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
@@ -92,5 +92,33 @@ class UsuarioController extends Controller
             $item->delete();
         }
         return response()->json(["message" => "Usuario eliminado"]);
+    }
+
+    /**
+     * Cambiar la propia contraseña (accesible para cualquier autenticado).
+     */
+    public function cambiarPassword(Request $request)
+    {
+        $request->validate([
+            'currentPassword' => 'required',
+            'newPassword' => 'required|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->currentPassword, $user->password)) {
+            return response()->json([
+                'error' => true,
+                'message' => 'La contraseña actual no es correcta'
+            ], 400);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newPassword)
+        ]);
+
+        return response()->json([
+            'message' => 'Contraseña cambiada correctamente'
+        ]);
     }
 }

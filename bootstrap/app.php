@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
         $middleware->prepend(\Illuminate\Http\Middleware\HandleCors::class);
+
+        $middleware->alias([
+            'check_perfil' => \App\Http\Middleware\CheckPerfil::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (AuthenticationException $e, $request) {

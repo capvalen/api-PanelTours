@@ -11,6 +11,7 @@ use App\Models\VentaRestaurante;
 use App\Models\VentaTurismo;
 use App\Models\VentaVuelo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
@@ -21,6 +22,11 @@ class VentaController extends Controller
     public function index(Request $request)
     {
         $query = Venta::orderBy('id', 'desc')->with('items', 'departamento');
+
+        // Si es counter, solo ver sus propias ventas
+        if (Auth::user()->perfil === 'counter') {
+            $query->where('usuario_id', Auth::id());
+        }
 
         if ($request->filled('fecha')) {
             $query->whereDate('fecha', $request->fecha);
@@ -40,6 +46,11 @@ class VentaController extends Controller
         $ventaData['cuantas_personas'] = $ventaData['personas'];
       }
       unset($ventaData['personas']);
+
+      // Auto-asignar usuario_id si no se envió
+      if (!isset($ventaData['usuario_id'])) {
+          $ventaData['usuario_id'] = Auth::id();
+      }
 
       $venta = Venta::create($ventaData);
 

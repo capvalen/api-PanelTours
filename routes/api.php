@@ -44,73 +44,74 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [UsuarioController::class, 'login']);
 
+// ─────────────────────────────────────────────
+// Grupo autenticado con restricciones por perfil
+// ─────────────────────────────────────────────
 Route::middleware('auth:sanctum')->group(function () {
-	Route::apiResource('usuarios', UsuarioController::class);
-	// 1. Tablas Independientes Base
-	Route::apiResource('clientes', ClienteController::class);
-	Route::apiResource('departamentos', DepartamentoController::class)->only(['index']); // Solo listar
-	Route::apiResource('guias', GuiaController::class);
-	Route::apiResource('vuelos', VueloController::class);
-	Route::apiResource('proveedores', ProveedorController::class);
-	Route::apiResource('aerolineas', AerolineaController::class);
-	Route::apiResource('recordatorios', RecordatorioController::class);
-	
-	// 2. Tablas de Dependencia Leve
-	Route::apiResource('hospedajes', HospedajeController::class);
-	Route::apiResource('restaurantes', RestauranteController::class);
-	Route::apiResource('vehiculos', VehiculoController::class);
 
-		// Personas (autenticado)
-	Route::apiResource('personas', PersonaController::class)->except(['options']);
+	// Todos los autenticados pueden cambiar su propia contraseña
+	Route::put('/cambiar-password', [UsuarioController::class, 'cambiarPassword']);
 
-	// 7. Módulo Financiero: debe ir antes de ventas por conflicto
-	Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
-	Route::apiResource('deudas', DeudaController::class);
+	// Solo administrador
+	Route::middleware('check_perfil:administrador')->group(function () {
+		Route::apiResource('usuarios', UsuarioController::class);
+		Route::apiResource('departamentos', DepartamentoController::class)->only(['index']);
+		Route::apiResource('vuelos', VueloController::class);
+		Route::apiResource('aerolineas', AerolineaController::class);
+		Route::apiResource('recordatorios', RecordatorioController::class);
+		Route::apiResource('hospedajes', HospedajeController::class);
+		Route::apiResource('restaurantes', RestauranteController::class);
+		Route::apiResource('personas', PersonaController::class)->except(['options']);
+		Route::apiResource('comisiones', ComisionController::class);
+		Route::apiResource('comision-pagos', ComisionPagoController::class);
+	});
 
-	// 3. Tablas Transaccionales Core
-	Route::apiResource('ventas', VentaController::class);
-	Route::apiResource('cajas', CajaController::class);
-	
-	// 4. Tablas Detalle e Items
-	Route::apiResource('venta_items', VentaItemController::class);
- 	Route::apiResource('cotizacion', CotizacionController::class);
- 	Route::apiResource('cotizacion_items', CotizacionItemController::class);
-	Route::apiResource('caja_detalles', CajaDetalleController::class);
-	
-	// 5. Detalles Específicos de Items de Venta
-	Route::apiResource('venta_hospedajes', VentaHospedajeController::class);
-	Route::apiResource('venta_autos', VentaAutoController::class);
-	Route::apiResource('venta_restaurantes', VentaRestauranteController::class);
-	Route::apiResource('venta_turismo', VentaTurismoController::class);
-	Route::apiResource('venta_guias', VentaGuiaController::class);
-	
-	// 6. Subdetalles y Pasajeros
-	Route::apiResource('venta_vuelos', VentaVueloController::class);
-	Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
-	Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
-	
-	// Comisiones
-	Route::apiResource('comisiones', ComisionController::class);
-	Route::apiResource('comision-pagos', ComisionPagoController::class);
+	// Counter + Admin: cotizaciones, ventas, clientes
+	Route::middleware('check_perfil:administrador,counter')->group(function () {
+		Route::apiResource('clientes', ClienteController::class);
+		Route::post('/clientes/{id}/adjuntar_archivo', [ClienteController::class, 'adjuntarArchivo']);
 
-	//Logística
-	Route::get('/logistica', [LogisticaController::class, 'index']);
-	Route::get('/logistica/{id}', [LogisticaController::class, 'show']);
-	Route::post('/logistica', [LogisticaController::class, 'store']);
-	Route::put('/logistica/{id}', [LogisticaController::class, 'update']);
-	Route::post('/logistica/vincular-venta', [LogisticaController::class, 'vincularVenta']);
+		Route::apiResource('cotizacion', CotizacionController::class);
+		Route::apiResource('cotizacion_items', CotizacionItemController::class);
+		Route::post('/cotizacion/{id}/convertir-reserva', [CotizacionController::class, 'convertirReserva']);
+
+		Route::apiResource('ventas', VentaController::class);
+		Route::apiResource('venta_items', VentaItemController::class);
+		Route::apiResource('venta_hospedajes', VentaHospedajeController::class);
+		Route::apiResource('venta_autos', VentaAutoController::class);
+		Route::apiResource('venta_restaurantes', VentaRestauranteController::class);
+		Route::apiResource('venta_turismo', VentaTurismoController::class);
+		Route::apiResource('venta_guias', VentaGuiaController::class);
+		Route::apiResource('venta_vuelos', VentaVueloController::class);
+		Route::apiResource('venta_vuelos_pasajeros', VentaVueloPasajeroController::class);
+		Route::apiResource('venta_autos_pasajeros', VentaAutoPasajeroController::class);
+	});
+
+	// Logística + Admin: guías, vehículos, proveedores, logística
+	Route::middleware('check_perfil:administrador,logística')->group(function () {
+		Route::apiResource('guias', GuiaController::class);
+		Route::apiResource('vehiculos', VehiculoController::class);
+		Route::apiResource('proveedores', ProveedorController::class);
+
+		Route::get('/logistica', [LogisticaController::class, 'index']);
+		Route::get('/logistica/{id}', [LogisticaController::class, 'show']);
+		Route::post('/logistica', [LogisticaController::class, 'store']);
+		Route::put('/logistica/{id}', [LogisticaController::class, 'update']);
+		Route::post('/logistica/vincular-venta', [LogisticaController::class, 'vincularVenta']);
+	});
+
+	// Caja + Admin: caja, pagos
+	Route::middleware('check_perfil:administrador,caja')->group(function () {
+		Route::apiResource('cajas', CajaController::class);
+		Route::put('/cajas/aperturar', [CajaController::class, 'aperturar']);
+		Route::put('/cajas/cerrar/{id}', [CajaController::class, 'cerrar']);
+		Route::apiResource('caja_detalles', CajaDetalleController::class);
+		Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
+		Route::post('/archivos', [ArchivoController::class, 'store']);
+	});
 
 	Route::get('/saludo_token', function(){ return "hola token"; });
 
-	//Personalizadas
-	Route::put('/cajas/aperturar', [CajaController::class, 'aperturar']);
-	Route::put('/cajas/cerrar/{id}', [CajaController::class, 'cerrar']);
-	Route::post('/archivos', [ArchivoController::class, 'store']);
-	Route::post('/clientes/{id}/adjuntar_archivo', [ClienteController::class, 'adjuntarArchivo']);
-
-	//Cotización: conversión
-	Route::post('/cotizacion/{id}/convertir-reserva', [CotizacionController::class, 'convertirReserva']);
-	
 });
 
 //sin loguearse:

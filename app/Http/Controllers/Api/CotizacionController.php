@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cotizacion;
 use App\Models\CotizacionItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -21,6 +22,11 @@ class CotizacionController extends Controller
     {
         $query = Cotizacion::orderBy('id', 'desc')
             ->with('items', 'departamento');
+
+        // Si es counter, solo ver sus propias cotizaciones
+        if (Auth::user()->perfil === 'counter') {
+            $query->where('usuario_id', Auth::id());
+        }
 
         // Filtro por fecha (formato: YYYY-MM-DD)
         if (request()->has('fecha') && request()->filled('fecha')) {
@@ -80,6 +86,11 @@ class CotizacionController extends Controller
             $cotizacionData['cuantas_personas'] = $cotizacionData['personas'];
         }
         unset($cotizacionData['personas']);
+
+        // Auto-asignar usuario_id si no se envió
+        if (!isset($cotizacionData['usuario_id'])) {
+            $cotizacionData['usuario_id'] = Auth::id();
+        }
 
         $cotizacion = Cotizacion::create($cotizacionData);
 
