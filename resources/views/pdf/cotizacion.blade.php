@@ -122,7 +122,7 @@
         <table style="width: 100%;">
             <tr>
                 <td style="width: 90px;">
-                    <img src="data:image/webp;base64,{{ $logoBase64 }}" alt="Logo" style="max-width: 80px; max-height: 60px;">
+                    <img src="{{ $logoBase64 }}" alt="Logo" style="max-width: 80px; max-height: 60px;">
                 </td>
                 <td>
                     <h1 class="mb-0">Grupo Euro Andino S.A.C.</h1>
@@ -138,6 +138,36 @@
             </tr>
         </table>
     </div>
+
+    @if(count($tourData['fotosBase64'] ?? []) > 0)
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; padding: 5px;">
+                    <img src="{{ $tourData['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; object-fit: cover; border-radius: 4px;">
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][1] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                      </td>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                      </td>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+            </tr>
+        </table>
+    @endif
 
     <div class="section">
         <div class="section-title">Datos del Cliente</div>

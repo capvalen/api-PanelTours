@@ -200,17 +200,16 @@ class CotizacionController extends Controller
 
         $codigo = 'COT-' . str_pad($cotizacion->id, 3, '0', STR_PAD_LEFT);
 
-        $logoPath = public_path('images/logo.png');
         $logoBase64 = '';
-        if (file_exists($logoPath)) {
-            $img = imagecreatefrompng($logoPath);
-            if ($img) {
-                ob_start();
-                imagepng($img);
-                $logoBase64 = base64_encode(ob_get_clean());
-                imagedestroy($img);
-            }
+        try {
+            $logoClient = new \GuzzleHttp\Client(['verify' => false, 'timeout' => 10]);
+            $logoResp = $logoClient->get('https://grupoeuroandino.com/wp-content/uploads/2020/09/Grupo-Euro-Andino.png');
+            $logoBase64 = 'data:' . $logoResp->getHeaderLine('Content-Type') . ';base64,' . base64_encode($logoResp->getBody());
+        } catch (\Exception $e) {
+            Log::warning('Error al obtener logo: ' . $e->getMessage());
         }
+
+        $cotizacion->unsetRelation('usuario');
 
         $tourData = null;
         foreach ($cotizacion->items as $item) {
@@ -224,6 +223,24 @@ class CotizacionController extends Controller
 								$body = json_decode($response->getBody(), true);
 								$content = $body['contenido'] ?? $body['datos'] ?? $body;
 								
+								$fotos = $content['fotos'] ?? null;
+								$fotosBase64 = [];
+								if (!empty($fotos)) {
+									$baseUrl = 'https://grupoeuroandino.com/app/render/images/subidas/';
+									$imgClient = new \GuzzleHttp\Client(['verify' => false, 'timeout' => 5]);
+									foreach ($fotos as $foto) {
+										$nombreRuta = is_string($foto) ? $foto : ($foto['nombreRuta'] ?? $foto[0] ?? null);
+										if ($nombreRuta) {
+											try {
+												$resp = $imgClient->get($baseUrl . $nombreRuta);
+												$fotosBase64[] = 'data:image/jpeg;base64,' . base64_encode($resp->getBody());
+											} catch (\Exception $e) {
+												$fotosBase64[] = null;
+											}
+										}
+									}
+								}
+
 								$tourData = [
 									'nombre' => $content['nombre'] ?? null,
 									'incluidos' => $content['incluye'] ?? null,
@@ -231,6 +248,8 @@ class CotizacionController extends Controller
 									'descripcion' => $content['descripcion'] ?? null,
 									'itinerario' => $content['itinerario'] ?? null,
 									'partida' => $content['partida'] ?? null,
+									'fotos' => $fotos,
+									'fotosBase64' => $fotosBase64,
 								];
 						} catch (\Exception $e) {
 								Log::warning('Error al obtener tour web: ' . $e->getMessage());
