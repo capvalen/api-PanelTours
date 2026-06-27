@@ -212,17 +212,19 @@ class CotizacionController extends Controller
         $cotizacion->unsetRelation('usuario');
 
         $tourData = null;
+        
         foreach ($cotizacion->items as $item) {
 					if (!empty($item->id_tour)) {
 						try {
 								$url = rtrim(env('VITE_API_GRUPO', ''), '/') . '/verTourPorId_v2.php';
+                
 								$client = new \GuzzleHttp\Client(['verify' => false, 'timeout' => 10]);
 								$response = $client->post($url, [
 										'json' => ['id' => $item->id_tour],
 								]);
-								$body = json_decode($response->getBody(), true);
-								$content = $body['contenido'] ?? $body['datos'] ?? $body;
-								
+                $body = json_decode($response->getBody(), true);
+								$content = json_decode($body['tour']['contenido'], true);
+
 								$fotos = $content['fotos'] ?? null;
 								$fotosBase64 = [];
 								if (!empty($fotos)) {
@@ -233,13 +235,16 @@ class CotizacionController extends Controller
 										if ($nombreRuta) {
 											try {
 												$resp = $imgClient->get($baseUrl . $nombreRuta);
-												$fotosBase64[] = 'data:image/jpeg;base64,' . base64_encode($resp->getBody());
+                        $contenido = (string) $resp->getBody();
+                        $mime = $resp->getHeaderLine('Content-Type');
+                        $fotosBase64[] = "data:{$mime};base64," . base64_encode($contenido);
 											} catch (\Exception $e) {
 												$fotosBase64[] = null;
 											}
 										}
 									}
 								}
+                
 
 								$tourData = [
 									'nombre' => $content['nombre'] ?? null,
@@ -253,6 +258,7 @@ class CotizacionController extends Controller
 								];
 						} catch (\Exception $e) {
 								Log::warning('Error al obtener tour web: ' . $e->getMessage());
+                return var_dump('Error al obtener tour web: ' . $e->getMessage());
 						}
 						break;
 					}
@@ -268,10 +274,11 @@ class CotizacionController extends Controller
             'tourData' => $tourData,
         ];
 
+        
         $pdf = Pdf::loadView('pdf.cotizacion', $data);
         $pdf->setPaper('A4', 'portrait');
-
-        return $pdf->stream("{$codigo}.pdf");
+        
+        return $pdf->stream("Cotizacion.pdf");
     }
 
     /**

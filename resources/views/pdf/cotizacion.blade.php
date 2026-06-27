@@ -1,9 +1,13 @@
+@php
+//var_dump($tourData); die();
+
+@endphp
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Cotización {{ $codigo }}</title>
+    <title>Cotización {{ $codigo }} - Grupo Euro Andino S.A.C</title>
     <style>
         @page { margin: 20px; }
         body {
@@ -143,24 +147,25 @@
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
             <tr>
                 <td style="width: 50%; vertical-align: top; padding: 5px;">
-                    <img src="{{ $tourData['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; object-fit: cover; border-radius: 4px;">
+                  
+                    <img src="{{ $tourData['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; border-radius: 4px;">
                 </td>
                 <td style="width: 50%; vertical-align: top;">
                   <table style="width: 100%; border-collapse: collapse;">
                     <tr>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][1] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                          <img src="{{ $tourData['fotosBase64'][5] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                          <img src="{{ $tourData['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                     </tr>
                     <tr>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                          <img src="{{ $tourData['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; object-fit: cover; border-radius: 4px;">
+                          <img src="{{ $tourData['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                     </tr>
                   </table>
