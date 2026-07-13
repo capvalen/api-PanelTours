@@ -211,7 +211,7 @@ class CotizacionController extends Controller
 
         $cotizacion->unsetRelation('usuario');
 
-        $tourData = null;
+        $tourData = [];
         
         foreach ($cotizacion->items as $item) {
 					if (!empty($item->id_tour)) {
@@ -246,7 +246,7 @@ class CotizacionController extends Controller
 								}
                 
 
-								$tourData = [
+								$tourData[] = [
 									'nombre' => $content['nombre'] ?? null,
 									'incluidos' => $content['incluye'] ?? null,
 									'noincluidos' => $content['noIncluye'] ?? null,
@@ -261,7 +261,6 @@ class CotizacionController extends Controller
 								Log::warning('Error al obtener tour web: ' . $e->getMessage());
                 return var_dump('Error al obtener tour web: ' . $e->getMessage());
 						}
-						break;
 					}
         }
 
@@ -271,7 +270,7 @@ class CotizacionController extends Controller
             'items' => $cotizacion->items,
             'total' => $cotizacion->items->sum('precio'),
             'codigo' => $codigo,
-            //'logoBase64' => $logoBase64,
+            'logoBase64' => $logoBase64,
             'tourData' => $tourData,
         ];
 				//echo json_encode( $data, true); die();

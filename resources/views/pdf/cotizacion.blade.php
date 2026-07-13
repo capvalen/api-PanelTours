@@ -231,76 +231,70 @@
         </div>
     </div>
 
-    @if(count($tourData['fotosBase64'] ?? []) > 0)
+    @foreach($tourData as $index => $tour)
+        @if(count($tour['fotosBase64'] ?? []) > 0)
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
             <tr>
                 <td style="width: 50%; vertical-align: top; padding: 5px;">
-                  
-                    <img src="{{ $tourData['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; border-radius: 4px;">
+                    <img src="{{ $tour['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; border-radius: 4px;">
                 </td>
                 <td style="width: 50%; vertical-align: top;">
                   <table style="width: 100%; border-collapse: collapse;">
                     <tr>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][5] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                          <img src="{{ $tour['fotosBase64'][5] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                          <img src="{{ $tour['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                     </tr>
                     <tr>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                          <img src="{{ $tour['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                       <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                          <img src="{{ $tour['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
                       </td>
                     </tr>
                   </table>
                 </td>
             </tr>
         </table>
-    @endif
+        @endif
 
-    @if($tourData)
-			<div class="section">
-					@if($tourData['nombre'])
-							<h2 style="font-size: 16px; color: #023475; margin-bottom: 12px;">{!! $tourData['nombre'] !!}</h2>
-					@endif
-					@if($tourData['url'])
-							<p style="margin-bottom: 8px;"><strong>URL del tour:</strong></p>
-							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">
-									<b>Link:</b> <a href="https://grupoeuroandino.com/tours/{{ $tourData['url'] }}" target="_blank" style="color: #023475;">{{ $tourData['url'] }}</a>
-							</div>
-					@endif
-					<div class="section-title">Detalles del Tour</div>
-
-					@if($tourData['descripcion'])
-							<p style="margin-bottom: 8px;"><strong>Descripción:</strong></p>
-							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['descripcion'] !!}</div>
-					@endif
-
-					@if($tourData['partida'])
-							<p style="margin-bottom: 8px;"><strong>Punto de partida:</strong></p>
-							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['partida'] !!}</div>
-					@endif
-
-					@if($tourData['itinerario'])
-							<p style="margin-bottom: 8px;"><strong>Itinerario:</strong></p>
-							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['itinerario'] !!}</div>
-					@endif
-
-					@if($tourData['incluidos'])
-							<p style="margin-bottom: 8px;"><strong>Incluye:</strong></p>
-							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['incluidos'] !!}</div>
-					@endif
-
-					@if($tourData['noincluidos'])
-							<p style="margin-bottom: 8px;"><strong>No incluye:</strong></p>
-							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tourData['noincluidos'] !!}</div>
-					@endif
-			</div>
-    @endif
+        <div class="section">
+            <div class="section-title">Detalles del Tour {{ count($tourData) > 1 ? ($index + 1) : '' }}</div>
+            @if($tour['nombre'])
+                <h2 style="font-size: 16px; color: #023475; margin-bottom: 12px;">{!! $tour['nombre'] !!}</h2>
+            @endif
+            @if($tour['url'])
+                <p style="margin-bottom: 8px;"><strong>URL del tour:</strong></p>
+                <div style="font-size: 11px; color: #555; margin-bottom: 12px;">
+                    <b>Link:</b> <a href="https://grupoeuroandino.com/tours/{{ $tour['url'] }}" target="_blank" style="color: #023475;">{{ $tour['url'] }}</a>
+                </div>
+            @endif
+            @if($tour['descripcion'])
+                <p style="margin-bottom: 8px;"><strong>Descripción:</strong></p>
+                <div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tour['descripcion'] !!}</div>
+            @endif
+            @if($tour['partida'])
+                <p style="margin-bottom: 8px;"><strong>Punto de partida:</strong></p>
+                <div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tour['partida'] !!}</div>
+            @endif
+            @if($tour['itinerario'])
+                <p style="margin-bottom: 8px;"><strong>Itinerario:</strong></p>
+                <div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tour['itinerario'] !!}</div>
+            @endif
+            @if($tour['incluidos'])
+                <p style="margin-bottom: 8px;"><strong>Incluye:</strong></p>
+                <div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tour['incluidos'] !!}</div>
+            @endif
+            @if($tour['noincluidos'])
+                <p style="margin-bottom: 8px;"><strong>No incluye:</strong></p>
+                <div style="font-size: 11px; color: #555; margin-bottom: 12px;">{!! $tour['noincluidos'] !!}</div>
+            @endif
+        </div>
+    @endforeach
 
     @if($cotizacion->ruta || count($cotizacion->servicios ?? []) > 0 || count($cotizacion->incluye ?? []) > 0 || count($cotizacion->no_incluye ?? []) > 0)
 			<div class="section">
