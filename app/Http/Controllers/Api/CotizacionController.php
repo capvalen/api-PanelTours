@@ -192,7 +192,7 @@ class CotizacionController extends Controller
     /**
      * Generar PDF de la cotización.
      */
-    public function generarPdf(string $id)
+    public function generarCotizacionPdf(string $id)
     {       
         $cotizacion = Cotizacion::with('items', 'cliente', 'departamento')
             ->withoutGlobalScope('activo')
@@ -253,8 +253,9 @@ class CotizacionController extends Controller
 									'descripcion' => $content['descripcion'] ?? null,
 									'itinerario' => $content['itinerario'] ?? null,
 									'partida' => $content['partida'] ?? null,
+									'url' => $body['tour']['url'] ?? null,
 									'fotos' => $fotos,
-									'fotosBase64' => $fotosBase64,
+									'fotosBase64' => $fotosBase64
 								];
 						} catch (\Exception $e) {
 								Log::warning('Error al obtener tour web: ' . $e->getMessage());
@@ -270,9 +271,10 @@ class CotizacionController extends Controller
             'items' => $cotizacion->items,
             'total' => $cotizacion->items->sum('precio'),
             'codigo' => $codigo,
-            'logoBase64' => $logoBase64,
+            //'logoBase64' => $logoBase64,
             'tourData' => $tourData,
         ];
+				//echo json_encode( $data, true); die();
 
         
         $pdf = Pdf::loadView('pdf.cotizacion', $data);

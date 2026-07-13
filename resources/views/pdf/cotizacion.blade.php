@@ -143,37 +143,6 @@
         </table>
     </div>
 
-    @if(count($tourData['fotosBase64'] ?? []) > 0)
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-            <tr>
-                <td style="width: 50%; vertical-align: top; padding: 5px;">
-                  
-                    <img src="{{ $tourData['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; border-radius: 4px;">
-                </td>
-                <td style="width: 50%; vertical-align: top;">
-                  <table style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                      <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][5] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
-                      </td>
-                      <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
-                      </td>
-                      <td style="width: 50%; padding: 3px;">
-                          <img src="{{ $tourData['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-            </tr>
-        </table>
-    @endif
-
     <div class="section">
         <div class="section-title">Datos del Cliente</div>
         <table style="width: 100%; border-collapse: collapse;">
@@ -262,12 +231,49 @@
         </div>
     </div>
 
+    @if(count($tourData['fotosBase64'] ?? []) > 0)
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; padding: 5px;">
+                  
+                    <img src="{{ $tourData['fotosBase64'][0] ?? '' }}" style="width: 100%; height: 260px; border-radius: 4px;">
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][5] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                      </td>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][4] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][3] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                      </td>
+                      <td style="width: 50%; padding: 3px;">
+                          <img src="{{ $tourData['fotosBase64'][2] ?? '' }}" style="width: 100%; height: 128px; border-radius: 4px;">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+            </tr>
+        </table>
+    @endif
+
     @if($tourData)
 			<div class="section">
-					<div class="section-title">Detalles del Tour</div>
 					@if($tourData['nombre'])
 							<h2 style="font-size: 16px; color: #023475; margin-bottom: 12px;">{!! $tourData['nombre'] !!}</h2>
 					@endif
+					@if($tourData['url'])
+							<p style="margin-bottom: 8px;"><strong>URL del tour:</strong></p>
+							<div style="font-size: 11px; color: #555; margin-bottom: 12px;">
+									<b>Link:</b> <a href="https://grupoeuroandino.com/tours/{{ $tourData['url'] }}" target="_blank" style="color: #023475;">{{ $tourData['url'] }}</a>
+							</div>
+					@endif
+					<div class="section-title">Detalles del Tour</div>
 
 					@if($tourData['descripcion'])
 							<p style="margin-bottom: 8px;"><strong>Descripción:</strong></p>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Venta;
 use App\Models\VentaAuto;
 use App\Models\VentaHospedaje;
+use App\Models\Cliente;
+use App\Models\Persona;
 use App\Models\VentaItem;
 use App\Models\VentaRestaurante;
 use App\Models\VentaTurismo;
@@ -134,6 +136,23 @@ class VentaController extends Controller
         $progresoAnterior = $item->progreso;
         DB::transaction(function () use ($request, $item, $data) {
             $item->update($data);
+
+            // sincronizar datos del titular
+						if (isset($data['cliente_id'])) {
+							$cliente = Cliente::find($data['cliente_id']);
+							if ($cliente) {
+								$nombreCompleto = $cliente->razon_social ?: trim(($cliente->nombres ?? '') . ' ' . ($cliente->apellidos ?? ''));
+								Persona::updateOrCreate(
+									['venta_id' => $item->id, 'es_titular' => true],
+									[
+											'dni' => $cliente->dni,
+											'nombre' => $nombreCompleto,
+											'celular' => $cliente->celular,
+									]
+								);
+							}
+						}
+            
 
             if ($request->has('canasta') && is_array($request->input('canasta'))) {
                 $canasta = $request->input('canasta', []);

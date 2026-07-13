@@ -119,11 +119,12 @@ Route::get('/reporte/personas/{venta_id}', [PersonaPublicController::class, 'sho
 Route::post('/reporte/personas/{venta_id}', [PersonaPublicController::class, 'storeByVenta']);
 
 // Cotización y Venta - PDF
-Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarPdf']);
+Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarCotizacionPdf']);
 Route::get('/ticket-pdf/{token}', [PagoController::class, 'generarTicketPdf']);
 
 // Público - manifiesto PDF con ID cifrado
 Route::get('/manifiesto-pdf/{token}', [LogisticaController::class, 'generarManifiestoPdf']);
+Route::get('/manifiesto-pasajeros-pdf/{token}', [LogisticaController::class, 'generarManifiestoPasajerosPdf']);
 
 //saludo público
 Route::get('/saludo', function(){ return "hola token"; });

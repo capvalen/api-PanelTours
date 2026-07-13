@@ -114,4 +114,43 @@ class LogisticaController extends Controller
 
         return $pdf->stream('manifiesto-' . $logistica->id . '.pdf');
     }
+
+    public function generarManifiestoPasajerosPdf(string $token)
+    {
+        $encoded = $token;
+        if (!$encoded) {
+            return response()->json(['error' => 'Parámetro inválido'], 400);
+        }
+        $decoded = base64_decode($encoded);
+        $json = strrev($decoded);
+        $data = json_decode($json, true);
+        $id = $data['id'] ?? null;
+        if (!$id) {
+            return response()->json(['error' => 'ID no encontrado'], 400);
+        }
+        $logistica = Logistica::with('ventas.cliente', 'ventas.personas', 'guia', 'vehiculo', 'usuario')->findOrFail($id);
+
+        $logoPath = public_path('images/logo.webp');
+        $logoBase64 = '';
+        if (file_exists($logoPath)) {
+            $img = imagecreatefromwebp($logoPath);
+            if ($img) {
+                imagefilter($img, IMG_FILTER_GRAYSCALE);
+                ob_start();
+                imagewebp($img);
+                $logoBase64 = base64_encode(ob_get_clean());
+                imagedestroy($img);
+            }
+        }
+
+        $data = [
+            'logistica' => $logistica,
+            'logoBase64' => $logoBase64,
+        ];
+
+        $pdf = Pdf::loadView('pdf.manifiesto-pasajeros', $data);
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->stream('manifiesto-pasajeros-' . $logistica->id . '.pdf');
+    }
 }
