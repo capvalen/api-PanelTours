@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('cant_personas')->default(0);
             $table->decimal('monto', 10, 2)->default(0);
             $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
+            $table->text('descripcion')->nullable();
             $table->text('observaciones')->nullable();
             $table->morphs('comisionable');
             $table->boolean('activo')->default(true);
