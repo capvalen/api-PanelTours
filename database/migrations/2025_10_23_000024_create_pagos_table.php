@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('metodo_pago', ['yape', 'plin', 'efectivo', 'tarjeta', 'POS', 'transferencia', 'depósito'])->default('efectivo');
             $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
             $table->string('codigo_referencia')->nullable()->comment('Para transferencias o depósitos');
-						$table->boolean('activo')->default(true)->comment('no/si');
+            $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
             
             // Índices

@@ -190,6 +190,9 @@
                 <td style="padding: 4px 8px;">
                     <span style="color: #666; font-weight: bold;">Total:</span> {{ $cotizacion->cuantas_personas ?? ($cotizacion->adults + $cotizacion->kids) }}
                 </td>
+                <td style="padding: 4px 8px;">
+                    <span style="color: #666; font-weight: bold;">Modalidad:</span> {{ ucfirst($cotizacion->compartido ?? 'Compartido') }}
+                </td>
             </tr>
         </table>
     </div>

@@ -138,6 +138,7 @@
                         <td colspan="9" class="venta-title">
                             {{ $venta->cliente->razon_social ?? ($venta->cliente->apellidos . ' ' . $venta->cliente->nombres) ?? 'Sin cliente' }}
                             @if($venta->ciudad) - {{ $venta->ciudad }} @endif
+                            <span style="font-weight:normal;"> ({{ ucfirst($venta->compartido ?? 'compartido') }})</span>
                         </td>
                     </tr>
                     @foreach($personas as $idx => $persona)

@@ -35,6 +35,7 @@
  						$table->enum('estado', ['activo', 'anulado', 'confirmado', 'operativo', 'en curso', 'finalizado' ])->default('activo')->comment('no/si');
  						$table->enum('progreso', ['cotización', 'venta', 'facturada', 'en seguimiento', 'finalizado'])->default('cotización');
  						$table->enum('nacionalidad', ['peruana', 'extranjera'])->default('peruana');
+						$table->enum('compartido', ['compartido', 'privado'])->default('compartido');
 						$table->json('autorizaciones')->nullable()->default('[]');
  						$table->boolean('activo')->default(true)->comment('no/si');
              $table->timestamps();

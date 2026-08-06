@@ -36,6 +36,7 @@ class Cotizacion extends Model
         'servicios',
         'incluye',
         'no_incluye',
+        'compartido',
         'activo',
     ];
 

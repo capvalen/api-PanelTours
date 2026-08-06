@@ -40,6 +40,7 @@ class Venta extends Model
         'servicios',
         'incluye',
         'no_incluye',
+        'compartido',
         'autorizaciones',
         'activo',
     ];

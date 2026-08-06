@@ -19,15 +19,18 @@ class Comision extends Model
         'cant_personas',
         'monto',
         'estado_pago',
+        'descripcion',
         'observaciones',
         'comisionable_id',
         'comisionable_type',
+        'archivos',
         'activo',
     ];
 
     protected $casts = [
         'fecha' => 'date:Y-m-d',
         'monto' => 'decimal:2',
+        'archivos' => 'array',
         'activo' => 'boolean',
     ];
 
@@ -58,5 +61,9 @@ class Comision extends Model
     public function pagos()
     {
         return $this->hasMany(ComisionPago::class);
+    }
+     public function getArchivosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
     }
 }

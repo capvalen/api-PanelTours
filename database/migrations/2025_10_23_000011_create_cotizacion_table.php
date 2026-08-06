@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('motivo_descuento')->nullable();
             $table->enum('estado', ['activo', 'anulado', 'convertido'])->default('activo');
             $table->enum('nacionalidad', ['peruana', 'extranjera'])->default('peruana');
+            $table->enum('compartido', ['compartido', 'privado'])->default('compartido');
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
 

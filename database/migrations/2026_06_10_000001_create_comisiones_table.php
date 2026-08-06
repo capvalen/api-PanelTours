@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->text('observaciones')->nullable();
             $table->morphs('comisionable');
+            $table->json('archivos')->nullable();
             $table->boolean('activo')->default(true);
             $table->timestamps();
 

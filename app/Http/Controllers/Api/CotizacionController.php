@@ -320,6 +320,7 @@ class CotizacionController extends Controller
                 'servicios' => $cotizacion->servicios ?? [],
                 'incluye' => $cotizacion->incluye ?? [],
                 'no_incluye' => $cotizacion->no_incluye ?? [],
+                'compartido' => $cotizacion->compartido ?? 'compartido',
                 'usuario_id' => $cotizacion->usuario_id,
                 'estado' => 'activo',
                 'estado_pago' => 'pendiente',
