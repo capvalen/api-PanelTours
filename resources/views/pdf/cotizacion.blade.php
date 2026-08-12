@@ -194,6 +194,10 @@
                     <span style="color: #666; font-weight: bold;">Modalidad:</span> {{ ucfirst($cotizacion->compartido ?? 'Compartido') }}
                 </td>
             </tr>
+            <tr>
+                <td class="label">Hora de inicio:</td>
+                <td class="value">{{ $cotizacion->hora_inicio ? \Carbon\Carbon::parse($cotizacion->hora_inicio)->format('H:i') : '-' }}</td>
+            </tr>
         </table>
     </div>
 

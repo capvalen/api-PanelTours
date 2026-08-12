@@ -303,6 +303,7 @@ class CotizacionController extends Controller
                 'user_id' => $request->usuario_id ?? $cotizacion->usuario_id,
                 'fecha' => now()->toDateString(),
                 'fecha_inicio' =>$cotizacion->fecha_inicio,
+                'hora_inicio' =>$cotizacion->hora_inicio,
                 'fecha_fin' =>$cotizacion->fecha_fin,
                 'adults' => $cotizacion->adults,
                 'kids' => $cotizacion->kids,

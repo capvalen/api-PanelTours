@@ -139,6 +139,9 @@
                             {{ $venta->cliente->razon_social ?? ($venta->cliente->apellidos . ' ' . $venta->cliente->nombres) ?? 'Sin cliente' }}
                             @if($venta->ciudad) - {{ $venta->ciudad }} @endif
                             <span style="font-weight:normal;"> ({{ ucfirst($venta->compartido ?? 'compartido') }})</span>
+                            @if($venta->hora_inicio)
+                                <span style="font-weight:normal;"> - Hora de inicio: {{ \Carbon\Carbon::parse($venta->hora_inicio)->format('H:i') }}</span>
+                            @endif
                         </td>
                     </tr>
                     @foreach($personas as $idx => $persona)

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
             $table->date('fecha');
             $table->date('fecha_inicio')->nullable();
+            $table->time('hora_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->integer('adults')->nullable()->default(0);
             $table->integer('kids')->nullable()->default(0);

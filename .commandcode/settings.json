@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(php -l database/migrations/2026_08_12_000001_add_hora_inicio_to_cotizacion_and_ventas_table.php)",
+      "Shell(php -l app/Models/Cotizacion.php)",
+      "Shell(php -l app/Models/Venta.php)",
+      "Shell(php -l app/Http/Controllers/Api/CotizacionController.php)",
+      "Shell(php artisan migrate --force)",
+      "Shell(php artisan tinker --execute=\"echo \\Illuminate\\Support\\Facades\\Schema::getColumnListing('cotizacion').PHP_EOL; echo '---'.PHP_EOL; echo \\Illuminate\\Support\\Facades\\Schema::getColumnListing('ventas').PHP_EOL;\")",
+      "Shell(php artisan tinker --execute=\"print_r(array_filter(\\Illuminate\\Support\\Facades\\Schema::getColumnListing('cotizacion'), fn(\\$c) => str_contains(\\$c, 'hora') || str_contains(\\$c, 'fecha'))); print_r(array_filter(\\Illuminate\\Support\\Facades\\Schema::getColumnListing('ventas'), fn(\\$c) => str_contains(\\$c, 'hora') || str_contains(\\$c, 'fecha')));\")",
+      "Shell(rm:*)",
+      "Shell(php artisan migrate:status)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

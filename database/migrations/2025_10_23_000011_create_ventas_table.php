@@ -17,6 +17,7 @@
              $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
              $table->date('fecha');
              $table->date('fecha_inicio')->nullable();
+             $table->time('hora_inicio')->nullable();
              $table->date('fecha_fin')->nullable();
              $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
              $table->integer('adults')->nullable()->default(0);
