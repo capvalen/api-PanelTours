@@ -34,6 +34,10 @@ class VentaController extends Controller
             $query->whereDate('fecha', $request->fecha);
         }
 
+        if ($request->filled('temporada_id')) {
+            $query->where('temporada_id', $request->temporada_id);
+        }
+
         return $query->get();
     }
 

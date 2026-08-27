@@ -61,6 +61,11 @@ class CotizacionController extends Controller
             $query->where('estado', request('estado'));
         }
 
+        // Filtro por temporada_id
+        if (request()->has('temporada_id') && request()->filled('temporada_id')) {
+            $query->where('temporada_id', request('temporada_id'));
+        }
+
         // Límite de resultados para no sobrecargar
         $query->limit(request('limit', 50));
 
@@ -309,6 +314,7 @@ class CotizacionController extends Controller
                 'kids' => $cotizacion->kids,
                 'cuantas_personas' => $cotizacion->cuantas_personas,
                 'departamento_id' => $cotizacion->departamento_id,
+                'temporada_id' => $cotizacion->temporada_id,
                 'precio_adultos' => $cotizacion->precio_adultos,
                 'precio_kids' => $cotizacion->precio_kids,
                 'costo' => $cotizacion->costo,

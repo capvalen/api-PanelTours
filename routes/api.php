@@ -37,6 +37,7 @@ use App\Http\Controllers\Api\PersonaPublicController;
 use App\Http\Controllers\Api\LogisticaController;
 use App\Http\Controllers\Api\ComisionController;
 use App\Http\Controllers\Api\ComisionPagoController;
+use App\Http\Controllers\Api\ConfiguracionController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -64,6 +65,8 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::apiResource('personas', PersonaController::class)->except(['options']);
 		Route::apiResource('comisiones', ComisionController::class);
 		Route::apiResource('comision-pagos', ComisionPagoController::class);
+		Route::get('configuraciones/clave/{clave}', [ConfiguracionController::class, 'getByClave']);
+		Route::apiResource('configuraciones', ConfiguracionController::class);
 	});
 
 	// Counter + Admin: cotizaciones, ventas, clientes

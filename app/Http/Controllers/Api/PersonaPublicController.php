@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Configuracion;
 use App\Models\Persona;
 use App\Models\Venta;
 use App\Models\VentaItem;
@@ -60,14 +61,27 @@ class PersonaPublicController extends Controller
             ->orderBy('id')
             ->first();
 
+        $temporada = null;
+        if ($venta->temporada_id) {
+            $configuracion = Configuracion::find($venta->temporada_id);
+            if ($configuracion && $configuracion->valor) {
+                $temporada = is_string($configuracion->valor)
+                    ? json_decode($configuracion->valor, true)
+                    : $configuracion->valor;
+            }
+        }
+
         return response()->json([
             'venta' => [
                 'venta_id' => $venta->id,
                 'tipo' => $ventaItemPrioritario?->tipo,
                 'descripcion' => $ventaItemPrioritario?->descripcion,
                 'nro_clientes' => $ventaItemPrioritario?->nro_clientes,
+                'compartido' => $venta->compartido,
+                'temporada' => $temporada,
             ],
             'venta_id' => $venta->id,
+            'temporada' => $temporada,
             'total' => $venta->cuantas_personas,// $personas->count(),
             'titular' => $titular,
             'personas' => $personas,
