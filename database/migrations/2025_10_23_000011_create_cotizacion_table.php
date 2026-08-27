@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('vendedor_id')->nullable()->constrained('proveedores')->nullOnDelete();
             $table->date('fecha');
             $table->date('fecha_inicio')->nullable();
             $table->time('hora_inicio')->nullable();

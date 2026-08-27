@@ -15,6 +15,7 @@ class Cotizacion extends Model
     protected $fillable = [
         'usuario_id',
         'cliente_id',
+        'vendedor_id',
         'fecha',
         'adults',
         'kids',
@@ -57,13 +58,14 @@ class Cotizacion extends Model
         'kids' => 'integer',
         'cuantas_personas' => 'integer',
         'temporada_id' => 'integer',
+        'vendedor_id' => 'integer',
         'servicios' => 'array',
         'incluye' => 'array',
         'no_incluye' => 'array',
         'activo' => 'boolean',
     ];
 
-    protected $with = ['cliente', 'usuario'];
+    protected $with = ['cliente', 'usuario', 'vendedor'];
 
     protected static function booted()
     {
@@ -80,6 +82,11 @@ class Cotizacion extends Model
     public function cliente()
     {
         return $this->belongsTo(Cliente::class)->select(['id', 'ruc', 'razon_social', 'dni', 'nombres', 'apellidos', 'celular']);
+    }
+
+    public function vendedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'vendedor_id');
     }
 
     public function departamento()

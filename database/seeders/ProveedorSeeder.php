@@ -94,6 +94,20 @@ class ProveedorSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'ruc' => '20606789012',
+                'razon_social' => 'Vendedor de Tours',
+                'direccion' => '',
+                'contacto' => '',
+                'celular' => '939678901',
+                'banco' => 'BCP',
+                'numero_cuenta' => '19167890123456',
+                'categoria' => 'vendedor',
+                'archivos' => null,
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

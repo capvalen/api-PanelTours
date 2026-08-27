@@ -27,6 +27,9 @@ class ProveedorController extends Controller
 			if ($request->filled('departamento_id')) {
 				$query->where('departamento_id', $request->departamento_id);
 			}
+			if ($request->filled('categoria')) {
+				$query->where('categoria', $request->categoria);
+			}
 
 			return $query->orderBy('id', 'desc')->get();
     }

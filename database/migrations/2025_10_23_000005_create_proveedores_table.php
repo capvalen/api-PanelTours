@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('celular', 20)->nullable();
             $table->string('banco')->nullable();
             $table->string('numero_cuenta', 30)->nullable();
-            $table->enum('categoria', ['alojamiento', 'transporte', 'restaurant', 'local', 'agencia'])->nullable();
+            $table->enum('categoria', ['alojamiento', 'transporte', 'restaurant', 'local', 'agencia', 'vendedor'])->default('local')->nullable();
             $table->json('archivos')->nullable();
 						$table->boolean('activo')->default(true)->comment('no/si');
             $table->text('observaciones')->nullable();

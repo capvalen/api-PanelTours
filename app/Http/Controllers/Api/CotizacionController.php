@@ -305,6 +305,7 @@ class CotizacionController extends Controller
             $venta = Venta::create(
                 [
                 'cliente_id' => $cotizacion->cliente_id,
+                'vendedor_id' => $cotizacion->vendedor_id,
                 'user_id' => $request->usuario_id ?? $cotizacion->usuario_id,
                 'fecha' => now()->toDateString(),
                 'fecha_inicio' =>$cotizacion->fecha_inicio,
