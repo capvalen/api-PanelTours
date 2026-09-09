@@ -41,6 +41,17 @@ class Logistica extends Model
         if ($this->vehiculo_id) {
             $this->crearComision($this->vehiculo_id, 'App\Models\Vehiculo', $totalPrecio, $totalPersonas);
         }
+
+        // Comisión del 10% para cada vendedor (proveedor) de las ventas de la logística
+        $ventasPorVendedor = $ventas->filter(fn ($v) => !empty($v->vendedor_id))->groupBy('vendedor_id');
+        foreach ($ventasPorVendedor as $vendedorId => $ventasVendedor) {
+            $this->crearComision(
+                $vendedorId,
+                'App\Models\Proveedor',
+                $ventasVendedor->sum('precio'),
+                $ventasVendedor->sum('cuantas_personas')
+            );
+        }
     }
 
     protected function crearComision($comisionableId, $comisionableType, $totalPrecio, $totalPersonas)

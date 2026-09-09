@@ -147,7 +147,7 @@
     </p>
 
     <div class="footer">
-        <p>Generado el {{ now()->format('d/m/Y g:i a') }} · Grupo Euroandino S.A.C.</p>
+        <p>Generado el {{ now()->format('d/m/Y g:i a') }} · Grupo Euro Andino S.A.C.</p>
     </div>
 </body>
 </html>

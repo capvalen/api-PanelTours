@@ -14,6 +14,7 @@ class Pago extends Model
 
     protected $fillable = [
         'venta_id',
+        'proveedor_id',
         'fecha',
         'es_compromiso',
         'fecha_compromiso',
@@ -21,7 +22,10 @@ class Pago extends Model
         'saldo_pendiente',
         'metodo_pago',
         'estado_pago',
+        'es_cobro',
         'codigo_referencia',
+        'concepto',
+        'archivos',
         'activo',
     ];
 
@@ -31,6 +35,8 @@ class Pago extends Model
         'fecha_compromiso' => 'date',
         'monto_abonado' => 'decimal:2',
         'saldo_pendiente' => 'decimal:2',
+        'es_cobro' => 'boolean',
+        'archivos' => 'array',
         'activo' => 'boolean',
     ];
 
@@ -44,5 +50,20 @@ class Pago extends Model
     public function venta()
     {
         return $this->belongsTo(Venta::class);
+    }
+
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class);
+    }
+
+    public function abonos()
+    {
+        return $this->hasMany(CobroAbono::class, 'cobro_id');
+    }
+
+    public function getArchivosAttribute($value)
+    {
+        return $value ? json_decode($value, true) : [];
     }
 }

@@ -110,6 +110,12 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::put('/cajas/cerrar/{id}', [CajaController::class, 'cerrar']);
 		Route::apiResource('caja_detalles', CajaDetalleController::class);
 		Route::apiResource('ventas.pagos', PagoController::class)->parameters(['ventas' => 'idVenta'])->except(['options']);
+		Route::get('/pagos', [PagoController::class, 'indexTodos']);
+		Route::post('/pagos', [PagoController::class, 'storeProveedor']);
+		Route::get('/pagos/{id}', [PagoController::class, 'showCobro']);
+		Route::put('/pagos/{id}', [PagoController::class, 'abonarCobro']);
+		Route::get('/pagos-pagar/{id}', [PagoController::class, 'showPagoPagar']);
+		Route::put('/pagos-pagar/{id}', [PagoController::class, 'abonarPagoPagar']);
 		Route::post('/archivos', [ArchivoController::class, 'store']);
 	});
 

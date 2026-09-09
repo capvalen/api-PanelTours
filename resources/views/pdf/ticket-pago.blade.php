@@ -123,7 +123,7 @@
         <img src="data:image/webp;base64,{{ $logoBase64 }}" alt="Logo">
     </div>
 
-    <div class="empresa">GRUPO EUROANDINO S.A.C.</div>
+    <div class="empresa">GRUPO EURO ANDINO S.A.C.</div>
     <div style="text-align:center;font-size:8px;color:#555;margin-bottom:1mm;">RUC 1111111110</div>
     <div class="codigo">{{ $codigo }}</div>
     <div class="fecha">{{ \Carbon\Carbon::parse($pago->fecha)->format('d/m/Y g:i a') }}</div>

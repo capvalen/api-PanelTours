@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
              $table->foreignId('venta_id')->constrained('ventas')->onDelete('cascade');
             $table->dateTime('fecha');
+            $table->string('concepto')->nullable();
 						$table->boolean('es_compromiso')->default(false)->comment('0=pago, 1=es compromiso');
 						$table->date('fecha_compromiso')->nullable()->comment('Fecha en que el cliente se compromete a pagar');
             $table->decimal('monto_abonado', 10, 2);
             $table->decimal('saldo_pendiente', 10, 2);
             $table->enum('metodo_pago', ['yape', 'plin', 'efectivo', 'tarjeta', 'POS', 'transferencia', 'depósito'])->default('efectivo');
             $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pendiente');
+            $table->boolean('es_cobro')->default(true)->comment('1=cobrar (ingreso), 0=pagar (egreso)');
             $table->string('codigo_referencia')->nullable()->comment('Para transferencias o depósitos');
             $table->boolean('activo')->default(true)->comment('no/si');
             $table->timestamps();
