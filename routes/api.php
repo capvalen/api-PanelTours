@@ -77,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
 		Route::apiResource('cotizacion', CotizacionController::class);
 		Route::apiResource('cotizacion_items', CotizacionItemController::class);
 		Route::post('/cotizacion/{id}/convertir-reserva', [CotizacionController::class, 'convertirReserva']);
+		Route::get('/proxy-imagen', [CotizacionController::class, 'proxyImagen']);
 
 		Route::apiResource('ventas', VentaController::class);
 		Route::apiResource('venta_items', VentaItemController::class);
@@ -130,6 +131,9 @@ Route::post('/reporte/personas/{venta_id}', [PersonaPublicController::class, 'st
 // Cotización y Venta - PDF
 Route::get('/cotizacion/{id}/pdf', [CotizacionController::class, 'generarCotizacionPdf']);
 Route::get('/ticket-pdf/{token}', [PagoController::class, 'generarTicketPdf']);
+
+// Temporada pública para previsualizaciones
+Route::get('/temporada/{id}', [ConfiguracionController::class, 'temporadaPublica']);
 
 // Público - manifiesto PDF con ID cifrado
 Route::get('/manifiesto-pdf/{token}', [LogisticaController::class, 'generarManifiestoPdf']);

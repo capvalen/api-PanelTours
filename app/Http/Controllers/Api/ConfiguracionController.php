@@ -28,10 +28,8 @@ class ConfiguracionController extends Controller
             'valor' => ['nullable'],
         ]);
 
-        $configuracion = Configuracion::updateOrCreate(
-            ['clave' => $validated['clave']],
-            ['valor' => $validated['valor'] ?? null]
-        );
+        // Siempre crea un registro nuevo (permite varias temporadas con la misma clave).
+        $configuracion = Configuracion::create($validated);
 
         return response()->json($configuracion, 201);
     }
@@ -61,6 +59,20 @@ class ConfiguracionController extends Controller
 
         if (!$configuracion) {
             return response()->json(['message' => 'Configuración no encontrada.'], 404);
+        }
+
+        return response()->json($configuracion);
+    }
+
+    /**
+     * Obtener una temporada por ID (acceso público para previsualizaciones).
+     */
+    public function temporadaPublica(string $id): JsonResponse
+    {
+        $configuracion = Configuracion::where('clave', 'temporada')->find($id);
+
+        if (!$configuracion || !$configuracion->valor) {
+            return response()->json(['message' => 'Temporada no encontrada.'], 404);
         }
 
         return response()->json($configuracion);

@@ -11,7 +11,8 @@ class VehiculoSeeder extends Seeder
     {
         DB::table('vehiculos')->insert([
             [
-                'tipo_vehiculo' => 'Ningún Vehículo',
+                
+                'tipo_carro' => 'ninguno',
                 'placa' => 'Sin placa',
                 'dni_conductor' => 'Sin DNI',
                 'nombre_conductor' => 'Sin conductor',
@@ -29,7 +30,7 @@ class VehiculoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'tipo_vehiculo' => 'SUV',
+                'tipo_carro' => 'auto',
                 'placa' => 'DEF-456',
                 'dni_conductor' => '52345678',
                 'nombre_conductor' => 'Pedro Sánchez Ruiz',
@@ -47,7 +48,7 @@ class VehiculoSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'tipo_vehiculo' => 'Bus turístico',
+                'tipo_carro' => 'bus',
                 'placa' => 'GHI-789',
                 'dni_conductor' => '53456789',
                 'nombre_conductor' => 'Marcos Loza Fernández',

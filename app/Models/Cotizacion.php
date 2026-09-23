@@ -36,6 +36,7 @@ class Cotizacion extends Model
         'estado',
         'nacionalidad',
         'ruta',
+        'punto_recojo',
         'servicios',
         'incluye',
         'no_incluye',

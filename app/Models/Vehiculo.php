@@ -12,11 +12,13 @@ class Vehiculo extends Model
     protected $table = 'vehiculos';
 
     protected $fillable = [
-        'tipo_vehiculo',
+        'tipo_carro',
+        'capacidad',
         'placa',
         'dni_conductor',
         'nombre_conductor',
         'celular',
+        'ciudad',
         'licencia_conductor',
         'edad_conductor',
         'tipo_combustible',
@@ -35,6 +37,7 @@ class Vehiculo extends Model
     ];
 
     protected $casts = [
+        'capacidad' => 'integer',
         'incluye_seguro' => 'boolean',
         'incluye_gps' => 'boolean',
         'incluye_silla_bebe' => 'boolean',

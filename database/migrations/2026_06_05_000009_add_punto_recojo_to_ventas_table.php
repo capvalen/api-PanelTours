@@ -11,11 +11,19 @@ return new class extends Migration
         Schema::table('ventas', function (Blueprint $table) {
             $table->text('punto_recojo')->nullable()->after('ruta');
         });
+
+        Schema::table('cotizacion', function (Blueprint $table) {
+            $table->text('punto_recojo')->nullable()->after('ruta');
+        });
     }
 
     public function down(): void
     {
         Schema::table('ventas', function (Blueprint $table) {
+            $table->dropColumn('punto_recojo');
+        });
+
+        Schema::table('cotizacion', function (Blueprint $table) {
             $table->dropColumn('punto_recojo');
         });
     }

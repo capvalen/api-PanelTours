@@ -288,6 +288,33 @@ class CotizacionController extends Controller
     }
 
     /**
+     * Proxy de imágenes: permite al frontend leer imágenes del sitio web
+     * (que no envían cabeceras CORS) para poder renderizarlas en el PDF.
+     */
+    public function proxyImagen(Request $request)
+    {
+        $url = $request->query('url');
+
+        if (!$url || !filter_var($url, FILTER_VALIDATE_URL) || !str_starts_with($url, 'https://grupoeuroandino.com/')) {
+            return response('', 400);
+        }
+
+        try {
+            $client = new \GuzzleHttp\Client(['verify' => false, 'timeout' => 10]);
+            $resp = $client->get($url);
+            $contentType = $resp->getHeaderLine('Content-Type') ?: 'image/jpeg';
+
+            return response($resp->getBody(), 200, [
+                'Content-Type' => $contentType,
+                'Cache-Control' => 'public, max-age=86400',
+            ]);
+        } catch (\Exception $e) {
+            Log::warning('Error al obtener imagen proxy: ' . $e->getMessage());
+            return response('', 404);
+        }
+    }
+
+    /**
      * Convertir cotización en reserva (venta).
      */
     public function convertirReserva(string $id, Request $request)

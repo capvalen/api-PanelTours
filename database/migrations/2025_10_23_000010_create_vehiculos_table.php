@@ -13,10 +13,13 @@ return new class extends Migration
     {
 			Schema::create('vehiculos', function (Blueprint $table) {
 				$table->id();
-				$table->string('tipo_vehiculo');
+				/* $table->string('tipo_vehiculo'); */
+				$table->enum('tipo_carro', ['ninguno','auto', 'minivan', 'van', 'coaster', 'minibus', 'bus'])->default('ninguno');
+				$table->tinyInteger('capacidad')->nullable()->check('capacidad BETWEEN 1 AND 60');
 				$table->string('placa', 10)->unique();
 				$table->string('dni_conductor', 8)->nullable();
 				$table->string('nombre_conductor')->nullable();
+				$table->string('ciudad', 50)->nullable();
 				$table->string('celular', 20)->nullable();
 				$table->string('licencia_conductor', 20)->nullable();
 				$table->integer('edad_conductor')->nullable()->default(0);
