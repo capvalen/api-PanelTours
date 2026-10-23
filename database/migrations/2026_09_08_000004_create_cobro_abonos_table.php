@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('metodo_pago')->nullable();
             $table->string('codigo_referencia')->nullable();
             $table->text('observaciones')->nullable();
+            $table->text('quien_paga')->nullable();
             $table->boolean('activo')->default(true);
             $table->timestamps();
 

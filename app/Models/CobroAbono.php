@@ -19,6 +19,7 @@ class CobroAbono extends Model
         'metodo_pago',
         'codigo_referencia',
         'observaciones',
+        'quien_paga',
         'activo',
     ];
 

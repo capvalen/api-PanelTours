@@ -26,6 +26,7 @@ class Pago extends Model
         'codigo_referencia',
         'concepto',
         'archivos',
+        'quien_paga',
         'activo',
     ];
 

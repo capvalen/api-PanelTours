@@ -38,6 +38,7 @@ use App\Http\Controllers\Api\LogisticaController;
 use App\Http\Controllers\Api\ComisionController;
 use App\Http\Controllers\Api\ComisionPagoController;
 use App\Http\Controllers\Api\ConfiguracionController;
+use App\Http\Controllers\Api\DashboardController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -52,6 +53,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 	// Todos los autenticados pueden cambiar su propia contraseña
 	Route::put('/cambiar-password', [UsuarioController::class, 'cambiarPassword']);
+
+	// Estadísticas del dashboard: disponible para todos los perfiles
+	Route::get('/dashboard/estadisticas', [DashboardController::class, 'estadisticas']);
 
 	// Solo administrador
 	Route::middleware('check_perfil:administrador')->group(function () {
@@ -72,6 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
 	// Counter + Admin: cotizaciones, ventas, clientes
 	Route::middleware('check_perfil:administrador,counter')->group(function () {
 		Route::apiResource('clientes', ClienteController::class);
+		Route::get('/clientes/reniec/{dni}', [ClienteController::class, 'buscarReniec']);
+		Route::post('/clientes/desde-reniec', [ClienteController::class, 'storeDesdeReniec']);
 		Route::post('/clientes/{id}/adjuntar_archivo', [ClienteController::class, 'adjuntarArchivo']);
 
 		Route::apiResource('cotizacion', CotizacionController::class);

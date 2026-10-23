@@ -70,6 +70,7 @@ class PagoController extends Controller
                 ?? ($p->venta?->cliente ? trim(($p->venta->cliente->nombres ?? '') . ' ' . ($p->venta->cliente->apellidos ?? '')) : null)
                 ?? null,
             'concepto' => $p->concepto ?: ($p->proveedor ? 'Cobro a proveedor' : 'Pago de venta'),
+            'quien_paga' => $p->quien_paga,
             'venta_id' => $p->venta_id,
             'proveedor_id' => $p->proveedor_id,
         ]);
@@ -150,6 +151,7 @@ class PagoController extends Controller
             'metodo_pago' => 'nullable|string',
             'codigo_referencia' => 'nullable|string',
             'observaciones' => 'nullable|string',
+            'quien_paga' => 'nullable|string',
         ]);
 
         $esCobro = $request->boolean('es_cobro', true);
@@ -171,6 +173,7 @@ class PagoController extends Controller
             'es_cobro' => $esCobro,
             'codigo_referencia' => $request->codigo_referencia,
             'concepto' => $request->concepto,
+            'quien_paga' => $request->quien_paga,
             'activo' => true,
         ]);
 
@@ -201,6 +204,7 @@ class PagoController extends Controller
                     'metodo_pago' => $request->metodo_pago ?? 'efectivo',
                     'codigo_referencia' => $request->codigo_referencia,
                     'observaciones' => $request->observaciones,
+                    'quien_paga' => $request->quien_paga,
                 ]);
             }
         }
@@ -228,6 +232,7 @@ class PagoController extends Controller
             'metodo_pago' => 'nullable|string',
             'codigo_referencia' => 'nullable|string',
             'observaciones' => 'nullable|string',
+            'quien_paga' => 'nullable|string',
         ]);
 
         $item = Pago::where('es_cobro', true)->findOrFail($id);
@@ -243,25 +248,31 @@ class PagoController extends Controller
         $nuevoSaldo = round(max(0, (float) $item->saldo_pendiente - $abono), 2);
         $nuevoEstado = $nuevoSaldo <= 0 ? 'pagado' : 'adelantado';
 
+        $quienPaga = $request->has('quien_paga') ? ($request->quien_paga ?: null) : $item->quien_paga;
+
         $item->update([
             'monto_abonado' => $nuevoAbonado,
             'saldo_pendiente' => $nuevoSaldo,
             'estado_pago' => $nuevoEstado,
             'metodo_pago' => $request->metodo_pago ?? $item->metodo_pago,
             'codigo_referencia' => $request->codigo_referencia ?? $item->codigo_referencia,
+            'quien_paga' => $quienPaga,
         ]);
 
         // Registrar en caja como ingreso
         $cajaAbierta = Caja::where('estado', 'abierta')->first();
         if ($cajaAbierta) {
+            // Un pago de venta (sin proveedor) se registra en caja asociado a la venta
+            $esPagoVenta = !$item->proveedor_id && $item->venta_id;
             CajaDetalle::create([
                 'caja_id' => $cajaAbierta->id,
                 'tipo' => 'ingreso',
-                'categoria' => 'cobro a proveedor',
+                'categoria' => $esPagoVenta ? 'venta' : 'cobro a proveedor',
                 'monto' => $abono,
-                'concepto' => $request->observaciones ?: 'Abono a cobro de proveedor',
+                'concepto' => $request->observaciones ?: ($esPagoVenta ? 'Pago de venta #' . $item->venta_id : 'Abono a cobro de proveedor'),
                 'fecha' => now(),
                 'comprobante_pago' => 'interno',
+                'venta_id' => $item->venta_id,
                 'proveedor_id' => $item->proveedor_id,
                 'metodo_pago' => $request->metodo_pago ?? $item->metodo_pago,
                 'estado_pago' => 'pagado',
@@ -276,6 +287,7 @@ class PagoController extends Controller
             'metodo_pago' => $request->metodo_pago ?? $item->metodo_pago,
             'codigo_referencia' => $request->codigo_referencia,
             'observaciones' => $request->observaciones,
+            'quien_paga' => $quienPaga,
         ]);
 
         $item->load('abonos');
@@ -303,6 +315,7 @@ class PagoController extends Controller
             'metodo_pago' => 'nullable|string',
             'codigo_referencia' => 'nullable|string',
             'observaciones' => 'nullable|string',
+            'quien_paga' => 'nullable|string',
         ]);
 
         $item = Pago::where('es_cobro', false)->findOrFail($id);
@@ -318,25 +331,31 @@ class PagoController extends Controller
         $nuevoSaldo = round(max(0, (float) $item->saldo_pendiente - $abono), 2);
         $nuevoEstado = $nuevoSaldo <= 0 ? 'pagado' : 'adelantado';
 
+        $quienPaga = $request->has('quien_paga') ? ($request->quien_paga ?: null) : $item->quien_paga;
+
         $item->update([
             'monto_abonado' => $nuevoAbonado,
             'saldo_pendiente' => $nuevoSaldo,
             'estado_pago' => $nuevoEstado,
             'metodo_pago' => $request->metodo_pago ?? $item->metodo_pago,
             'codigo_referencia' => $request->codigo_referencia ?? $item->codigo_referencia,
+            'quien_paga' => $quienPaga,
         ]);
 
         // Registrar en caja como egreso
         $cajaAbierta = Caja::where('estado', 'abierta')->first();
         if ($cajaAbierta) {
+            // Un pago de venta (sin proveedor) se registra en caja asociado a la venta
+            $esPagoVenta = !$item->proveedor_id && $item->venta_id;
             CajaDetalle::create([
                 'caja_id' => $cajaAbierta->id,
                 'tipo' => 'egreso',
-                'categoria' => 'pago de proveedores',
+                'categoria' => $esPagoVenta ? 'venta' : 'pago de proveedores',
                 'monto' => $abono,
-                'concepto' => $request->observaciones ?: 'Abono a pago por pagar de proveedor',
+                'concepto' => $request->observaciones ?: ($esPagoVenta ? 'Pago de venta #' . $item->venta_id : 'Abono a pago por pagar de proveedor'),
                 'fecha' => now(),
                 'comprobante_pago' => 'interno',
+                'venta_id' => $item->venta_id,
                 'proveedor_id' => $item->proveedor_id,
                 'metodo_pago' => $request->metodo_pago ?? $item->metodo_pago,
                 'estado_pago' => 'pagado',
@@ -351,6 +370,7 @@ class PagoController extends Controller
             'metodo_pago' => $request->metodo_pago ?? $item->metodo_pago,
             'codigo_referencia' => $request->codigo_referencia,
             'observaciones' => $request->observaciones,
+            'quien_paga' => $quienPaga,
         ]);
 
         $item->load('abonos');

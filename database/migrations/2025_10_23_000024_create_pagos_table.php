@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('es_cobro')->default(true)->comment('1=cobrar (ingreso), 0=pagar (egreso)');
             $table->string('codigo_referencia')->nullable()->comment('Para transferencias o depósitos');
             $table->boolean('activo')->default(true)->comment('no/si');
+            $table->string('quien_paga')->nullable()->comment('para saber quien es el pago, si es el cliente o un tercero');
             $table->timestamps();
             
             // Índices

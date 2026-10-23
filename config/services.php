@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | RENIEC (consulta de DNI)
+    |--------------------------------------------------------------------------
+    | Token usado para consultar el servicio externo de DNI.
+    | Puede sobrescribirse desde el .env con RENIEC_TOKEN.
+    */
+    'reniec' => [
+        'url' => env('RENIEC_URL', 'https://dnis.infocat.workers.dev/api/dni'),
+        'token' => env('RENIEC_TOKEN', 'euro-d2g99412p3qwg13g'),
+    ],
+
 ];

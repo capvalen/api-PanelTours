@@ -22,6 +22,10 @@ class CajaController extends Controller
 				if ($request->has('abierta')) {
 					$query->where('estado', 'abierta');
         }
+				//URL: http://127.0.0.1:8000/api/cajas?estado=abierta
+				if ($request->filled('estado')) {
+					$query->where('estado', $request->estado);
+        }
 				$cajas = $query->with('usuario')
 				->orderBy('id', 'desc')
 				->get();

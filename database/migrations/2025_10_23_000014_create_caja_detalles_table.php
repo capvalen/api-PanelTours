@@ -23,8 +23,9 @@ return new class extends Migration
             $table->string('serie', 50)->nullable();
             $table->foreignId('venta_id')->nullable()->constrained('ventas')->onDelete('set null');
             $table->text('observaciones')->nullable();
-						$table->foreignId('proveedor_id')->constrained('proveedores')->onDelete('cascade');
-            $table->enum('metodo_pago', ['efectivo', 'tarjeta', 'yape', 'plin', 'POS', 'cuenta bancaria'])->nullable();
+						// Nullable porque los movimientos de pagos de venta no tienen proveedor
+						$table->foreignId('proveedor_id')->nullable()->constrained('proveedores')->onDelete('set null');
+						$table->enum('metodo_pago', ['efectivo', 'tarjeta', 'yape', 'plin', 'POS', 'transferencia', 'depósito', 'cuenta bancaria'])->nullable();
             $table->enum('estado_pago', ['pendiente', 'adelantado', 'pagado', 'anulado'])->default('pagado')->nullable();
 
 
