@@ -18,8 +18,8 @@ class CajaDetalleController extends Controller
             $query->where('caja_id', $request->caja_id);
         }
 
-        $internos = (clone $query)->where('venta_id', null)->get();
-        $especiales = (clone $query)->where('venta_id', '!=', null)->with('venta.cliente')->get();
+        $internos = (clone $query)->where('venta_id', null)->with('usuario')->get();
+        $especiales = (clone $query)->where('venta_id', '!=', null)->with('venta.cliente', 'usuario')->get();
 
         return response()->json([
             'internos' => $internos,

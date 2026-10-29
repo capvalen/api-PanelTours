@@ -7,6 +7,7 @@ use App\Models\Caja;
 use App\Models\CajaDetalle;
 use App\Models\Venta;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -33,6 +34,12 @@ class DashboardController extends Controller
 
         $ventasHoyCount = (clone $ventasHoy)->count();
         $montoVentasHoy = (float) (clone $ventasHoy)->sum('precio');
+
+        // ── Pasajeros en ruta: solo los pasajeros de las ventas de hoy ──
+        // Se usa cuantas_personas y, si está vacío, la suma de adultos + niños.
+        $pasajerosEnRuta = (int) (clone $ventasHoy)->sum(DB::raw(
+            'COALESCE(NULLIF(cuantas_personas, 0), COALESCE(adults, 0) + COALESCE(kids, 0))'
+        ));
 
         // ── Ventas del mes ──
         $ventasMes = Venta::where('estado', '!=', 'anulado')
@@ -70,6 +77,7 @@ class DashboardController extends Controller
             'monto_ventas_hoy' => $montoVentasHoy,
             'ventas_mes' => $ventasMesCount,
             'monto_ventas_mes' => $montoVentasMes,
+            'pasajeros_en_ruta' => $pasajerosEnRuta,
             'ingresos_caja' => $ingresosCaja,
             'egresos_caja' => $egresosCaja,
             'saldo_caja' => $saldoCaja,

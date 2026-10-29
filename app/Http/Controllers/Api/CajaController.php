@@ -41,7 +41,12 @@ class CajaController extends Controller
 			$otrasCajas = Caja::where('estado', 'abierta');
 			$otrasCajas->update(['estado' => 'cerrada']);
 
-			$item = Caja::create($request->all());
+			$data = $request->all();
+			if (empty($data['fecha_apertura'])) {
+				$data['fecha_apertura'] = now();
+			}
+
+			$item = Caja::create($data);
 			$item->load('usuario');
 			//$item->load('detalle');
 
@@ -53,7 +58,7 @@ class CajaController extends Controller
      */
     public function show(string $id)
     {
-        return Caja::find($id);
+        return Caja::with('usuario')->find($id);
     }
 
     /**
